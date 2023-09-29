@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.android_programming.HomeScreen.HomeScreen
-import com.example.android_programming.Screens.LikeScreen
+import com.example.android_programming.LikeScreen.LikeScreen
 import com.example.android_programming.Screens.OrderScreen
 import com.example.android_programming.Screens.ProfileScreen
 

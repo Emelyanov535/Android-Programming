@@ -1,4 +1,4 @@
-package com.example.android_programming.HomeScreen;
+package com.example.android_programming.HomeScreen.SearchField;
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

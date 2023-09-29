@@ -1,4 +1,4 @@
-package com.example.android_programming.HomeScreen
+package com.example.android_programming.HomeScreen.BrandScrollBar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

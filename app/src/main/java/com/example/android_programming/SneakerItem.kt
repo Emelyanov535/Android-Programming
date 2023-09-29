@@ -1,4 +1,4 @@
-package com.example.android_programming.HomeScreen
+package com.example.android_programming
 
 data class SneakerItem(
     val imageId: Int,
