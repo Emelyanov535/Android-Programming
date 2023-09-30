@@ -7,7 +7,8 @@ import androidx.navigation.compose.composable
 import com.example.android_programming.HomeScreen.HomeScreen
 import com.example.android_programming.LikeScreen.LikeScreen
 import com.example.android_programming.Screens.OrderScreen
-import com.example.android_programming.Screens.ProfileScreen
+import com.example.android_programming.ProfileScreen.Profile.ProfileScreen
+import com.example.android_programming.ProfileScreen.SignIn.LoginScreen
 
 @Composable
 fun NavController(navController: NavHostController){
@@ -25,7 +26,10 @@ fun NavController(navController: NavHostController){
             OrderScreen()
         }
         composable(NavItem.Profile.route){
-            ProfileScreen()
+            ProfileScreen(navController)
+        }
+        composable(NavItem.SignIn.route){
+            LoginScreen()
         }
     }
 }

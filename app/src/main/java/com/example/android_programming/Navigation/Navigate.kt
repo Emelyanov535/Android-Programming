@@ -61,11 +61,13 @@ fun Navigate(){
                             Modifier
                         }
 
-                        Icon(
-                            imageVector = it.icon,
-                            contentDescription = null,
-                            modifier = iconModifier.then(Modifier.size(24.dp))
-                        )
+                        it.icon?.let { it1 ->
+                            Icon(
+                                imageVector = it1,
+                                contentDescription = null,
+                                modifier = iconModifier.then(Modifier.size(24.dp))
+                            )
+                        }
                     }
                 )
             }
