@@ -1,4 +1,4 @@
-package com.example.android_programming.LikeScreen;
+package com.example.android_programming.Screens.LikeScreen;
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.example.android_programming.HomeScreen.BrandScrollBar
+package com.example.android_programming.Screens.HomeScreen.BrandScrollBar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,10 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.android_programming.R
+
 
 @Composable
 fun ItemRow(item: ItemFilterByBrand) {
@@ -23,7 +25,7 @@ fun ItemRow(item: ItemFilterByBrand) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .clip(RoundedCornerShape(10.dp))
-            .background(Color.LightGray)
+            .background(colorResource(id = R.color.figma))
 
     ) {
         Image(

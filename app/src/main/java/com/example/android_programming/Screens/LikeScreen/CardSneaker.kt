@@ -1,4 +1,4 @@
-package com.example.android_programming.LikeScreen
+package com.example.android_programming.Screens.LikeScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,14 +32,14 @@ fun CardSneakerLike(item: SneakerItem) {
             .fillMaxWidth()
             .padding(10.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(Color.LightGray),
+            .background(colorResource(id = R.color.figma)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Image(
             painter = painterResource(id = item.imageId),
             contentDescription = "image",
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .size(70.dp)
                 .padding(10.dp)
@@ -54,14 +55,13 @@ fun CardSneakerLike(item: SneakerItem) {
             Text(text = "${item.price} USD", color = Color.Red, fontSize = 16.sp)
         }
 
-        // Кнопка для удаления
         Button(
-            onClick = {  },
+            onClick = { /*TODO*/ },
             modifier = Modifier
-                .size(40.dp)
-                .padding(10.dp)
+                .size(40.dp, 20.dp)
+                .padding(end = 16.dp)
         ) {
-            Text(text = "X", fontSize = 16.sp)
+            Text(text = "+", fontSize = 4.sp)
         }
     }
 }

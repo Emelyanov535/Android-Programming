@@ -1,4 +1,4 @@
-package com.example.android_programming.HomeScreen.SearchField;
+package com.example.android_programming.Screens.HomeScreen.SearchField;
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,8 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.example.android_programming.R
 
 @Composable
 fun SearchField(
@@ -32,7 +34,7 @@ fun SearchField(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color.LightGray)
+            .background(colorResource(id = R.color.figma))
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Row(

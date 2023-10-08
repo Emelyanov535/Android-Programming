@@ -1,4 +1,4 @@
-package com.example.android_programming.HomeScreen
+package com.example.android_programming.Screens.HomeScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,15 +17,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.android_programming.HomeScreen.BrandScrollBar.ItemFilterByBrand
-import com.example.android_programming.HomeScreen.BrandScrollBar.ItemRow
-import com.example.android_programming.HomeScreen.SearchField.SearchField
-import com.example.android_programming.HomeScreen.SneakerRecyclerView.CardSneaker
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.android_programming.Screens.HomeScreen.BrandScrollBar.ItemFilterByBrand
+import com.example.android_programming.Screens.HomeScreen.BrandScrollBar.ItemRow
+import com.example.android_programming.Screens.HomeScreen.SearchField.SearchField
+import com.example.android_programming.Screens.HomeScreen.SneakerRecyclerView.CardSneaker
 import com.example.android_programming.SneakerItem
 import com.example.android_programming.R
 
 @Composable
 fun HomeScreen() {
+    val navController = rememberNavController()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -104,7 +107,7 @@ fun HomeScreen() {
                     ) {
                         for (item in chunkedListItem) {
                             // Создайте карточку для каждого элемента
-                            CardSneaker(item = item)
+                            CardSneaker(item = item, navController = navController)
                         }
                     }
                 }

@@ -1,24 +1,28 @@
-package com.example.android_programming.ProfileScreen.Profile;
+package com.example.android_programming.Screens.ProfileScreen.Profile;
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable;
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.android_programming.Navigation.NavController
-import com.example.android_programming.ProfileScreen.SignIn.LoginScreen
+import com.example.android_programming.Screens.ProfileScreen.SignIn.LoginScreen
 
 @Composable
 fun ProfileScreen(navController: NavHostController) {
@@ -30,23 +34,45 @@ fun ProfileScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Row(
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
+        ){
+            Button(
+                onClick = {
+                    navController.navigate("person")
+                },
+                modifier = Modifier
+                    .requiredSize(300.dp, 40.dp)
+            ) {
+                Text(text = "Profile")
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
         ){
             Button(
                 onClick = {
                     navController.navigate("login")
                 },
                 modifier = Modifier
-                    .requiredSize(100.dp, 40.dp)
+                    .requiredSize(300.dp, 40.dp)
             ) {
                 Text(text = "Sign In")
             }
         }
-        Row{
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
+        ){
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    navController.navigate("signup")
+                },
                 modifier = Modifier
-                    .requiredSize(100.dp, 40.dp)
+                    .requiredSize(300.dp, 40.dp)
                 ) {
                 Text(text = "Sign Up")
             }

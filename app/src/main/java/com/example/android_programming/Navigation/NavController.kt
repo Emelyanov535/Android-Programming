@@ -4,11 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.android_programming.HomeScreen.HomeScreen
-import com.example.android_programming.LikeScreen.LikeScreen
-import com.example.android_programming.Screens.OrderScreen
-import com.example.android_programming.ProfileScreen.Profile.ProfileScreen
-import com.example.android_programming.ProfileScreen.SignIn.LoginScreen
+import com.example.android_programming.Screens.HomeScreen.HomeScreen
+import com.example.android_programming.Screens.LikeScreen.LikeScreen
+import com.example.android_programming.Screens.OrderScreen.OrderScreen
+import com.example.android_programming.Screens.ProfileScreen.Profile.Person
+import com.example.android_programming.Screens.ProfileScreen.Profile.ProfileScreen
+import com.example.android_programming.Screens.ProfileScreen.SignIn.LoginScreen
+import com.example.android_programming.Screens.ProfileScreen.SignUp.SignUpScreen
 
 @Composable
 fun NavController(navController: NavHostController){
@@ -30,6 +32,12 @@ fun NavController(navController: NavHostController){
         }
         composable(NavItem.SignIn.route){
             LoginScreen()
+        }
+        composable(NavItem.SignUp.route){
+            SignUpScreen()
+        }
+        composable(NavItem.Person.route){
+            Person()
         }
     }
 }

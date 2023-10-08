@@ -1,4 +1,4 @@
-package com.example.android_programming.ProfileScreen.SignIn
+package com.example.android_programming.Screens.ProfileScreen.SignIn
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,8 +12,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerIcon.Companion.Text
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.semantics.SemanticsProperties.Text
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.font.FontWeight
@@ -25,17 +27,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.example.android_programming.R
 import androidx.compose.material.Text as Text1
 
 @Composable
-fun LoginScreen(navController : NavHostController) {
+fun LoginScreen() {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .clip(RoundedCornerShape(25.dp))
+            .background(colorResource(id = R.color.figma))
             .padding(15.dp, 0.dp)
         ,
         verticalArrangement = Arrangement.Center,
@@ -93,9 +97,12 @@ fun LoginScreen(navController : NavHostController) {
 
         Button(
             onClick = {
-                navController.navigate("login")
+
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp, 0.dp, 8.dp, 0.dp)
+                .clip(RoundedCornerShape(20.dp))
         ) {
             Text1("Sign In")
         }
