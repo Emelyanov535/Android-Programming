@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="figma">#F4F4F4</color>
+    <color name="figma_blue">#3660F6</color>
 </resources>

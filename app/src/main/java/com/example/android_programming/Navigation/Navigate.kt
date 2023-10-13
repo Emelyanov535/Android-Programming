@@ -12,10 +12,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.android_programming.R
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -26,6 +28,7 @@ fun Navigate(){
         NavItem.Like,
         NavItem.Order,
         NavItem.Profile,
+        NavItem.AdminPanel,
     )
 
     Scaffold(bottomBar = {
@@ -55,7 +58,7 @@ fun Navigate(){
                     icon = {
                         val iconModifier = if (isSelected) {
                             Modifier
-                                .background(color = Color.LightGray, shape = CircleShape)
+                                .background(color = colorResource(id = R.color.figma_blue), shape = CircleShape)
                                 .padding(8.dp)
                         } else {
                             Modifier

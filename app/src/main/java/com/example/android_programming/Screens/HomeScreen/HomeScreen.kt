@@ -15,20 +15,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.android_programming.Screens.HomeScreen.BrandScrollBar.ItemFilterByBrand
 import com.example.android_programming.Screens.HomeScreen.BrandScrollBar.ItemRow
 import com.example.android_programming.Screens.HomeScreen.SearchField.SearchField
 import com.example.android_programming.Screens.HomeScreen.SneakerRecyclerView.CardSneaker
 import com.example.android_programming.SneakerItem
 import com.example.android_programming.R
+import com.example.android_programming.getSneakers
 
 @Composable
-fun HomeScreen() {
-    val navController = rememberNavController()
+fun HomeScreen(navHostController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,31 +70,8 @@ fun HomeScreen() {
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                val list = listOf(
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                    SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                )
-
-                // Определите количество столбцов
+                val list = getSneakers()
                 val numColumns = 2
-
-                // Разделите список на группы по numColumns элементов
                 val chunkedList = list.chunked(numColumns)
 
                 itemsIndexed(chunkedList) { _, chunkedListItem ->
@@ -106,8 +81,7 @@ fun HomeScreen() {
                             .fillMaxWidth()
                     ) {
                         for (item in chunkedListItem) {
-                            // Создайте карточку для каждого элемента
-                            CardSneaker(item = item, navController = navController)
+                            CardSneaker(item, navHostController)
                         }
                     }
                 }
@@ -115,12 +89,6 @@ fun HomeScreen() {
         }
 
     }
-}
-
-@Composable
-@Preview
-fun HomeScreenPreview(){
-    HomeScreen()
 }
 
 

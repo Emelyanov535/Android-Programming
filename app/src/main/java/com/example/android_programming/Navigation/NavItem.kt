@@ -1,6 +1,7 @@
 package com.example.android_programming.Navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -15,4 +16,9 @@ sealed class NavItem(val route: String, val icon: ImageVector?){
     object SignIn : NavItem("login", null)
     object SignUp : NavItem("signup", null)
     object Person : NavItem("person", null)
+    object AdminPanel : NavItem("admin", Icons.Default.Build)
+    object AddPanel : NavItem("add", null)
+    object ChangePanel : NavItem("change", null)
+    object AboutSneaker : NavItem("aboutSneaker/{sneakerItem}", null)
+    object ChangeSneaker : NavItem("changeSneaker/{sneakerItem}", null)
 }
