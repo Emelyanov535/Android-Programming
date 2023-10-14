@@ -1,0 +1,73 @@
+package com.example.android_programming.composeui.Navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.android_programming.composeui.Screens.AdminPanel.AddPanel
+import com.example.android_programming.composeui.Screens.AdminPanel.AdminPanel
+import com.example.android_programming.composeui.Screens.AdminPanel.ChangePanel
+import com.example.android_programming.composeui.Screens.AdminPanel.ChangeSneaker
+import com.example.android_programming.composeui.Screens.HomeScreen.AboutSneaker
+import com.example.android_programming.composeui.Screens.HomeScreen.HomeScreen
+import com.example.android_programming.composeui.Screens.LikeScreen.LikeScreen
+import com.example.android_programming.composeui.Screens.OrderScreen.OrderScreen
+import com.example.android_programming.composeui.Screens.ProfileScreen.Profile.Person
+import com.example.android_programming.composeui.Screens.ProfileScreen.Profile.ProfileScreen
+import com.example.android_programming.composeui.Screens.ProfileScreen.SignIn.LoginScreen
+import com.example.android_programming.composeui.Screens.ProfileScreen.SignUp.SignUpScreen
+import com.example.android_programming.model.SneakerItem
+import com.google.gson.Gson
+
+@Composable
+fun NavController(navController: NavHostController){
+    NavHost(
+        navController = navController,
+        startDestination = NavItem.Home.route
+    ){
+        composable(NavItem.Home.route){
+            HomeScreen(navController)
+        }
+        composable(NavItem.Like.route){
+            LikeScreen()
+        }
+        composable(NavItem.Order.route){
+            OrderScreen()
+        }
+        composable(NavItem.Profile.route){
+            ProfileScreen(navController)
+        }
+        composable(NavItem.SignIn.route){
+            LoginScreen(navController)
+        }
+        composable(NavItem.SignUp.route){
+            SignUpScreen()
+        }
+        composable(NavItem.Person.route){
+            Person()
+        }
+        composable(NavItem.AdminPanel.route){
+            AdminPanel(navController)
+        }
+        composable(NavItem.AddPanel.route){
+            AddPanel()
+        }
+        composable(NavItem.ChangePanel.route){
+            ChangePanel(navController)
+        }
+        composable(NavItem.AboutSneaker.route) { backStackEntry ->
+            val sneakerItemString = backStackEntry.arguments?.getString("sneakerItem")
+            val sneakerItem = Gson().fromJson(sneakerItemString, SneakerItem::class.java)
+            sneakerItem?.let { AboutSneaker(it, onBackClick = {
+                navController.navigateUp() })
+            }
+        }
+        composable(NavItem.ChangeSneaker.route) { backStackEntry ->
+            val sneakerItemString = backStackEntry.arguments?.getString("sneakerItem")
+            val sneakerItem = Gson().fromJson(sneakerItemString, SneakerItem::class.java)
+            sneakerItem?.let { ChangeSneaker(it, onBackClick = {
+                navController.navigateUp() })
+            }
+        }
+    }
+}

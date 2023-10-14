@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.android_programming.Header.Header
-import com.example.android_programming.Navigation.Navigate
+import com.example.android_programming.composeui.Header.Header
+import com.example.android_programming.composeui.Navigation.Navigate
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
