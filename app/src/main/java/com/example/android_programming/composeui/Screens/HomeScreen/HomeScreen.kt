@@ -14,9 +14,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.android_programming.composeui.Screens.HomeScreen.FilterByBrand.ItemFilterByBrand
@@ -26,10 +30,16 @@ import com.example.android_programming.composeui.Screens.HomeScreen.SneakerRecyc
 import com.example.android_programming.R
 import com.example.android_programming.composeui.Screens.HomeScreen.FilterByBrand.FilterByBrand
 import com.example.android_programming.composeui.Screens.HomeScreen.SneakerRecyclerView.RecyclerView
+import com.example.android_programming.database.AppDatabase
+import com.example.android_programming.model.Sneaker
 import com.example.android_programming.model.getSneakers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun HomeScreen(navHostController: NavHostController) {
+    val context = LocalContext.current
+    val sneakers = remember { mutableStateListOf<Sneaker>() }
     Column(
         modifier = Modifier
             .fillMaxSize()

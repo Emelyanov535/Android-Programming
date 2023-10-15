@@ -32,10 +32,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.android_programming.R
+import com.example.android_programming.model.Sneaker
 import com.example.android_programming.model.SneakerItem
 
 @Composable
-fun AboutSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
+fun AboutSneaker(sneaker: Sneaker, onBackClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,7 +56,7 @@ fun AboutSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
             )
         }
         Image(
-            painter = painterResource(id = sneaker.imageId),
+            painter = painterResource(id = sneaker.photo),
             contentDescription = "image",
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
@@ -67,12 +68,17 @@ fun AboutSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = "${sneaker.name}",
+                text = "${sneaker.brand}",
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "${sneaker.model}",
                 fontSize = 25.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(text = "Price: $${sneaker.price}", fontSize = 16.sp)
-            Text(text = "Description: If you wear stylish sneakers, you are doing something good for yourself. And with colors inspired by the aisles of your local beauty store (plus cloud-like Air cushioning underfoot), you'll feel anything but mediocre in these mid-cut Js. Go on, treat yourself.", fontSize = 16.sp)
+            Text(text = "Description: ${sneaker.description}", fontSize = 16.sp)
             Button(
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = colorResource(id = R.color.figma_blue),
@@ -89,13 +95,4 @@ fun AboutSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun asds(){
-    val sdas = rememberNavController()
-    AboutSneaker(SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-        onBackClick = {
-            sdas.navigateUp() })
 }

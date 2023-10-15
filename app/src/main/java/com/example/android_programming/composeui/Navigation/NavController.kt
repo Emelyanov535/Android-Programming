@@ -16,6 +16,7 @@ import com.example.android_programming.composeui.Screens.ProfileScreen.Profile.P
 import com.example.android_programming.composeui.Screens.ProfileScreen.Profile.ProfileScreen
 import com.example.android_programming.composeui.Screens.ProfileScreen.SignIn.LoginScreen
 import com.example.android_programming.composeui.Screens.ProfileScreen.SignUp.SignUpScreen
+import com.example.android_programming.model.Sneaker
 import com.example.android_programming.model.SneakerItem
 import com.google.gson.Gson
 
@@ -57,14 +58,14 @@ fun NavController(navController: NavHostController){
         }
         composable(NavItem.AboutSneaker.route) { backStackEntry ->
             val sneakerItemString = backStackEntry.arguments?.getString("sneakerItem")
-            val sneakerItem = Gson().fromJson(sneakerItemString, SneakerItem::class.java)
+            val sneakerItem = Gson().fromJson(sneakerItemString, Sneaker::class.java)
             sneakerItem?.let { AboutSneaker(it, onBackClick = {
                 navController.navigateUp() })
             }
         }
         composable(NavItem.ChangeSneaker.route) { backStackEntry ->
             val sneakerItemString = backStackEntry.arguments?.getString("sneakerItem")
-            val sneakerItem = Gson().fromJson(sneakerItemString, SneakerItem::class.java)
+            val sneakerItem = Gson().fromJson(sneakerItemString, Sneaker::class.java)
             sneakerItem?.let { ChangeSneaker(it, onBackClick = {
                 navController.navigateUp() })
             }

@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-//    id("kotlin-kapt")
+    id ("kotlin-kapt")
 }
 
 android {
@@ -31,11 +31,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "19"
     }
     buildFeatures {
         compose = true
@@ -49,7 +49,7 @@ android {
         }
     }
 }
-
+apply(plugin = "kotlin-kapt")
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
@@ -78,7 +78,7 @@ dependencies {
     val room_version = "2.5.2"
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
-//    kapt("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     implementation("androidx.room:room-paging:$room_version")
 }

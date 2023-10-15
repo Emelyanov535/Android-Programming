@@ -1,5 +1,6 @@
 package com.example.android_programming.composeui.Screens.AdminPanel
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +23,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -29,23 +31,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.android_programming.App
 import com.example.android_programming.R
+import com.example.android_programming.SneakerViewModel
+import com.example.android_programming.database.AppDatabase
+import com.example.android_programming.model.PhotoManager
 
 @Composable
-@Preview
-fun AddPanel(){
-    var brand by remember { mutableStateOf("") }
-    var model by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    var price by remember { mutableStateOf("") }
-
+fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)){
+    val photoManager = PhotoManager()
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -59,20 +63,22 @@ fun AddPanel(){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Box(
+            Image(
+                painter = painterResource(id = sneakerViewModel.photo.value),
+                contentDescription = "image",
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-                    .height(150.dp)
-                    .background(Color.Gray)
-            ) {
-            }
+                    .height(200.dp)
+            )
             Button(
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = colorResource(id = R.color.figma_blue),
                     contentColor = Color.White
                 ),
                 onClick = {
+                    sneakerViewModel.photo.value = photoManager.changePhoto(sneakerViewModel.photo.value)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -82,8 +88,8 @@ fun AddPanel(){
             }
 
             TextField(
-                value = brand,
-                onValueChange = { brand = it },
+                value = sneakerViewModel.brand.value,
+                onValueChange = { sneakerViewModel.brand.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -110,8 +116,8 @@ fun AddPanel(){
             Spacer(modifier = Modifier.height(16.dp))
 
             TextField(
-                value = model,
-                onValueChange = { model = it },
+                value = sneakerViewModel.model.value,
+                onValueChange = { sneakerViewModel.model.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -138,8 +144,8 @@ fun AddPanel(){
             Spacer(modifier = Modifier.height(16.dp))
 
             TextField(
-                value = description,
-                onValueChange = { description = it },
+                value = sneakerViewModel.description.value,
+                onValueChange = { sneakerViewModel.description.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
@@ -165,8 +171,8 @@ fun AddPanel(){
             Spacer(modifier = Modifier.height(16.dp))
 
             TextField(
-                value = price,
-                onValueChange = { price = it },
+                value = sneakerViewModel.price.value,
+                onValueChange = { sneakerViewModel.price.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -196,7 +202,7 @@ fun AddPanel(){
                     contentColor = Color.White
                 ),
                 onClick = {
-
+                    sneakerViewModel.insertSneaker()
                 },
                 modifier = Modifier
                     .fillMaxWidth()

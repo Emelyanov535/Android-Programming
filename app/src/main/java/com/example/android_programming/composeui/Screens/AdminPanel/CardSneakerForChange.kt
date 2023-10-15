@@ -27,13 +27,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.android_programming.R
+import com.example.android_programming.SneakerViewModel
+import com.example.android_programming.model.Sneaker
 import com.example.android_programming.model.SneakerItem
 import com.google.gson.Gson
 
 @Composable
-fun CardSneakerForChange(item: SneakerItem, navController: NavHostController) {
+fun CardSneakerForChange(item: Sneaker, navController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,7 +47,7 @@ fun CardSneakerForChange(item: SneakerItem, navController: NavHostController) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Image(
-            painter = painterResource(id = item.imageId),
+            painter = painterResource(id = item.photo),
             contentDescription = "image",
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
@@ -58,8 +61,8 @@ fun CardSneakerForChange(item: SneakerItem, navController: NavHostController) {
                 .weight(1f)
                 .padding(start = 16.dp)
         ) {
-            item.name?.let { Text(text = it, fontSize = 20.sp) }
-            Text(text = "${item.price} USD", color = Color.Red, fontSize = 16.sp)
+            item.brand?.let { Text(text = it, fontSize = 20.sp) }
+            Text(text = "${item.price} $", color = Color.Red, fontSize = 16.sp)
         }
 
         Button(
@@ -68,6 +71,10 @@ fun CardSneakerForChange(item: SneakerItem, navController: NavHostController) {
                 contentColor = Color.White
             ),
             onClick = {
+                sneakerViewModel.brand.value = item.brand ?: ""
+                sneakerViewModel.model.value = item.model ?: ""
+                sneakerViewModel.description.value = item.description ?: ""
+                sneakerViewModel.price.value = item.price.toString()
                 val sneakerItemString = Gson().toJson(item)
                 navController.navigate("changeSneaker/${sneakerItemString}") },
             modifier = Modifier
@@ -81,7 +88,9 @@ fun CardSneakerForChange(item: SneakerItem, navController: NavHostController) {
                 backgroundColor = colorResource(id = R.color.figma_blue),
                 contentColor = Color.White
             ),
-            onClick = { /*TODO*/ },
+            onClick = {
+                  sneakerViewModel.deleteSneaker(item)
+            },
             modifier = Modifier
                 .padding(end = 16.dp)
         ) {

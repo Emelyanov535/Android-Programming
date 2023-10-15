@@ -8,15 +8,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.android_programming.R
+import com.example.android_programming.SneakerViewModel
 import com.example.android_programming.model.SneakerItem
 
 @Composable
-fun ChangePanel(navHostController: NavHostController) {
+fun ChangePanel(navHostController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {
+    val list = sneakerViewModel.SneakerList.collectAsState(initial = emptyList()).value
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,12 +32,7 @@ fun ChangePanel(navHostController: NavHostController) {
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                itemsIndexed(
-                    listOf(
-                        SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                        SneakerItem(R.drawable.sneaker, "Jordan", 159.99),
-                        SneakerItem(R.drawable.sneaker, "Jordan", 179.99),
-                    )
+                itemsIndexed(list
                 ){_, item->
                     CardSneakerForChange(item = item, navHostController)
                 }

@@ -4,11 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -41,15 +39,20 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.android_programming.R
+import com.example.android_programming.SneakerViewModel
+import com.example.android_programming.model.PhotoManager
+import com.example.android_programming.model.Sneaker
 import com.example.android_programming.model.SneakerItem
 @Composable
-fun ChangeSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
-    var brand by remember { mutableStateOf("") }
-    var model by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    var price by remember { mutableStateOf("") }
-
+fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {
+    val brand = remember {mutableStateOf(sneaker.brand)}
+    val model = remember{mutableStateOf(sneaker.model)}
+    val description = remember{mutableStateOf(sneaker.description)}
+    val price = remember{mutableStateOf(sneaker.price.toString())}
+    var photo by remember { mutableStateOf(sneaker.photo) }
+    val photoManager = PhotoManager()
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -76,7 +79,7 @@ fun ChangeSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
                 )
             }
             Image(
-                painter = painterResource(id = sneaker.imageId),
+                painter = painterResource(id = photo),
                 contentDescription = "image",
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
@@ -84,12 +87,14 @@ fun ChangeSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
                     .padding(16.dp)
                     .height(200.dp)
             )
+
             Button(
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = colorResource(id = R.color.figma_blue),
                     contentColor = Color.White
                 ),
                 onClick = {
+                    photo = photoManager.changePhoto(photo)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -99,8 +104,8 @@ fun ChangeSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
             }
 
             TextField(
-                value = sneaker.name.toString(),
-                onValueChange = { brand = it },
+                value = brand.value,
+                onValueChange = { newValue -> brand.value = newValue },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -127,8 +132,8 @@ fun ChangeSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
             Spacer(modifier = Modifier.height(16.dp))
 
             TextField(
-                value = model,
-                onValueChange = { model = it },
+                value = model.value,
+                onValueChange = { model.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -155,8 +160,8 @@ fun ChangeSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
             Spacer(modifier = Modifier.height(16.dp))
 
             TextField(
-                value = description,
-                onValueChange = { description = it },
+                value = description.value,
+                onValueChange = { description.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
@@ -182,8 +187,8 @@ fun ChangeSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
             Spacer(modifier = Modifier.height(16.dp))
 
             TextField(
-                value = sneaker.price.toString(),
-                onValueChange = { price = it },
+                value = price.value,
+                onValueChange = { price.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -213,7 +218,17 @@ fun ChangeSneaker(sneaker: SneakerItem, onBackClick: () -> Unit) {
                     contentColor = Color.White
                 ),
                 onClick = {
-
+                    sneakerViewModel.UpdateSneaker(
+                        Sneaker(
+                            id = sneaker.id,
+                            brand = brand.value,
+                            model = model.value,
+                            description = description.value,
+                            photo = photo,
+                            price = price.value.toDouble()
+                        )
+                    )
+                    onBackClick()
                 },
                 modifier = Modifier
                     .fillMaxWidth()

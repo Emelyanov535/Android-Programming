@@ -14,7 +14,7 @@ interface SneakerDao {
     suspend fun insert(sneaker: Sneaker)
 
     @Update
-    suspend fun update(sneaker: Sneaker)
+    suspend fun update(sneaker: Sneaker?)
 
     @Delete
     suspend fun delete(sneaker: Sneaker)
@@ -22,6 +22,6 @@ interface SneakerDao {
     @Query("SELECT*FROM sneakers")
     fun getAllSneakers(): Flow<List<Sneaker>>
 
-    @Query("SELECT*FROM sneakers WHERE id = :id")
-    suspend fun getSneakerById(id: Int)
+    @Query("SELECT * FROM sneakers WHERE id = :id")
+    suspend fun getSneakerById(id: Int): Sneaker
 }

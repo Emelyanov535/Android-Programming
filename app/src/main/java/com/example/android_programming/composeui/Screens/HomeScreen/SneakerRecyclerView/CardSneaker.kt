@@ -29,11 +29,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.android_programming.R
+import com.example.android_programming.model.Sneaker
 import com.example.android_programming.model.SneakerItem
 import com.google.gson.Gson
 
 @Composable
-fun CardSneaker(item: SneakerItem, navController: NavHostController) {
+fun CardSneaker(item: Sneaker, navController: NavHostController) {
     val maxWidth = (LocalConfiguration.current.screenWidthDp / 2).dp
 
     Box(
@@ -53,7 +54,7 @@ fun CardSneaker(item: SneakerItem, navController: NavHostController) {
                 .widthIn(maxWidth)
         ) {
             Image(
-                painter = painterResource(id = item.imageId),
+                painter = painterResource(id = item.photo),
                 contentDescription = "image",
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
@@ -71,7 +72,10 @@ fun CardSneaker(item: SneakerItem, navController: NavHostController) {
                         modifier = Modifier
                             .padding(10.dp, 0.dp)
                     ) {
-                        item.name?.let { Text(text = it) }
+                        Row {
+                            item.brand?.let { Text(text = "$it ") }
+                            item.model?.let { Text(text = it) }
+                        }
                         Text(text = item.price.toString(), color = Color.Red)
                     }
                     Column(
