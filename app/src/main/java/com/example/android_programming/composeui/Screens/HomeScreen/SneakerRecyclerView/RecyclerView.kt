@@ -6,21 +6,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.android_programming.SneakerViewModel
-import com.example.android_programming.model.Sneaker
-import kotlin.collections.chunked
+import com.example.android_programming.vmodel.OrderViewModel
+import com.example.android_programming.vmodel.SneakerViewModel
 
 @Composable
-fun RecyclerView(navHostController : NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {
+fun RecyclerView(navHostController : NavHostController, orderViewModel: OrderViewModel, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,9 +32,12 @@ fun RecyclerView(navHostController : NavHostController, sneakerViewModel: Sneake
                 modifier = Modifier.fillMaxWidth()
             ) {
                 for (item in chunkedListItem) {
-                    CardSneaker(item, navHostController)
+                    CardSneaker(item, navHostController, orderViewModel.selectedItems) { selectedItem ->
+                        orderViewModel.addSelectedItem(selectedItem)
+                    }
                 }
             }
         }
     }
 }
+

@@ -2,7 +2,6 @@ package com.example.android_programming.composeui.Screens.AdminPanel
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,9 +29,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.android_programming.R
-import com.example.android_programming.SneakerViewModel
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.model.SneakerItem
+import com.example.android_programming.vmodel.SneakerViewModel
 import com.google.gson.Gson
 
 @Composable

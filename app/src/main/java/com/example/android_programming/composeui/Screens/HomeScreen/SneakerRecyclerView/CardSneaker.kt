@@ -30,11 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.android_programming.R
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.model.SneakerItem
 import com.google.gson.Gson
 
 @Composable
-fun CardSneaker(item: Sneaker, navController: NavHostController) {
+fun CardSneaker(item: Sneaker, navController: NavHostController, selectedItems: List<Sneaker>, onItemSelected: (Sneaker) -> Unit) {
     val maxWidth = (LocalConfiguration.current.screenWidthDp / 2).dp
 
     Box(
@@ -87,7 +86,9 @@ fun CardSneaker(item: Sneaker, navController: NavHostController) {
                                 backgroundColor = colorResource(id = R.color.figma_blue),
                                 contentColor = Color.White
                             ),
-                            onClick = { /*TODO*/ },
+                            onClick = {
+                                onItemSelected(item)
+                            },
                             modifier = Modifier
                                 .size(50.dp, 30.dp)
                                 .clip(RoundedCornerShape(10.dp))

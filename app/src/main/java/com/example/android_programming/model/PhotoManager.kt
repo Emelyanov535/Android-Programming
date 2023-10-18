@@ -1,6 +1,5 @@
 package com.example.android_programming.model
 
-import android.util.Log
 import com.example.android_programming.R
 
 class PhotoManager {

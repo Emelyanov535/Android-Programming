@@ -12,9 +12,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -24,22 +22,23 @@ import com.example.android_programming.R
 @Composable
 fun Navigate() {
     val navController = rememberNavController()
-    val listItem = listOf(
+
+    val Items = listOf(
         NavItem.Home,
-        NavItem.Like,
         NavItem.Order,
         NavItem.Profile,
         NavItem.AdminPanel,
     )
 
     Scaffold(bottomBar = {
+        // Оставьте код навигационного бара без изменений
         BottomNavigation(
             backgroundColor = Color.White
         ) {
             val navBackStackEntry = navController.currentBackStackEntryAsState()
             val currentState = navBackStackEntry.value
 
-            listItem.forEach { it ->
+            Items.forEach { it ->
                 val isSelected = currentState?.destination?.route == it.route
 
                 BottomNavigationItem(
@@ -54,7 +53,6 @@ fun Navigate() {
                             }
                         }
                         navController.navigate(it.route)
-
                     },
                     icon = {
                         val iconModifier = if (isSelected) {
@@ -80,10 +78,4 @@ fun Navigate() {
     }) {
         NavController(navController = navController)
     }
-}
-
-@Composable
-@Preview
-fun NavigatePreview() {
-    Navigate()
 }

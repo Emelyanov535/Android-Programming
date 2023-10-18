@@ -14,9 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.android_programming.R
-import com.example.android_programming.SneakerViewModel
-import com.example.android_programming.model.SneakerItem
+import com.example.android_programming.vmodel.SneakerViewModel
 
 @Composable
 fun ChangePanel(navHostController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {

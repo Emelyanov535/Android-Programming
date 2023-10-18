@@ -1,4 +1,4 @@
-package com.example.android_programming.composeui.Screens.LikeScreen
+package com.example.android_programming.composeui.Screens.OrderScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,14 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.android_programming.R
-import com.example.android_programming.model.SneakerItem
+import com.example.android_programming.model.Sneaker
+import com.example.android_programming.vmodel.OrderViewModel
 
 @Composable
-fun CardSneakerLike(item: SneakerItem) {
+fun CardSneakerLike(item: Sneaker, orderViewModel: OrderViewModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -41,7 +41,7 @@ fun CardSneakerLike(item: SneakerItem) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Image(
-            painter = painterResource(id = item.imageId),
+            painter = painterResource(id = item.photo),
             contentDescription = "image",
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
@@ -55,7 +55,7 @@ fun CardSneakerLike(item: SneakerItem) {
                 .weight(1f)
                 .padding(start = 16.dp)
         ) {
-            item.name?.let { Text(text = it, fontSize = 20.sp) }
+            item.brand?.let { Text(text = it, fontSize = 20.sp) }
             Text(text = "${item.price} USD", color = Color.Red, fontSize = 16.sp)
         }
 
@@ -64,19 +64,13 @@ fun CardSneakerLike(item: SneakerItem) {
                 backgroundColor = colorResource(id = R.color.figma_blue),
                 contentColor = Color.White
             ),
-            onClick = { /*TODO*/ },
+            onClick = {
+                      orderViewModel.removeSelectedItem(item)
+            },
             modifier = Modifier
                 .padding(end = 16.dp)
         ) {
             Icon(imageVector = Icons.Default.Delete, contentDescription = "delete")
         }
     }
-}
-
-
-
-@Composable
-@Preview
-fun CardSneakerLikePreview(){
-    CardSneakerLike(SneakerItem(R.drawable.sneaker, "Jordan", 159.99))
 }

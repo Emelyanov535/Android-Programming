@@ -1,4 +1,4 @@
-package com.example.android_programming
+package com.example.android_programming.vmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.room.Update
+import com.example.android_programming.App
+import com.example.android_programming.R
 import com.example.android_programming.database.AppDatabase
 import com.example.android_programming.model.Sneaker
 import kotlinx.coroutines.launch

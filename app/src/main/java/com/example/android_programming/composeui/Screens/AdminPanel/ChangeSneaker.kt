@@ -41,10 +41,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.android_programming.R
-import com.example.android_programming.SneakerViewModel
 import com.example.android_programming.model.PhotoManager
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.model.SneakerItem
+import com.example.android_programming.vmodel.SneakerViewModel
+
 @Composable
 fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {
     val brand = remember {mutableStateOf(sneaker.brand)}
@@ -220,7 +220,7 @@ fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: S
                 onClick = {
                     sneakerViewModel.UpdateSneaker(
                         Sneaker(
-                            id = sneaker.id,
+                            sneakerId = sneaker.sneakerId,
                             brand = brand.value,
                             model = model.value,
                             description = description.value,

@@ -73,6 +73,8 @@ dependencies {
     implementation ("io.coil-kt:coil-compose:1.4.0")
     implementation ("com.google.code.gson:gson:2.8.8")
     implementation("androidx.navigation:navigation-compose:2.7.4")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0-alpha02")
+
 
     //ROOM
     val room_version = "2.5.2"

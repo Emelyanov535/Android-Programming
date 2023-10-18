@@ -12,14 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.android_programming.R
+import com.example.android_programming.vmodel.OrderViewModel
 
 @Composable
-@Preview
-fun SubTotal() {
+fun SubTotal(orderViewModel: OrderViewModel) {
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -42,7 +41,7 @@ fun SubTotal() {
                 modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.End
             ){
-                Text(text = "319.99 $", fontSize = 15.sp)
+                Text(text = "${orderViewModel.getSubTotal()} $", fontSize = 15.sp)
             }
         }
         Row(
@@ -61,7 +60,7 @@ fun SubTotal() {
                 modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.End
             ){
-                Text(text = "180 $", fontSize = 15.sp)
+                Text(text = "${"%.2f".format(orderViewModel.getSubTotal() * 0.05)} $", fontSize = 15.sp)
             }
         }
         Row(
@@ -80,7 +79,7 @@ fun SubTotal() {
                 modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.End
             ){
-                Text(text = "1900 $", fontSize = 15.sp)
+                Text(text = "${"%.2f".format(orderViewModel.getSubTotal() + orderViewModel.getSubTotal() * 0.05)} $", fontSize = 15.sp)
             }
         }
     }

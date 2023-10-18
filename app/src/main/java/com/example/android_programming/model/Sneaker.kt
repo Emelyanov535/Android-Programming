@@ -1,14 +1,13 @@
 package com.example.android_programming.model
 
-import androidx.compose.runtime.MutableState
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "sneakers")
+@Entity
 data class Sneaker(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val sneakerId: Int? = null,
     @ColumnInfo(name = "Brand")
     val brand: String,
     @ColumnInfo(name = "Model")
