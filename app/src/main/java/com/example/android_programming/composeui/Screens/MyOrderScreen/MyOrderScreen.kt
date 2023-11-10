@@ -11,21 +11,25 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.android_programming.GlobalUser
 import com.example.android_programming.model.Order
+import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.OrderViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun MyOrderScreen(orderViewModel: OrderViewModel) {
-    val userWithOrder by orderViewModel.database.userDao().getUserOrders(GlobalUser.getInstance().getUser()?.userId!!).collectAsState(null)
+    /*val userWithOrder by orderViewModel.database.userDao().getUserOrders(GlobalUser.getInstance().getUser()?.userId!!).collectAsState(null)*/
+    val userId = GlobalUser.getInstance().getUser()?.userId
+    val userWithOrder = orderViewModel.getOrderList(userId!!).collectAsState(null).value?.orders
 
-    val orderList: List<Order>? = userWithOrder?.orders
-    println()
     Column(
         modifier = Modifier
             .padding(bottom = 50.dp)
@@ -46,8 +50,8 @@ fun MyOrderScreen(orderViewModel: OrderViewModel) {
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                if (orderList != null) {
-                    for (item in orderList) {
+                if (userWithOrder != null) {
+                    for (item in userWithOrder) {
                         OrderCard(item, orderViewModel)
                     }
                 }

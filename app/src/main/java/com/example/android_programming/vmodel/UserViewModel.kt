@@ -10,9 +10,11 @@ import com.example.android_programming.GlobalUser
 import com.example.android_programming.database.AppDatabase
 import com.example.android_programming.model.RoleEnum
 import com.example.android_programming.model.User
+import com.example.android_programming.repository.SneakerRepository
+import com.example.android_programming.repository.UserRepository
 import kotlinx.coroutines.launch
 
-class UserViewModel(val database: AppDatabase): ViewModel() {
+class UserViewModel(private val userRepository: UserRepository): ViewModel() {
 
     var name = mutableStateOf("")
     val surname = mutableStateOf("")
@@ -26,10 +28,10 @@ class UserViewModel(val database: AppDatabase): ViewModel() {
             password = password.value,
             role = RoleEnum.User
         )
-        database.userDao().createUser(user)
+        userRepository.createUser(user)
     }
     fun authUser() = viewModelScope.launch {
-        val user = database.userDao().getUserByEmail(email.value)
+        val user = userRepository.getUserByEmail(email.value)
         if (password.value != "" && user.password == password.value) {
             val globalUser = GlobalUser.getInstance()
             globalUser.setUser(user)
@@ -38,17 +40,5 @@ class UserViewModel(val database: AppDatabase): ViewModel() {
     }
     fun isValidEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    companion object{
-        val factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory{
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                val database = (checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]) as App).database
-                return UserViewModel(database) as T
-            }
-        }
     }
 }

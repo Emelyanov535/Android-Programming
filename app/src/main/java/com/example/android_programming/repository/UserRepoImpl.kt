@@ -16,6 +16,4 @@ class UserRepoImpl(private val userDao: UserDao) : UserRepository {
     override suspend fun getUserById(id: Int): User = userDao.getUserById(id)
 
     override suspend fun getUserByEmail(email: String): User = userDao.getUserByEmail(email)
-
-    override fun getUserOrders(id: Int): Flow<UserWithOrder> = userDao.getUserOrders(id)
 }

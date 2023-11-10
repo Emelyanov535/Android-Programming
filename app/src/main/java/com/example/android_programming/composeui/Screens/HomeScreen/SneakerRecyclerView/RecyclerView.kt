@@ -12,11 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.OrderViewModel
 import com.example.android_programming.vmodel.SneakerViewModel
 
 @Composable
-fun RecyclerView(navHostController : NavHostController, orderViewModel: OrderViewModel, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {
+fun RecyclerView(navHostController : NavHostController, orderViewModel: OrderViewModel, sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     Column(
         modifier = Modifier
             .fillMaxSize()

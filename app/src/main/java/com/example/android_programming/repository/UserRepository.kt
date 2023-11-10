@@ -10,5 +10,4 @@ interface UserRepository {
     suspend fun deleteUser(user: User)
     suspend fun getUserById(id: Int): User
     suspend fun getUserByEmail(email: String): User
-    fun getUserOrders(id: Int) : Flow<UserWithOrder>
 }

@@ -10,15 +10,16 @@ import com.example.android_programming.App
 import com.example.android_programming.R
 import com.example.android_programming.database.AppDatabase
 import com.example.android_programming.model.Sneaker
+import com.example.android_programming.repository.SneakerRepository
 import kotlinx.coroutines.launch
 
-class SneakerViewModel(val database: AppDatabase): ViewModel() {
+class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewModel() {
     var brand = mutableStateOf("")
     val model = mutableStateOf("")
     val description = mutableStateOf("")
     val price = mutableStateOf("")
     val photo = mutableStateOf(R.drawable.img)
-    val SneakerList = database.sneakerDao().getAllSneakers()
+    val SneakerList = sneakerRepository.getAllSneakers()
     var sneaker: Sneaker? = null
 
     fun insertSneaker() = viewModelScope.launch {
@@ -29,29 +30,18 @@ class SneakerViewModel(val database: AppDatabase): ViewModel() {
             price = price.value.toDouble(),
             photo = photo.value
             )
-        database.sneakerDao().insert(sneaker)
+        sneakerRepository.insertSneaker(sneaker)
     }
 
     fun deleteSneaker(sneaker :  Sneaker) = viewModelScope.launch {
-        database.sneakerDao().delete(sneaker)
+        sneakerRepository.deleteSneaker(sneaker)
     }
 
     fun getSneakerById(id: Int) = viewModelScope.launch {
-        database.sneakerDao().getSneakerById(id)
+        sneakerRepository.getSneakerById(id)
     }
 
     fun UpdateSneaker(sneaker: Sneaker) = viewModelScope.launch {
-        database.sneakerDao().update(sneaker)
-    }
-
-    companion object{
-        val factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory{
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras): T {
-                val database = (checkNotNull(extras[APPLICATION_KEY]) as App).database
-                return SneakerViewModel(database) as T
-            }
-        }
+        sneakerRepository.updateSneaker(sneaker)
     }
 }

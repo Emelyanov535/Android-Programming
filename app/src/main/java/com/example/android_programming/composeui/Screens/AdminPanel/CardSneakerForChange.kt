@@ -30,11 +30,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.android_programming.R
 import com.example.android_programming.model.Sneaker
+import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.SneakerViewModel
 import com.google.gson.Gson
 
 @Composable
-fun CardSneakerForChange(item: Sneaker, navController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {
+fun CardSneakerForChange(item: Sneaker, navController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

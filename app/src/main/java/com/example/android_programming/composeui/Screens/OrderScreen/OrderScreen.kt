@@ -15,14 +15,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.android_programming.GlobalUser
 import com.example.android_programming.R
+import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.OrderViewModel
 
 
 @Composable
-fun OrderScreen(orderViewModel: OrderViewModel, navHostController: NavHostController) {
+fun OrderScreen(navHostController: NavHostController, orderViewModel: OrderViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()

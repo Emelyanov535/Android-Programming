@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.example.android_programming.model.Order
 import com.example.android_programming.model.OrderSneaker
 import com.example.android_programming.model.OrderWithSneakers
+import com.example.android_programming.model.UserWithOrder
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -26,4 +27,7 @@ interface OrderDao {
 
     @Delete
     suspend fun delete(order: Order)
+
+    @Query("SELECT * FROM users WHERE userId =:id")
+    fun getUserOrders(id: Int) : Flow<UserWithOrder>
 }

@@ -43,10 +43,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.android_programming.R
 import com.example.android_programming.model.PhotoManager
 import com.example.android_programming.model.Sneaker
+import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.SneakerViewModel
 
 @Composable
-fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {
+fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val brand = remember {mutableStateOf(sneaker.brand)}
     val model = remember{mutableStateOf(sneaker.model)}
     val description = remember{mutableStateOf(sneaker.description)}

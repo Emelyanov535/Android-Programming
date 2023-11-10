@@ -14,10 +14,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.SneakerViewModel
 
 @Composable
-fun ChangePanel(navHostController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)) {
+fun ChangePanel(navHostController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val list = sneakerViewModel.SneakerList.collectAsState(initial = emptyList()).value
     Column(
         modifier = Modifier

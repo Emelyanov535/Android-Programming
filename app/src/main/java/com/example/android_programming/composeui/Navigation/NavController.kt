@@ -18,12 +18,13 @@ import com.example.android_programming.composeui.Screens.ProfileScreen.Profile.P
 import com.example.android_programming.composeui.Screens.ProfileScreen.SignIn.LoginScreen
 import com.example.android_programming.composeui.Screens.ProfileScreen.SignUp.SignUpScreen
 import com.example.android_programming.model.Sneaker
+import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.OrderViewModel
 import com.google.gson.Gson
 
 @Composable
 fun NavController(navController: NavHostController){
-    var orderViewModel: OrderViewModel = viewModel(factory = OrderViewModel.factory)
+    var orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)
     NavHost(
         navController = navController,
         startDestination = NavItem.Home.route
@@ -35,7 +36,7 @@ fun NavController(navController: NavHostController){
             MyOrderScreen(orderViewModel)
         }
         composable(NavItem.Order.route){
-            OrderScreen(orderViewModel, navController)
+            OrderScreen(navController, orderViewModel)
         }
         composable(NavItem.Profile.route){
             ProfileScreen(navController)

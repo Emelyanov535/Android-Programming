@@ -31,11 +31,8 @@ import java.util.Date
 @Composable
 fun OrderCard(order: Order, orderViewModel: OrderViewModel){
 
-    val SneakerList = order.orderId?.let {
-        orderViewModel.database.orderDao().getOrderWithSneakers(
-            it
-        )
-    }
+    val SneakerList = order?.orderId?.let { orderViewModel.getOrderWithSneakers(it) }
+
     val sneakerWithOrder by SneakerList!!.collectAsState(null)
 
     val sneakerList: List<Sneaker>? = sneakerWithOrder?.sneakers

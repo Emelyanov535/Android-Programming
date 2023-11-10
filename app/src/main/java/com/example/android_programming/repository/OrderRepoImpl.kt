@@ -4,6 +4,7 @@ import com.example.android_programming.dao.OrderDao
 import com.example.android_programming.model.Order
 import com.example.android_programming.model.OrderSneaker
 import com.example.android_programming.model.OrderWithSneakers
+import com.example.android_programming.model.UserWithOrder
 import kotlinx.coroutines.flow.Flow
 
 class OrderRepoImpl(private val orderDao: OrderDao) : OrderRepository {
@@ -17,4 +18,6 @@ class OrderRepoImpl(private val orderDao: OrderDao) : OrderRepository {
     override fun getOrderWithSneakers(id: Int): Flow<OrderWithSneakers> = orderDao.getOrderWithSneakers(id)
 
     override fun getAllOrder(): Flow<List<Order>> = orderDao.getAllOrder()
+
+    override fun getUserOrders(id: Int): Flow<UserWithOrder> = orderDao.getUserOrders(id)
 }

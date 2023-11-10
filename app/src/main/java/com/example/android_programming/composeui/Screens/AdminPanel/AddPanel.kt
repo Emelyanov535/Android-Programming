@@ -35,10 +35,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.android_programming.R
 import com.example.android_programming.model.PhotoManager
+import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.SneakerViewModel
 
 @Composable
-fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = SneakerViewModel.factory)){
+fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)){
     val photoManager = PhotoManager()
     Row(
         modifier = Modifier

@@ -17,11 +17,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.android_programming.composeui.Screens.HomeScreen.FilterByBrand.FilterByBrand
 import com.example.android_programming.composeui.Screens.HomeScreen.SearchField.SearchField
 import com.example.android_programming.composeui.Screens.HomeScreen.SneakerRecyclerView.RecyclerView
 import com.example.android_programming.model.Sneaker
+import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.OrderViewModel
 
 @Composable
