@@ -7,13 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class App : Application() {
-    val database by lazy { AppDatabase.getInstance(this)}
+    lateinit var container: AppContainer
 
     override fun onCreate() {
         super.onCreate()
-//        this.deleteDatabase("my-db")
-        CoroutineScope(Dispatchers.IO).launch {
-            AppDatabase.populateDatabase()
-        }
+        container = AppDataContainer(this)
     }
 }
