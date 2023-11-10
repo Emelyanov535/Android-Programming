@@ -1,5 +1,6 @@
 package com.example.android_programming.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -20,7 +21,7 @@ interface SneakerDao {
     suspend fun delete(sneaker: Sneaker)
 
     @Query("SELECT*FROM Sneaker")
-    fun getAllSneakers(): Flow<List<Sneaker>>
+    fun getAllSneakersPaged(): PagingSource<Int, Sneaker>
 
     @Query("SELECT * FROM Sneaker WHERE sneakerId = :id")
     suspend fun getSneakerById(id: Int): Sneaker

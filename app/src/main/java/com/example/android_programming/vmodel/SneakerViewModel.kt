@@ -1,16 +1,24 @@
 package com.example.android_programming.vmodel
 
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.example.android_programming.App
 import com.example.android_programming.R
 import com.example.android_programming.database.AppDatabase
 import com.example.android_programming.model.Sneaker
 import com.example.android_programming.repository.SneakerRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewModel() {
@@ -18,8 +26,8 @@ class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewMo
     val model = mutableStateOf("")
     val description = mutableStateOf("")
     val price = mutableStateOf("")
-    val photo = mutableStateOf(R.drawable.img)
-    val SneakerList = sneakerRepository.getAllSneakers()
+    val photo = mutableIntStateOf(R.drawable.img)
+    val sneakerList = sneakerRepository.call().cachedIn(viewModelScope)
     var sneaker: Sneaker? = null
 
     fun insertSneaker() = viewModelScope.launch {

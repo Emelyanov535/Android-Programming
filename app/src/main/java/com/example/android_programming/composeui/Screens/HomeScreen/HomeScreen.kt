@@ -28,13 +28,11 @@ import com.example.android_programming.vmodel.OrderViewModel
 
 @Composable
 fun HomeScreen(navHostController: NavHostController, orderViewModel: OrderViewModel) {
-    val context = LocalContext.current
-    val sneakers = remember { mutableStateListOf<Sneaker>() }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .verticalScroll(rememberScrollState())
+            /*.verticalScroll(rememberScrollState())*/
     ) {
         Row {
             // Поле для поиска
