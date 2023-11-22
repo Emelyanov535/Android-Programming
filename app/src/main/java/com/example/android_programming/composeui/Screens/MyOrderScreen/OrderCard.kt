@@ -22,19 +22,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.android_programming.R
 import com.example.android_programming.model.Order
 import com.example.android_programming.model.Sneaker
+import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.OrderViewModel
 import java.util.Date
 
 @Composable
-fun OrderCard(order: Order, orderViewModel: OrderViewModel){
+fun OrderCard(order: Order, orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)){
 
-    val SneakerList = order?.orderId?.let { orderViewModel.getOrderWithSneakers(it) }
-
+    val SneakerList = order?.orderId?.let {
+        orderViewModel.getOrderWithSneakers(it)
+    }
     val sneakerWithOrder by SneakerList!!.collectAsState(null)
-
     val sneakerList: List<Sneaker>? = sneakerWithOrder?.sneakers
     Row(
         modifier = Modifier
@@ -71,7 +73,7 @@ fun OrderCard(order: Order, orderViewModel: OrderViewModel){
                     contentColor = Color.White
                 ),
                 onClick = {
-                          orderViewModel.deleteOrder(order)
+                    orderViewModel.deleteOrder(order)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

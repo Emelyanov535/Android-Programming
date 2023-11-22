@@ -2,6 +2,8 @@ package com.example.android_programming
 
 import android.content.Context
 import com.example.android_programming.database.AppDatabase
+import com.example.android_programming.repository.BasketRepoImpl
+import com.example.android_programming.repository.BasketRepository
 import com.example.android_programming.repository.OrderRepoImpl
 import com.example.android_programming.repository.OrderRepository
 import com.example.android_programming.repository.SneakerRepoImpl
@@ -18,5 +20,8 @@ class AppDataContainer(private val context: Context) : AppContainer {
     }
     override val orderRepo: OrderRepository by lazy {
         OrderRepoImpl(AppDatabase.getInstance(context).orderDao())
+    }
+    override val basketRepo: BasketRepository by lazy {
+        BasketRepoImpl(AppDatabase.getInstance(context).basketDao())
     }
 }

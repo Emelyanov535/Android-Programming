@@ -7,11 +7,11 @@ import com.example.android_programming.model.Sneaker
 import com.example.android_programming.vmodel.OrderViewModel
 
 @Composable
-fun ShoppingList(list : List<Sneaker>, orderViewModel: OrderViewModel) {
+fun ShoppingList(list : List<Sneaker>) {
     Row {
         Column {
             for(item in list){
-                CardSneakerLike(item = item, orderViewModel)
+                CardSneakerLike(item = item)
             }
         }
     }

@@ -27,7 +27,7 @@ import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.OrderViewModel
 
 @Composable
-fun HomeScreen(navHostController: NavHostController, orderViewModel: OrderViewModel) {
+fun HomeScreen(navHostController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,6 +47,6 @@ fun HomeScreen(navHostController: NavHostController, orderViewModel: OrderViewMo
         }
         Sales()
         FilterByBrand()
-        RecyclerView(navHostController = navHostController, orderViewModel)
+        RecyclerView(navHostController = navHostController)
     }
 }

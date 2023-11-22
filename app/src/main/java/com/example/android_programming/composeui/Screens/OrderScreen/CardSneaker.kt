@@ -25,12 +25,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.android_programming.GlobalUser
 import com.example.android_programming.R
 import com.example.android_programming.model.Sneaker
+import com.example.android_programming.vmodel.AppViewModelProvider
+import com.example.android_programming.vmodel.BasketViewModel
 import com.example.android_programming.vmodel.OrderViewModel
 
 @Composable
-fun CardSneakerLike(item: Sneaker, orderViewModel: OrderViewModel) {
+fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,7 +69,7 @@ fun CardSneakerLike(item: Sneaker, orderViewModel: OrderViewModel) {
                 contentColor = Color.White
             ),
             onClick = {
-                      orderViewModel.removeSelectedItem(item)
+                basketViewModel.deleteSneakerFromBasket(GlobalUser.getInstance().getUser()?.userId!!, item.sneakerId!!)
             },
             modifier = Modifier
                 .padding(end = 16.dp)

@@ -14,6 +14,7 @@ import com.example.android_programming.model.User
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        this.deleteDatabase("my-db")
         setContent {
             MainContent()
         }

@@ -37,12 +37,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.android_programming.GlobalUser
 import com.example.android_programming.R
+import com.example.android_programming.model.Basket
 import com.example.android_programming.vmodel.AppViewModelProvider
+import com.example.android_programming.vmodel.BasketViewModel
 import com.example.android_programming.vmodel.UserViewModel
 
 @Composable
-fun SignInCard(navController: NavHostController, userViewModel: UserViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun SignInCard(navController: NavHostController, userViewModel: UserViewModel = viewModel(factory = AppViewModelProvider.Factory), basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

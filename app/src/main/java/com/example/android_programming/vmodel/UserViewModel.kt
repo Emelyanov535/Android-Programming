@@ -8,8 +8,10 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.android_programming.App
 import com.example.android_programming.GlobalUser
 import com.example.android_programming.database.AppDatabase
+import com.example.android_programming.model.Basket
 import com.example.android_programming.model.RoleEnum
 import com.example.android_programming.model.User
+import com.example.android_programming.repository.BasketRepository
 import com.example.android_programming.repository.SneakerRepository
 import com.example.android_programming.repository.UserRepository
 import kotlinx.coroutines.launch
@@ -35,9 +37,9 @@ class UserViewModel(private val userRepository: UserRepository): ViewModel() {
         if (password.value != "" && user.password == password.value) {
             val globalUser = GlobalUser.getInstance()
             globalUser.setUser(user)
-            println()
         }
     }
+
     fun isValidEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }

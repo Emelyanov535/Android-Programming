@@ -15,6 +15,7 @@ import com.example.android_programming.model.OrderSneaker
 import com.example.android_programming.model.OrderWithSneakers
 import com.example.android_programming.model.Sneaker
 import com.example.android_programming.model.UserWithOrder
+import com.example.android_programming.repository.BasketRepository
 import com.example.android_programming.repository.OrderRepository
 import com.example.android_programming.repository.SneakerRepository
 import kotlinx.coroutines.flow.Flow
@@ -23,14 +24,15 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class OrderViewModel(private val orderRepository: OrderRepository) : ViewModel() {
-    private var _selectedItems = mutableStateOf<List<Sneaker>>(emptyList())
-    val selectedItems get() = _selectedItems.value
+
     var city = mutableStateOf("")
     val street = mutableStateOf("")
     val house = mutableStateOf("")
+    private val _selectedItems = MutableLiveData<List<Sneaker>>()
+    val selectedItems: LiveData<List<Sneaker>> get() = _selectedItems
 
-    fun addSelectedItem(item: Sneaker) {
-        _selectedItems.value = _selectedItems.value + item
+    fun updateSelectedItems(items: List<Sneaker>) {
+        _selectedItems.value = items
     }
 
     fun deleteOrder(order: Order) = viewModelScope.launch {
@@ -39,12 +41,6 @@ class OrderViewModel(private val orderRepository: OrderRepository) : ViewModel()
 
     fun getOrderList(id: Int) : Flow<UserWithOrder> {
         return orderRepository.getUserOrders(id)
-    }
-
-    fun removeSelectedItem(item: Sneaker) {
-        val updatedItems = _selectedItems.value.toMutableList()
-        updatedItems.remove(item)
-        _selectedItems.value = updatedItems
     }
 
     fun getOrderWithSneakers(id: Int) : Flow<OrderWithSneakers> {
@@ -65,18 +61,16 @@ class OrderViewModel(private val orderRepository: OrderRepository) : ViewModel()
 
         val orderId = orderRepository.createOrder(order)
 
-
-        for (sneaker in selectedItems) {
+        for (sneaker in selectedItems.value.orEmpty()) {
             val orderSneaker = OrderSneaker( orderId.toInt(), sneaker.sneakerId!!)
             orderRepository.insertOrderSneaker(orderSneaker)
         }
         city.value = ""
         street.value = ""
         house.value = ""
-        _selectedItems = mutableStateOf(emptyList())
     }
 
     fun getSubTotal(): Double {
-        return selectedItems.sumOf { it.price }
+        return 0.0
     }
 }

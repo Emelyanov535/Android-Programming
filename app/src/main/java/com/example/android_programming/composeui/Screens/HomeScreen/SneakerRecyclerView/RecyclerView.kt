@@ -18,7 +18,7 @@ import com.example.android_programming.vmodel.OrderViewModel
 import com.example.android_programming.vmodel.SneakerViewModel
 
 @Composable
-fun RecyclerView(navHostController: NavHostController, orderViewModel: OrderViewModel, sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun RecyclerView(navHostController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,9 +35,7 @@ fun RecyclerView(navHostController: NavHostController, orderViewModel: OrderView
             ) { index: Int ->
                 val sneaker: Sneaker? = sneakerLazyPagingItems[index]
                 if (sneaker != null) {
-                    CardSneaker(sneaker, navHostController, orderViewModel.selectedItems) { selectedItem ->
-                        orderViewModel.addSelectedItem(selectedItem)
-                    }
+                    CardSneaker(sneaker, navHostController)
                 }
             }
         }

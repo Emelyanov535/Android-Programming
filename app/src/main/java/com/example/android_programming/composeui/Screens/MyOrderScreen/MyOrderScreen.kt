@@ -25,8 +25,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun MyOrderScreen(orderViewModel: OrderViewModel) {
-    /*val userWithOrder by orderViewModel.database.userDao().getUserOrders(GlobalUser.getInstance().getUser()?.userId!!).collectAsState(null)*/
+fun MyOrderScreen(orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val userId = GlobalUser.getInstance().getUser()?.userId
     val userWithOrder = orderViewModel.getOrderList(userId!!).collectAsState(null).value?.orders
 
@@ -52,7 +51,7 @@ fun MyOrderScreen(orderViewModel: OrderViewModel) {
             ) {
                 if (userWithOrder != null) {
                     for (item in userWithOrder) {
-                        OrderCard(item, orderViewModel)
+                        OrderCard(item)
                     }
                 }
             }

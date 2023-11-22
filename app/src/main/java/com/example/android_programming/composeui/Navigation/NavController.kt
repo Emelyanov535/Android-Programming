@@ -24,19 +24,18 @@ import com.google.gson.Gson
 
 @Composable
 fun NavController(navController: NavHostController){
-    var orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)
     NavHost(
         navController = navController,
         startDestination = NavItem.Home.route
     ){
         composable(NavItem.Home.route){
-            HomeScreen(navController, orderViewModel)
+            HomeScreen(navController)
         }
         composable(NavItem.MyOrder.route){
-            MyOrderScreen(orderViewModel)
+            MyOrderScreen()
         }
         composable(NavItem.Order.route){
-            OrderScreen(navController, orderViewModel)
+            OrderScreen(navController)
         }
         composable(NavItem.Profile.route){
             ProfileScreen(navController)

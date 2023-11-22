@@ -27,13 +27,19 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.android_programming.GlobalUser
 import com.example.android_programming.R
+import com.example.android_programming.model.BasketSneakers
 import com.example.android_programming.model.Sneaker
+import com.example.android_programming.vmodel.AppViewModelProvider
+import com.example.android_programming.vmodel.BasketViewModel
+import com.example.android_programming.vmodel.SneakerViewModel
 import com.google.gson.Gson
 
 @Composable
-fun CardSneaker(item: Sneaker, navController: NavHostController, selectedItems: List<Sneaker>, onItemSelected: (Sneaker) -> Unit) {
+fun CardSneaker(item: Sneaker, navController: NavHostController, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val maxWidth = (LocalConfiguration.current.screenWidthDp / 2).dp
 
     Box(
@@ -87,7 +93,11 @@ fun CardSneaker(item: Sneaker, navController: NavHostController, selectedItems: 
                                 contentColor = Color.White
                             ),
                             onClick = {
-                                onItemSelected(item)
+                                if(GlobalUser.getInstance().getUser() == null){
+                                    navController.navigate("login")
+                                }else{
+                                    basketViewModel.addToBasket(BasketSneakers(GlobalUser.getInstance().getUser()?.userId!!, item.sneakerId!!))
+                                }
                             },
                             modifier = Modifier
                                 .size(50.dp, 30.dp)
