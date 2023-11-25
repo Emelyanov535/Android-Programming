@@ -15,7 +15,7 @@ object AppViewModelProvider {
             UserViewModel(app().container.userRepo)
         }
         initializer {
-            OrderViewModel(app().container.orderRepo)
+            OrderViewModel(app().container.orderRepo, app().container.basketRepo)
         }
         initializer {
             BasketViewModel(app().container.basketRepo)

@@ -1,5 +1,6 @@
 package com.example.android_programming.composeui.Screens.OrderScreen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,10 +13,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,8 +41,11 @@ import com.example.android_programming.vmodel.AppViewModelProvider
 import com.example.android_programming.vmodel.BasketViewModel
 import com.example.android_programming.vmodel.OrderViewModel
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+    val userId = GlobalUser.getInstance().getUser()?.userId!!
+    val quantityState by basketViewModel.getQuantityState(userId, item.sneakerId!!).collectAsState()
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,18 +74,32 @@ fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(
             Text(text = "${item.price} USD", color = Color.Red, fontSize = 16.sp)
         }
 
-        Button(
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = colorResource(id = R.color.figma_blue),
-                contentColor = Color.White
-            ),
-            onClick = {
-                basketViewModel.deleteSneakerFromBasket(GlobalUser.getInstance().getUser()?.userId!!, item.sneakerId!!)
-            },
-            modifier = Modifier
-                .padding(end = 16.dp)
-        ) {
-            Icon(imageVector = Icons.Default.Delete, contentDescription = "delete")
+        Column {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = colorResource(id = R.color.figma_blue),
+                    contentColor = Color.White
+                ),
+                onClick = {
+                    basketViewModel.deleteSneakerFromBasket(GlobalUser.getInstance().getUser()?.userId!!, item.sneakerId!!)
+                },
+                modifier = Modifier
+                    .padding(end = 16.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Delete, contentDescription = "delete")
+            }
+        }
+
+        Column {
+            Row {
+                IconButton(onClick = { basketViewModel.decrementQuantity(userId ,item.sneakerId!!) }) {
+                    Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "Decrease Quantity")
+                }
+                Text("$quantityState")
+                IconButton(onClick = { basketViewModel.incrementQuantity(userId, item.sneakerId!!) }) {
+                    Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Increase Quantity")
+                }
+            }
         }
     }
 }

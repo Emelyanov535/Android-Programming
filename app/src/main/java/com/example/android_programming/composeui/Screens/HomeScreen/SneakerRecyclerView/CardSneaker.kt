@@ -96,7 +96,7 @@ fun CardSneaker(item: Sneaker, navController: NavHostController, basketViewModel
                                 if(GlobalUser.getInstance().getUser() == null){
                                     navController.navigate("login")
                                 }else{
-                                    basketViewModel.addToBasket(BasketSneakers(GlobalUser.getInstance().getUser()?.userId!!, item.sneakerId!!))
+                                    basketViewModel.addToBasket(BasketSneakers(GlobalUser.getInstance().getUser()?.userId!!, item.sneakerId!!, 1))
                                 }
                             },
                             modifier = Modifier

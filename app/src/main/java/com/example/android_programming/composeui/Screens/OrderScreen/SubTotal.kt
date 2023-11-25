@@ -9,16 +9,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.android_programming.GlobalUser
 import com.example.android_programming.R
 import com.example.android_programming.vmodel.OrderViewModel
 
 @Composable
 fun SubTotal(orderViewModel: OrderViewModel) {
+    val userId = GlobalUser.getInstance().getUser()?.userId!!
+    orderViewModel.updateSubTotal(userId)
+    val subTotal = orderViewModel.subTotal.value
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -41,7 +46,7 @@ fun SubTotal(orderViewModel: OrderViewModel) {
                 modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.End
             ){
-                Text(text = "${orderViewModel.getSubTotal()} $", fontSize = 15.sp)
+                Text(text = "$subTotal $", fontSize = 15.sp)
             }
         }
         Row(
@@ -60,7 +65,7 @@ fun SubTotal(orderViewModel: OrderViewModel) {
                 modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.End
             ){
-                Text(text = "${"%.2f".format(orderViewModel.getSubTotal() * 0.05)} $", fontSize = 15.sp)
+                Text(text = "${"%.2f".format(subTotal * 0.05)} $", fontSize = 15.sp)
             }
         }
         Row(
@@ -79,7 +84,7 @@ fun SubTotal(orderViewModel: OrderViewModel) {
                 modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.End
             ){
-                Text(text = "${"%.2f".format(orderViewModel.getSubTotal() + orderViewModel.getSubTotal() * 0.05)} $", fontSize = 15.sp)
+                Text(text = "${"%.2f".format(subTotal + subTotal * 0.05)} $", fontSize = 15.sp)
             }
         }
     }

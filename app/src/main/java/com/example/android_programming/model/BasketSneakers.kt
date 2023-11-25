@@ -7,4 +7,5 @@ import androidx.room.PrimaryKey
 class BasketSneakers (
     val basketId: Int,
     val sneakerId: Int,
+    val quantity: Int
 )

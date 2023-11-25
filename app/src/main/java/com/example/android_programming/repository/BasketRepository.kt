@@ -15,4 +15,10 @@ interface BasketRepository {
     suspend fun delete(basket: Basket)
     suspend fun createBasket(basket: Basket):Long
     suspend fun removeSneakerFromBasket(basketId: Int, sneakerId: Int)
+    suspend fun updateSneakerQuantity(basketId: Int, sneakerId: Int, quantity: Int)
+    suspend fun incrementSneakerQuantity(basketId: Int, sneakerId: Int)
+    suspend fun decrementSneakerQuantity(basketId: Int, sneakerId: Int)
+    suspend fun getQuantity(basketId: Int, sneakerId: Int): Int?
+    suspend fun getSneaker(basketId: Int, sneakerId: Int): BasketSneakers?
+    suspend fun getTotalPriceForUser(userId: Int): Double?
 }
