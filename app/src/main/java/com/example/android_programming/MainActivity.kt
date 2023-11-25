@@ -27,7 +27,6 @@ fun MainContent() {
         modifier = Modifier.fillMaxSize()
     ) {
         Header()
-
         Navigate()
 
     }
