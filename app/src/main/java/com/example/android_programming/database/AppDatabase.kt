@@ -10,6 +10,8 @@ import com.example.android_programming.dao.BasketDao
 import com.example.android_programming.dao.OrderDao
 import com.example.android_programming.dao.SneakerDao
 import com.example.android_programming.dao.UserDao
+import com.example.android_programming.database.remotekeys.dao.RemoteKeysDao
+import com.example.android_programming.database.remotekeys.model.RemoteKeys
 import com.example.android_programming.model.Basket
 import com.example.android_programming.model.BasketSneakers
 import com.example.android_programming.model.Order
@@ -21,12 +23,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Sneaker::class, User::class, Order::class, OrderSneaker::class, Basket::class, BasketSneakers::class], version = 6)
+@Database(entities = [Sneaker::class, User::class, Order::class, OrderSneaker::class, Basket::class, BasketSneakers::class, RemoteKeys::class], version = 7)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun sneakerDao(): SneakerDao
     abstract fun userDao(): UserDao
     abstract fun orderDao(): OrderDao
     abstract fun basketDao(): BasketDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 
     companion object {
         private const val DB_NAME: String = "my-db"

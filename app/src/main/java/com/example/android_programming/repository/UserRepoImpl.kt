@@ -13,7 +13,7 @@ class UserRepoImpl(private val userDao: UserDao) : UserRepository {
 
     override suspend fun deleteUser(user: User) = userDao.deleteUser(user)
 
-    override suspend fun getUserById(id: Int): User = userDao.getUserById(id)
-
-    override suspend fun getUserByEmail(email: String): User = userDao.getUserByEmail(email)
+//    override suspend fun getUserById(id: Int): User = userDao.getUserById(id)
+//
+//    override suspend fun getUserByEmail(email: String): User = userDao.getUserByEmail(email)
 }

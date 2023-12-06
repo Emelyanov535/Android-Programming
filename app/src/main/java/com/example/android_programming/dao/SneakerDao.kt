@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SneakerDao {
     @Insert
-    suspend fun insert(sneaker: Sneaker)
+    suspend fun insert(vararg sneaker: Sneaker)
 
     @Update
     suspend fun update(sneaker: Sneaker)
@@ -22,7 +22,10 @@ interface SneakerDao {
 
     @Query("SELECT*FROM Sneaker")
     fun getAllSneakersPaged(): PagingSource<Int, Sneaker>
-
+    @Query("select * from Sneaker")
+    fun getAll(): PagingSource<Int, Sneaker>
     @Query("SELECT * FROM Sneaker WHERE sneakerId = :id")
     suspend fun getSneakerById(id: Int): Sneaker
+    @Query("DELETE FROM Sneaker")
+    suspend fun deleteAll()
 }

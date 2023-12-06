@@ -1,5 +1,7 @@
 package com.example.android_programming.vmodel
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -14,22 +16,27 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.example.android_programming.App
 import com.example.android_programming.R
+import com.example.android_programming.api.model.toSneakerRemote
+import com.example.android_programming.api.repository.RestSneakerRepository
 import com.example.android_programming.database.AppDatabase
 import com.example.android_programming.model.Sneaker
 import com.example.android_programming.repository.SneakerRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewModel() {
+class SneakerViewModel(private val sneakerRepository: RestSneakerRepository): ViewModel() {
+    val sneakerList = sneakerRepository.getAllSneakers()
     var brand = mutableStateOf("")
     val model = mutableStateOf("")
     val description = mutableStateOf("")
     val price = mutableStateOf("")
     val photo = mutableIntStateOf(R.drawable.img)
-    val sneakerList = sneakerRepository.call().cachedIn(viewModelScope)
     var sneaker: Sneaker? = null
-
+    private var _record = MutableStateFlow<Sneaker?>(null)
+    var record: StateFlow<Sneaker?> = _record
     fun insertSneaker() = viewModelScope.launch {
         val sneaker = Sneaker(
             brand = brand.value,
@@ -43,10 +50,6 @@ class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewMo
 
     fun deleteSneaker(sneaker :  Sneaker) = viewModelScope.launch {
         sneakerRepository.deleteSneaker(sneaker)
-    }
-
-    fun getSneakerById(id: Int) = viewModelScope.launch {
-        sneakerRepository.getSneakerById(id)
     }
 
     fun UpdateSneaker(sneaker: Sneaker) = viewModelScope.launch {

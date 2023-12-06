@@ -10,6 +10,5 @@ interface SneakerRepository {
     suspend fun updateSneaker(sneaker: Sneaker)
     suspend fun deleteSneaker(sneaker: Sneaker)
     suspend fun getSneakerById(id: Int): Sneaker
-    fun getAllSneakersPaged(): PagingSource<Int, Sneaker>
-    fun call(): Flow<PagingData<Sneaker>>
+    fun getAllSneakers(): Flow<PagingData<Sneaker>>
 }
