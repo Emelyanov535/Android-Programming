@@ -1,4 +1,4 @@
-package com.example.android_programming
+package com.example.android_programming.di
 
 import android.content.Context
 import com.example.android_programming.api.BackendService

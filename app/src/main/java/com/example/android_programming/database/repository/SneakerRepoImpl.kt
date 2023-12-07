@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
-import com.example.android_programming.AppContainer
+import com.example.android_programming.di.AppContainer
 import com.example.android_programming.businessLogic.repo.SneakerRepository
 import com.example.android_programming.database.dao.SneakerDao
 import com.example.android_programming.model.Sneaker

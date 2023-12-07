@@ -4,7 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.android_programming.AppContainer
+import com.example.android_programming.di.AppContainer
 import com.example.android_programming.api.BackendService
 import com.example.android_programming.api.SneakerRemoteMediator
 import com.example.android_programming.api.model.toSneaker

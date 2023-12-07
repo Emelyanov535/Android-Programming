@@ -1,4 +1,4 @@
-package com.example.android_programming
+package com.example.android_programming.di
 
 import com.example.android_programming.api.repository.RestSneakerRepository
 import com.example.android_programming.api.repository.RestUserRepository
