@@ -1,7 +1,7 @@
-package com.example.android_programming.database.remotekeys.repository
+package com.example.android_programming.businessLogic.repo
 
-import com.example.android_programming.database.remotekeys.model.RemoteKeyType
-import com.example.android_programming.database.remotekeys.model.RemoteKeys
+import com.example.android_programming.model.RemoteKeyType
+import com.example.android_programming.model.RemoteKeys
 
 interface RemoteKeyRepository {
     suspend fun getAllRemoteKeys(id: Int, type: RemoteKeyType): RemoteKeys?

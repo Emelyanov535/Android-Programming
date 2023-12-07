@@ -17,7 +17,7 @@ data class User(
     @ColumnInfo(name = "Password")
     val password: String,
     @ColumnInfo(name = "Role")
-    val role: RoleEnum,
+    val role: String,
     @ColumnInfo(name = "Photo")
     val photo: Int? = null,
 )

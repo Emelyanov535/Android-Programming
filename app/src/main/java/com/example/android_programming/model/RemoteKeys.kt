@@ -1,10 +1,9 @@
-package com.example.android_programming.database.remotekeys.model
+package com.example.android_programming.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.example.android_programming.model.Sneaker
 
 enum class RemoteKeyType(private val type: String) {
     SNEAKER(Sneaker::class.simpleName ?: "Sneaker");

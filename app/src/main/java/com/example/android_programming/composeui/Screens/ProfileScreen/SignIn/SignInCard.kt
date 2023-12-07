@@ -40,9 +40,9 @@ import androidx.navigation.NavHostController
 import com.example.android_programming.GlobalUser
 import com.example.android_programming.R
 import com.example.android_programming.model.Basket
-import com.example.android_programming.vmodel.AppViewModelProvider
-import com.example.android_programming.vmodel.BasketViewModel
-import com.example.android_programming.vmodel.UserViewModel
+import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
+import com.example.android_programming.businessLogic.vmodel.BasketViewModel
+import com.example.android_programming.businessLogic.vmodel.UserViewModel
 
 @Composable
 fun SignInCard(navController: NavHostController, userViewModel: UserViewModel = viewModel(factory = AppViewModelProvider.Factory), basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {

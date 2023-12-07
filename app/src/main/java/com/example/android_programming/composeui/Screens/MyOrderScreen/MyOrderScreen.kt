@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.android_programming.GlobalUser
 import com.example.android_programming.model.Order
-import com.example.android_programming.vmodel.AppViewModelProvider
-import com.example.android_programming.vmodel.OrderViewModel
+import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
+import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

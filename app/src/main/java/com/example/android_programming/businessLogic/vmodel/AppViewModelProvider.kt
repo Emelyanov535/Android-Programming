@@ -1,4 +1,4 @@
-package com.example.android_programming.vmodel
+package com.example.android_programming.businessLogic.vmodel
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras

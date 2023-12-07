@@ -1,20 +1,13 @@
-package com.example.android_programming.vmodel
+package com.example.android_programming.businessLogic.vmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.android_programming.App
 import com.example.android_programming.GlobalUser
 import com.example.android_programming.R
-import com.example.android_programming.database.AppDatabase
-import com.example.android_programming.model.Basket
-import com.example.android_programming.model.RoleEnum
+import com.example.android_programming.api.model.UserRemoteSignIn
 import com.example.android_programming.model.User
-import com.example.android_programming.repository.BasketRepository
-import com.example.android_programming.repository.SneakerRepository
-import com.example.android_programming.repository.UserRepository
+import com.example.android_programming.businessLogic.repo.UserRepository
 import kotlinx.coroutines.launch
 
 class UserViewModel(private val userRepository: UserRepository): ViewModel() {
@@ -29,17 +22,14 @@ class UserViewModel(private val userRepository: UserRepository): ViewModel() {
             surname = surname.value,
             email = email.value,
             password = password.value,
-            role = RoleEnum.User,
+            role = "USER",
             photo = R.drawable.shailushai
         )
         userRepository.createUser(user)
     }
     fun authUser() = viewModelScope.launch {
-//        val user = userRepository.getUserByEmail(email.value)
-//        if (password.value != "" && user.password == password.value) {
-//            val globalUser = GlobalUser.getInstance()
-//            globalUser.setUser(user)
-//        }
+        val user = userRepository.authUser(UserRemoteSignIn(email.value, password.value))
+        GlobalUser.getInstance().setUser(user)
     }
 
     fun isValidEmail(email: String): Boolean {

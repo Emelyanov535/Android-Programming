@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.android_programming.R
-import com.example.android_programming.vmodel.AppViewModelProvider
-import com.example.android_programming.vmodel.UserViewModel
+import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
+import com.example.android_programming.businessLogic.vmodel.UserViewModel
 
 @Composable
 fun SignUpCard(navHostController: NavHostController, userViewModel: UserViewModel = viewModel(factory = AppViewModelProvider.Factory)) {

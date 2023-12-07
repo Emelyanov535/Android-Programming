@@ -1,8 +1,9 @@
-package com.example.android_programming.database.remotekeys.repository
+package com.example.android_programming.database.repository
 
-import com.example.android_programming.database.remotekeys.dao.RemoteKeysDao
-import com.example.android_programming.database.remotekeys.model.RemoteKeyType
-import com.example.android_programming.database.remotekeys.model.RemoteKeys
+import com.example.android_programming.businessLogic.repo.RemoteKeyRepository
+import com.example.android_programming.database.dao.RemoteKeysDao
+import com.example.android_programming.model.RemoteKeyType
+import com.example.android_programming.model.RemoteKeys
 
 class RemoteKeysRepositoryImpl(private val remoteKeysDao: RemoteKeysDao) : RemoteKeyRepository {
     override suspend fun getAllRemoteKeys(id: Int, type: RemoteKeyType) =

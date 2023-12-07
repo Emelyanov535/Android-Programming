@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.vmodel.OrderViewModel
+import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 
 @Composable
 fun ShoppingList(list : List<Sneaker>) {

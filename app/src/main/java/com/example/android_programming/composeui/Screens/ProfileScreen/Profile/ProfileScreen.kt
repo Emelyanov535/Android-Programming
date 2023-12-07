@@ -8,8 +8,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.android_programming.GlobalUser
 import com.example.android_programming.composeui.Screens.ProfileScreen.SignIn.LoginScreen
 import com.example.android_programming.model.Basket
-import com.example.android_programming.vmodel.AppViewModelProvider
-import com.example.android_programming.vmodel.BasketViewModel
+import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
+import com.example.android_programming.businessLogic.vmodel.BasketViewModel
 
 @Composable
 fun ProfileScreen(navController: NavHostController) {

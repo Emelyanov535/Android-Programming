@@ -1,11 +1,11 @@
-package com.example.android_programming.database.remotekeys.dao
+package com.example.android_programming.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.android_programming.database.remotekeys.model.RemoteKeyType
-import com.example.android_programming.database.remotekeys.model.RemoteKeys
+import com.example.android_programming.model.RemoteKeyType
+import com.example.android_programming.model.RemoteKeys
 
 @Dao
 interface RemoteKeysDao {

@@ -1,4 +1,4 @@
-package com.example.android_programming.repository
+package com.example.android_programming.businessLogic.repo
 
 import androidx.paging.PagingData
 import androidx.paging.PagingSource

@@ -1,4 +1,4 @@
-package com.example.android_programming.dao
+package com.example.android_programming.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete

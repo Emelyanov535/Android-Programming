@@ -2,10 +2,8 @@ package com.example.android_programming
 
 import com.example.android_programming.api.repository.RestSneakerRepository
 import com.example.android_programming.api.repository.RestUserRepository
-import com.example.android_programming.repository.BasketRepository
-import com.example.android_programming.repository.OrderRepository
-import com.example.android_programming.repository.SneakerRepository
-import com.example.android_programming.repository.UserRepository
+import com.example.android_programming.businessLogic.repo.BasketRepository
+import com.example.android_programming.businessLogic.repo.OrderRepository
 
 interface AppContainer {
     val sneakerRepo: RestSneakerRepository

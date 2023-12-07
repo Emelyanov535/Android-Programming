@@ -23,7 +23,7 @@ import com.example.android_programming.model.RoleEnum
 fun AdminPanel(navHostController: NavHostController) {
     var isAddPanelVisible by remember { mutableStateOf(false) }
     var isChangePanelVisible by remember { mutableStateOf(false) }
-    var showDialog by remember { mutableStateOf(GlobalUser.getInstance().getUser()?.role == RoleEnum.User || GlobalUser.getInstance().getUser()?.role == null) }
+    var showDialog by remember { mutableStateOf(GlobalUser.getInstance().getUser()?.role == "USER" || GlobalUser.getInstance().getUser()?.role == null) }
     if (!showDialog) {
         Column(
             modifier = Modifier

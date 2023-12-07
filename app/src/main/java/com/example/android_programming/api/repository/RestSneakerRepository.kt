@@ -1,20 +1,18 @@
 package com.example.android_programming.api.repository
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import com.example.android_programming.AppContainer
 import com.example.android_programming.api.BackendService
 import com.example.android_programming.api.SneakerRemoteMediator
 import com.example.android_programming.api.model.toSneaker
 import com.example.android_programming.database.AppDatabase
-import com.example.android_programming.database.remotekeys.repository.RemoteKeysRepositoryImpl
+import com.example.android_programming.database.repository.RemoteKeysRepositoryImpl
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.repository.SneakerRepoImpl
-import com.example.android_programming.repository.SneakerRepository
+import com.example.android_programming.database.repository.SneakerRepoImpl
+import com.example.android_programming.businessLogic.repo.SneakerRepository
 import kotlinx.coroutines.flow.Flow
 
 class RestSneakerRepository(

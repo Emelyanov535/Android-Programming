@@ -5,15 +5,12 @@ import com.example.android_programming.api.BackendService
 import com.example.android_programming.api.repository.RestSneakerRepository
 import com.example.android_programming.api.repository.RestUserRepository
 import com.example.android_programming.database.AppDatabase
-import com.example.android_programming.database.remotekeys.repository.RemoteKeysRepositoryImpl
-import com.example.android_programming.repository.BasketRepoImpl
-import com.example.android_programming.repository.BasketRepository
-import com.example.android_programming.repository.OrderRepoImpl
-import com.example.android_programming.repository.OrderRepository
-import com.example.android_programming.repository.SneakerRepoImpl
-import com.example.android_programming.repository.SneakerRepository
-import com.example.android_programming.repository.UserRepoImpl
-import com.example.android_programming.repository.UserRepository
+import com.example.android_programming.database.repository.RemoteKeysRepositoryImpl
+import com.example.android_programming.database.repository.BasketRepoImpl
+import com.example.android_programming.businessLogic.repo.BasketRepository
+import com.example.android_programming.database.repository.OrderRepoImpl
+import com.example.android_programming.businessLogic.repo.OrderRepository
+import com.example.android_programming.database.repository.SneakerRepoImpl
 
 class AppDataContainer(private val context: Context) : AppContainer {
     override val sneakerRepo: RestSneakerRepository by lazy {

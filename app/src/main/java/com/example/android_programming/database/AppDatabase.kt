@@ -6,17 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.android_programming.R
-import com.example.android_programming.dao.BasketDao
-import com.example.android_programming.dao.OrderDao
-import com.example.android_programming.dao.SneakerDao
-import com.example.android_programming.dao.UserDao
-import com.example.android_programming.database.remotekeys.dao.RemoteKeysDao
-import com.example.android_programming.database.remotekeys.model.RemoteKeys
+import com.example.android_programming.database.dao.BasketDao
+import com.example.android_programming.database.dao.OrderDao
+import com.example.android_programming.database.dao.SneakerDao
+import com.example.android_programming.database.dao.UserDao
+import com.example.android_programming.database.dao.RemoteKeysDao
+import com.example.android_programming.model.RemoteKeys
 import com.example.android_programming.model.Basket
 import com.example.android_programming.model.BasketSneakers
 import com.example.android_programming.model.Order
 import com.example.android_programming.model.OrderSneaker
-import com.example.android_programming.model.RoleEnum
 import com.example.android_programming.model.Sneaker
 import com.example.android_programming.model.User
 import kotlinx.coroutines.CoroutineScope
@@ -41,9 +40,9 @@ abstract class AppDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 // User
                 val userDao = database.userDao()
-                val user1 = User(null, "Artem", "Emelyanov", "artem@mail.ru", "123", RoleEnum.Admin)
-                val user2 = User(null, "Danil", "Markov", "danil@mail.ru", "123", RoleEnum.User)
-                val user3 = User(null, "Viktoria", "Presnyakova", "vika@mail.ru", "123", RoleEnum.User)
+                val user1 = User(null, "Artem", "Emelyanov", "artem@mail.ru", "123", "ADMIN")
+                val user2 = User(null, "Danil", "Markov", "danil@mail.ru", "123", "USER")
+                val user3 = User(null, "Viktoria", "Presnyakova", "vika@mail.ru", "123", "USER")
                 userDao.createUser(user1)
                 userDao.createUser(user2)
                 userDao.createUser(user3)

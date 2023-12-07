@@ -1,15 +1,10 @@
-package com.example.android_programming.vmodel
+package com.example.android_programming.businessLogic.vmodel
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.android_programming.model.Basket
 import com.example.android_programming.model.BasketSneakers
 import com.example.android_programming.model.BasketWithSneakers
-import com.example.android_programming.model.Sneaker
-import com.example.android_programming.repository.BasketRepository
+import com.example.android_programming.businessLogic.repo.BasketRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

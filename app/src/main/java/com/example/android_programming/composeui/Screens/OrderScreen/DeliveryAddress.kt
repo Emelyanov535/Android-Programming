@@ -27,7 +27,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.android_programming.R
-import com.example.android_programming.vmodel.OrderViewModel
+import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 
 @Composable
 fun DeliveryAddress(orderViewModel: OrderViewModel) {

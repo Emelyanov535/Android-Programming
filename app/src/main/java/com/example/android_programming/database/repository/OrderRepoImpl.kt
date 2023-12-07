@@ -1,6 +1,7 @@
-package com.example.android_programming.repository
+package com.example.android_programming.database.repository
 
-import com.example.android_programming.dao.OrderDao
+import com.example.android_programming.businessLogic.repo.OrderRepository
+import com.example.android_programming.database.dao.OrderDao
 import com.example.android_programming.model.Order
 import com.example.android_programming.model.OrderSneaker
 import com.example.android_programming.model.OrderWithSneakers

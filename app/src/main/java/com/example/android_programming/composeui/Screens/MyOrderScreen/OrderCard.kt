@@ -34,8 +34,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.android_programming.R
 import com.example.android_programming.model.Order
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.vmodel.AppViewModelProvider
-import com.example.android_programming.vmodel.OrderViewModel
+import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
+import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 import java.util.Date
 
 @Composable

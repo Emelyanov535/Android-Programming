@@ -23,8 +23,8 @@ import com.example.android_programming.composeui.Screens.HomeScreen.FilterByBran
 import com.example.android_programming.composeui.Screens.HomeScreen.SearchField.SearchField
 import com.example.android_programming.composeui.Screens.HomeScreen.SneakerRecyclerView.RecyclerView
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.vmodel.AppViewModelProvider
-import com.example.android_programming.vmodel.OrderViewModel
+import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
+import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 
 @Composable
 fun HomeScreen(navHostController: NavHostController) {

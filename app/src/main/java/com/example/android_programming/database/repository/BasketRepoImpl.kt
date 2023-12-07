@@ -1,6 +1,7 @@
-package com.example.android_programming.repository
+package com.example.android_programming.database.repository
 
-import com.example.android_programming.dao.BasketDao
+import com.example.android_programming.businessLogic.repo.BasketRepository
+import com.example.android_programming.database.dao.BasketDao
 import com.example.android_programming.model.Basket
 import com.example.android_programming.model.BasketSneakers
 import com.example.android_programming.model.BasketWithSneakers

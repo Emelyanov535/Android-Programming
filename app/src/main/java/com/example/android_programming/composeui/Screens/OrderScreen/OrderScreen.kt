@@ -23,9 +23,9 @@ import androidx.navigation.NavHostController
 import com.example.android_programming.GlobalUser
 import com.example.android_programming.R
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.vmodel.AppViewModelProvider
-import com.example.android_programming.vmodel.BasketViewModel
-import com.example.android_programming.vmodel.OrderViewModel
+import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
+import com.example.android_programming.businessLogic.vmodel.BasketViewModel
+import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 
 
 @Composable

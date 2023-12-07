@@ -1,26 +1,20 @@
-package com.example.android_programming.vmodel
+package com.example.android_programming.businessLogic.vmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.android_programming.App
 import com.example.android_programming.GlobalUser
-import com.example.android_programming.database.AppDatabase
 import com.example.android_programming.model.Order
 import com.example.android_programming.model.OrderSneaker
 import com.example.android_programming.model.OrderWithSneakers
 import com.example.android_programming.model.Sneaker
 import com.example.android_programming.model.UserWithOrder
-import com.example.android_programming.repository.BasketRepository
-import com.example.android_programming.repository.OrderRepository
-import com.example.android_programming.repository.SneakerRepository
+import com.example.android_programming.businessLogic.repo.BasketRepository
+import com.example.android_programming.businessLogic.repo.OrderRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Date
 

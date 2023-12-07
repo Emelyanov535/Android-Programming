@@ -6,15 +6,12 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.android_programming.api.model.toSneaker
-import com.example.android_programming.api.repository.RestSneakerRepository
 import com.example.android_programming.database.AppDatabase
-import com.example.android_programming.database.remotekeys.model.RemoteKeyType
-import com.example.android_programming.database.remotekeys.model.RemoteKeys
-import com.example.android_programming.database.remotekeys.repository.RemoteKeyRepository
-import com.example.android_programming.database.remotekeys.repository.RemoteKeysRepositoryImpl
+import com.example.android_programming.model.RemoteKeyType
+import com.example.android_programming.model.RemoteKeys
+import com.example.android_programming.database.repository.RemoteKeysRepositoryImpl
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.repository.SneakerRepoImpl
-import com.example.android_programming.repository.SneakerRepository
+import com.example.android_programming.database.repository.SneakerRepoImpl
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -23,7 +20,7 @@ class SneakerRemoteMediator(
     private val service: BackendService,
     private val sneakerRepository: SneakerRepoImpl,
     private val database: AppDatabase,
-    private val dbRemoteKeyRepository:RemoteKeysRepositoryImpl
+    private val dbRemoteKeyRepository: RemoteKeysRepositoryImpl
 ) : RemoteMediator<Int, Sneaker>() {
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH

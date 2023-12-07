@@ -20,9 +20,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.example.android_programming.R
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.vmodel.AppViewModelProvider
-import com.example.android_programming.vmodel.OrderViewModel
-import com.example.android_programming.vmodel.SneakerViewModel
+import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
+import com.example.android_programming.businessLogic.vmodel.OrderViewModel
+import com.example.android_programming.businessLogic.vmodel.SneakerViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

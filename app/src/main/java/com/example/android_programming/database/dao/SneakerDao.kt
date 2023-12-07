@@ -1,4 +1,4 @@
-package com.example.android_programming.dao
+package com.example.android_programming.database.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao

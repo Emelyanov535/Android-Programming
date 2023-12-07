@@ -14,9 +14,10 @@ data class UserRemote (
     val surname: String = "",
     val email: String = "",
     val password: String = "",
-    val role: RoleEnum = RoleEnum.User,
+    val role: String = "",
     val photo: Int? = 0,
 )
+
 
 fun UserRemote.toUser(): User = User(
     id,

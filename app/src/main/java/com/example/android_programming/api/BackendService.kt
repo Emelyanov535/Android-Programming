@@ -2,6 +2,7 @@ package com.example.android_programming.api
 
 import com.example.android_programming.api.model.SneakerRemote
 import com.example.android_programming.api.model.UserRemote
+import com.example.android_programming.api.model.UserRemoteSignIn
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -32,6 +33,11 @@ interface BackendService {
     @POST("user/signup")
     suspend fun SignUp(
         @Body user: UserRemote,
+    ): UserRemote
+
+    @POST("user/signin")
+    suspend fun SignIn(
+        @Body user: UserRemoteSignIn
     ): UserRemote
 
     companion object {
