@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -40,11 +41,11 @@ fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketVie
         DeliveryAddress(orderViewModel)
         val userId = GlobalUser.getInstance().getUser()?.userId
         if (userId != null) {
-            val list by basketViewModel.getBasketSneakers(userId!!).collectAsState(initial = null)
-            val SneakerList: List<Sneaker>? = list?.sneakers
-            if (SneakerList != null) {
-                orderViewModel.updateSelectedItems(SneakerList)
-                ShoppingList(SneakerList)
+            basketViewModel.fetchBasketSneakers(userId!!)
+            val sneakerList: List<Sneaker>? = basketViewModel.sneakerList.collectAsState(null).value
+            if (sneakerList != null) {
+                orderViewModel.updateSelectedItems(sneakerList)
+                ShoppingList(sneakerList)
                 SubTotal(orderViewModel)
             }
         }
@@ -54,12 +55,12 @@ fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketVie
                 contentColor = Color.White
             ),
             onClick = {
-                if(GlobalUser.getInstance().getUser() != null){
-                    orderViewModel.createOrder()
-                    navHostController.navigate("home")
-                }else{
-                    navHostController.navigate("login")
-                }
+//                if(GlobalUser.getInstance().getUser() != null){
+//                    orderViewModel.createOrder()
+//                    navHostController.navigate("home")
+//                }else{
+//                    navHostController.navigate("login")
+//                }
             },
             modifier = Modifier
                 .fillMaxWidth()

@@ -44,41 +44,41 @@ class OrderViewModel(private val orderRepository: OrderRepository, private val b
         return orderRepository.getOrderWithSneakers(id)
     }
 
-    fun createOrder() = viewModelScope.launch {
-        val userId = GlobalUser.getInstance().getUser()?.userId!!
-        val order = Order(
-            date = Date().time,
-            city = city.value,
-            street = street.value,
-            house = house.value,
-            subtotal = getSubTotal(userId),
-            taxes = "%.2f".format(getSubTotal(userId) * 0.05).toDouble(),
-            total = "%.2f".format(getSubTotal(userId) * 0.05 + getSubTotal(userId)).toDouble(),
-            creatorUserId = GlobalUser.getInstance().getUser()?.userId!!
-        )
+//    fun createOrder() = viewModelScope.launch {
+//        val userId = GlobalUser.getInstance().getUser()?.userId!!
+//        val order = Order(
+//            date = Date().time,
+//            city = city.value,
+//            street = street.value,
+//            house = house.value,
+//            subtotal = getSubTotal(userId),
+//            taxes = "%.2f".format(getSubTotal(userId) * 0.05).toDouble(),
+//            total = "%.2f".format(getSubTotal(userId) * 0.05 + getSubTotal(userId)).toDouble(),
+//            creatorUserId = GlobalUser.getInstance().getUser()?.userId!!
+//        )
+//
+//        val orderId = orderRepository.createOrder(order)
+//
+////        for (sneaker in selectedItems.value.orEmpty()) {
+////            val userId = GlobalUser.getInstance().getUser()?.userId!!
+////            val orderSneaker = basketRepository.getQuantity(userId, sneaker.sneakerId!!)
+////                ?.let { OrderSneaker( orderId.toInt(), sneaker.sneakerId!!, it) }
+////            if (orderSneaker != null) {
+////                orderRepository.insertOrderSneaker(orderSneaker)
+////            }
+////        }
+//        city.value = ""
+//        street.value = ""
+//        house.value = ""
+//    }
 
-        val orderId = orderRepository.createOrder(order)
+//    fun updateSubTotal(userId: Int) {
+//        viewModelScope.launch {
+//            _subTotal.value = getSubTotal(userId)
+//        }
+//    }
 
-        for (sneaker in selectedItems.value.orEmpty()) {
-            val userId = GlobalUser.getInstance().getUser()?.userId!!
-            val orderSneaker = basketRepository.getQuantity(userId, sneaker.sneakerId!!)
-                ?.let { OrderSneaker( orderId.toInt(), sneaker.sneakerId!!, it) }
-            if (orderSneaker != null) {
-                orderRepository.insertOrderSneaker(orderSneaker)
-            }
-        }
-        city.value = ""
-        street.value = ""
-        house.value = ""
-    }
-
-    fun updateSubTotal(userId: Int) {
-        viewModelScope.launch {
-            _subTotal.value = getSubTotal(userId)
-        }
-    }
-
-    suspend fun getSubTotal(userId: Int): Double {
-        return basketRepository.getTotalPriceForUser(userId) ?: 0.0
-    }
+//    suspend fun getSubTotal(userId: Int): Double {
+//        return basketRepository.getTotalPriceForUser(userId) ?: 0.0
+//    }
 }

@@ -1,8 +1,10 @@
 package com.example.android_programming.api
 
+import com.example.android_programming.api.model.BasketSneakerRemote
 import com.example.android_programming.api.model.SneakerRemote
 import com.example.android_programming.api.model.UserRemote
 import com.example.android_programming.api.model.UserRemoteSignIn
+import com.example.android_programming.model.Sneaker
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -10,8 +12,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -29,6 +33,22 @@ interface BackendService {
         @Query("size") size: Int,
     ): List<SneakerRemote>
 
+    @POST("sneaker/create")
+    suspend fun createSneaker(
+        @Body sneaker: SneakerRemote,
+    ): SneakerRemote
+
+    @PUT("sneaker/update/{id}")
+    suspend fun updateSneaker(
+        @Path("id") id: Int,
+        @Body sneaker: SneakerRemote
+    ): SneakerRemote
+
+    @DELETE("sneaker/delete/{id}")
+    suspend fun deleteSneaker(
+        @Path("id") id: Int
+    )
+
     //USER
     @POST("user/signup")
     suspend fun SignUp(
@@ -39,6 +59,40 @@ interface BackendService {
     suspend fun SignIn(
         @Body user: UserRemoteSignIn
     ): UserRemote
+
+    //BASKET
+    @POST("basket/createBasketSneaker")
+    suspend fun createBasketSneaker(
+        @Body basketSneaker: BasketSneakerRemote
+    )
+
+    @GET("basket/getUserBasketSneakers/{id}")
+    suspend fun getUserBasketSneakers(
+        @Path("id") id: Int
+    ): List<SneakerRemote>
+
+    @GET("basket/getUserBasket/{id}")
+    suspend fun getUserBasket(
+        @Path("id") id: Int
+    ): Int
+
+    @GET("basket/getQuantity/{basketId}/{sneakerId}")
+    suspend fun getQuantity(
+        @Path("basketId") basketId: Int,
+        @Path("sneakerId") sneakerId: Int,
+    ): Int
+
+    @PUT("basket/incrementQuantity/{basketId}/{sneakerId}")
+    suspend fun increment(
+        @Path("basketId") basketId: Int,
+        @Path("sneakerId") sneakerId: Int,
+    )
+
+    @PUT("basket/decrementQuantity/{basketId}/{sneakerId}")
+    suspend fun decrement(
+        @Path("basketId") basketId: Int,
+        @Path("sneakerId") sneakerId: Int,
+    )
 
     companion object {
         private const val BASE_URL = "https://59k4pfj3-8080.euw.devtunnels.ms/api/"

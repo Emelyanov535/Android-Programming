@@ -81,7 +81,7 @@ fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(
                     contentColor = Color.White
                 ),
                 onClick = {
-                    basketViewModel.deleteSneakerFromBasket(GlobalUser.getInstance().getUser()?.userId!!, item.sneakerId!!)
+//                    basketViewModel.deleteSneakerFromBasket(GlobalUser.getInstance().getUser()?.userId!!, item.sneakerId!!)
                 },
                 modifier = Modifier
                     .padding(end = 16.dp)

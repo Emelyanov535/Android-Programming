@@ -8,6 +8,7 @@ import com.example.android_programming.di.AppContainer
 import com.example.android_programming.api.BackendService
 import com.example.android_programming.api.SneakerRemoteMediator
 import com.example.android_programming.api.model.toSneaker
+import com.example.android_programming.api.model.toSneakerRemote
 import com.example.android_programming.database.AppDatabase
 import com.example.android_programming.database.repository.RemoteKeysRepositoryImpl
 import com.example.android_programming.model.Sneaker
@@ -44,14 +45,14 @@ class RestSneakerRepository(
 
     override suspend fun getSneakerById(id: Int): Sneaker = service.getSneaker(id).toSneaker()
     override suspend fun insertSneaker(sneaker: Sneaker) {
-        print("sdfsd")
+        service.createSneaker(sneaker.toSneakerRemote())
     }
 
     override suspend fun updateSneaker(sneaker: Sneaker) {
-        print("sdfsd")
+        sneaker.sneakerId?.let { service.updateSneaker(it, sneaker.toSneakerRemote()) }
     }
 
     override suspend fun deleteSneaker(sneaker: Sneaker) {
-        print("sdfsd")
+        sneaker.sneakerId?.let { service.deleteSneaker(it) }
     }
 }

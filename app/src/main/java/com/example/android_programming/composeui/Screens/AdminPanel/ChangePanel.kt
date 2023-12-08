@@ -36,7 +36,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun ChangePanel(navHostController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
-//    val list = sneakerViewModel.sneakerList.collectAsLazyPagingItems()
+    val list = sneakerViewModel.sneakerList.collectAsLazyPagingItems()
 
     Column(
         modifier = Modifier
@@ -44,18 +44,18 @@ fun ChangePanel(navHostController: NavHostController, sneakerViewModel: SneakerV
             .background(Color.White)
             .padding(16.dp, 80.dp)
     ) {
-//        Row {
-//            LazyColumn(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//            ) {
-//                items(list.itemCount) { index ->
-//                    list[index]?.let { sneaker ->
-//                        CardSneakerForChange(item = sneaker, navController = navHostController)
-//                    }
-//                }
-//            }
-//        }
+        Row {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                items(list.itemCount) { index ->
+                    list[index]?.let { sneaker ->
+                        CardSneakerForChange(item = sneaker, navController = navHostController)
+                    }
+                }
+            }
+        }
     }
 }
 

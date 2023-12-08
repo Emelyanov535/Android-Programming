@@ -18,6 +18,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,7 +36,6 @@ import com.example.android_programming.model.BasketSneakers
 import com.example.android_programming.model.Sneaker
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.BasketViewModel
-import com.example.android_programming.businessLogic.vmodel.SneakerViewModel
 import com.google.gson.Gson
 
 @Composable
@@ -93,10 +93,13 @@ fun CardSneaker(item: Sneaker, navController: NavHostController, basketViewModel
                                 contentColor = Color.White
                             ),
                             onClick = {
-                                if(GlobalUser.getInstance().getUser() == null){
+                                val user = GlobalUser.getInstance().getUser()
+                                if(user == null){
                                     navController.navigate("login")
                                 }else{
-                                    basketViewModel.addToBasket(BasketSneakers(GlobalUser.getInstance().getUser()?.userId!!, item.sneakerId!!, 1))
+//                                    basketViewModel.getUserBasketId(user.userId!!)
+//                                    val userBasketId = basketViewModel.basketId.value!!
+//                                    basketViewModel.addToBasket(BasketSneakers(userBasketId, item.sneakerId!!, 1))
                                 }
                             },
                             modifier = Modifier

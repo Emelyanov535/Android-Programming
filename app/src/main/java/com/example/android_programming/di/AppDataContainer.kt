@@ -2,18 +2,20 @@ package com.example.android_programming.di
 
 import android.content.Context
 import com.example.android_programming.api.BackendService
+import com.example.android_programming.api.repository.RestBasketRepository
 import com.example.android_programming.api.repository.RestSneakerRepository
 import com.example.android_programming.api.repository.RestUserRepository
 import com.example.android_programming.database.AppDatabase
 import com.example.android_programming.database.repository.RemoteKeysRepositoryImpl
-import com.example.android_programming.database.repository.BasketRepoImpl
 import com.example.android_programming.businessLogic.repo.BasketRepository
 import com.example.android_programming.database.repository.OrderRepoImpl
 import com.example.android_programming.businessLogic.repo.OrderRepository
+import com.example.android_programming.businessLogic.repo.SneakerRepository
+import com.example.android_programming.businessLogic.repo.UserRepository
 import com.example.android_programming.database.repository.SneakerRepoImpl
 
 class AppDataContainer(private val context: Context) : AppContainer {
-    override val sneakerRepo: RestSneakerRepository by lazy {
+    override val sneakerRepo: SneakerRepository by lazy {
         RestSneakerRepository(
             BackendService.getInstance(),
             sneakerRepository,
@@ -21,14 +23,15 @@ class AppDataContainer(private val context: Context) : AppContainer {
             remoteKeyRepository
         )
     }
-    override val userRepo: RestUserRepository by lazy {
+    override val userRepo: UserRepository by lazy {
         RestUserRepository(BackendService.getInstance())
     }
+    override val basketRepo: BasketRepository by lazy {
+        RestBasketRepository(BackendService.getInstance())
+    }
+
     override val orderRepo: OrderRepository by lazy {
         OrderRepoImpl(AppDatabase.getInstance(context).orderDao())
-    }
-    override val basketRepo: BasketRepository by lazy {
-        BasketRepoImpl(AppDatabase.getInstance(context).basketDao())
     }
     private val sneakerRepository: SneakerRepoImpl by lazy {
         SneakerRepoImpl(AppDatabase.getInstance(context).sneakerDao())
