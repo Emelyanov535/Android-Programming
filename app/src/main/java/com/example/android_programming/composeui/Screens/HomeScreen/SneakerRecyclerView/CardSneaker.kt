@@ -37,6 +37,9 @@ import com.example.android_programming.model.Sneaker
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.BasketViewModel
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun CardSneaker(item: Sneaker, navController: NavHostController, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
@@ -97,9 +100,11 @@ fun CardSneaker(item: Sneaker, navController: NavHostController, basketViewModel
                                 if(user == null){
                                     navController.navigate("login")
                                 }else{
-//                                    basketViewModel.getUserBasketId(user.userId!!)
-//                                    val userBasketId = basketViewModel.basketId.value!!
-//                                    basketViewModel.addToBasket(BasketSneakers(userBasketId, item.sneakerId!!, 1))
+                                    runBlocking {
+                                        launch(Dispatchers.Default) {
+                                            basketViewModel.addToBasket(BasketSneakers(basketViewModel.getUserBasketId(user.userId!!), item.sneakerId!!, 1))
+                                        }
+                                    }
                                 }
                             },
                             modifier = Modifier

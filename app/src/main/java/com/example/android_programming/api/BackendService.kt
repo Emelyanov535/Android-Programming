@@ -94,6 +94,12 @@ interface BackendService {
         @Path("sneakerId") sneakerId: Int,
     )
 
+    @GET("basket/getSneaker/{basketId}/{sneakerId}")
+    suspend fun getSneaker(
+        @Path("basketId") basketId: Int,
+        @Path("sneakerId") sneakerId: Int,
+    ): Boolean
+
     companion object {
         private const val BASE_URL = "https://59k4pfj3-8080.euw.devtunnels.ms/api/"
 

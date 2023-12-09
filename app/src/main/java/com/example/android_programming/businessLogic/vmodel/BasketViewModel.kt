@@ -12,12 +12,14 @@ import com.example.android_programming.model.BasketSneakers
 import com.example.android_programming.model.BasketWithSneakers
 import com.example.android_programming.businessLogic.repo.BasketRepository
 import com.example.android_programming.model.Sneaker
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class BasketViewModel(private val basketRepository: BasketRepository): ViewModel() {
 
@@ -25,9 +27,6 @@ class BasketViewModel(private val basketRepository: BasketRepository): ViewModel
 
     private val _sneakerList = MutableStateFlow<List<Sneaker>>(emptyList())
     val sneakerList: StateFlow<List<Sneaker>> = _sneakerList.asStateFlow()
-
-    private val _basketId = MutableLiveData<Int>()
-    val basketId: LiveData<Int> get() = _basketId
 
     fun getQuantityState(basketId: Int, sneakerId: Int): StateFlow<Int> {
         val quantityStateFlow = _quantityStateMap.getOrPut(sneakerId) {
@@ -41,21 +40,19 @@ class BasketViewModel(private val basketRepository: BasketRepository): ViewModel
 
         return quantityStateFlow
     }
-//
-//    suspend fun isSneakerInBasket(basketId: Int, sneakerId: Int): Boolean {
-//        return basketRepository.getSneaker(basketId, sneakerId) != null
-//    }
-    fun addToBasket(basketSneakers: BasketSneakers) = viewModelScope.launch {
-    basketRepository.insertBasketSneaker(basketSneakers)
-//        val isSneakerInBasket = isSneakerInBasket(basketSneakers.basketId, basketSneakers.sneakerId)
-//
-//        if (isSneakerInBasket) {
-//            incrementQuantity(basketSneakers.basketId, basketSneakers.sneakerId)
-//        } else {
-//            basketRepository.insertBasketSneaker(basketSneakers)
-//        }
+
+    suspend fun isSneakerInBasket(basketId: Int, sneakerId: Int): Boolean {
+        return basketRepository.existSneaker(basketId, sneakerId)
     }
-//
+    fun addToBasket(basketSneakers: BasketSneakers) = viewModelScope.launch {
+        val isSneakerInBasket = isSneakerInBasket(basketSneakers.basketId, basketSneakers.sneakerId)
+
+        if (isSneakerInBasket) {
+            incrementQuantity(basketSneakers.basketId, basketSneakers.sneakerId)
+        } else {
+            basketRepository.insertBasketSneaker(basketSneakers)
+        }
+    }
     fun fetchBasketSneakers(userId: Int) {
         viewModelScope.launch {
             basketRepository.getBasketWithSneakers(userId).collect {
@@ -64,12 +61,9 @@ class BasketViewModel(private val basketRepository: BasketRepository): ViewModel
         }
     }
 
-//    fun getUserBasketId(userId: Int) {
-//        viewModelScope.async {
-//            val basket = basketRepository.getUserOrder(userId)
-//            _basketId.value = basket
-//        }.await()
-//    }
+    suspend fun getUserBasketId(userId: Int) : Int{
+        return basketRepository.getUserBasketId(userId)
+    }
 
 //
 //    fun deleteSneakerFromBasket(basketId: Int, sneakerId: Int) = viewModelScope.launch {

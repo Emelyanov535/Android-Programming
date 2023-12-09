@@ -2,6 +2,7 @@ package com.example.android_programming.api.repository
 
 import com.example.android_programming.api.BackendService
 import com.example.android_programming.api.model.SneakerRemote
+import com.example.android_programming.api.model.toBasketSneaker
 import com.example.android_programming.api.model.toBasketSneakerRemote
 import com.example.android_programming.api.model.toSneaker
 import com.example.android_programming.businessLogic.repo.BasketRepository
@@ -25,7 +26,7 @@ class RestBasketRepository(
         return flowOf(sneakersList.toList())
     }
 
-    override suspend fun getUserOrder(id: Int): Int {
+    override suspend fun getUserBasketId(id: Int): Int {
         return service.getUserBasket(id)
     }
 
@@ -65,9 +66,9 @@ class RestBasketRepository(
 //        TODO("Not yet implemented")
 //    }
 //
-//    override suspend fun getSneaker(basketId: Int, sneakerId: Int): BasketSneakers? {
-//        TODO("Not yet implemented")
-//    }
+    override suspend fun existSneaker(basketId: Int, sneakerId: Int): Boolean {
+        return service.getSneaker(basketId, sneakerId)
+    }
 //
 //    override suspend fun getTotalPriceForUser(userId: Int): Double? {
 //        TODO("Not yet implemented")

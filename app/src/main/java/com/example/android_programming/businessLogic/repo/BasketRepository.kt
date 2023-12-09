@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface BasketRepository {
     suspend fun insertBasketSneaker(basketSneaker: BasketSneakers)
     suspend fun getBasketWithSneakers(id: Int): Flow<List<Sneaker>>
-    suspend fun getUserOrder(id: Int): Int
+    suspend fun getUserBasketId(id: Int): Int
 //    fun getAllBasket(): Flow<List<Basket>>
 //    suspend fun delete(basket: Basket)
 //    suspend fun createBasket(basket: Basket):Long
@@ -21,6 +21,6 @@ interface BasketRepository {
     suspend fun incrementSneakerQuantity(basketId: Int, sneakerId: Int)
     suspend fun decrementSneakerQuantity(basketId: Int, sneakerId: Int)
     suspend fun getQuantity(basketId: Int, sneakerId: Int): Int?
-//    suspend fun getSneaker(basketId: Int, sneakerId: Int): BasketSneakers?
+    suspend fun existSneaker(basketId: Int, sneakerId: Int): Boolean
 //    suspend fun getTotalPriceForUser(userId: Int): Double?
 }
