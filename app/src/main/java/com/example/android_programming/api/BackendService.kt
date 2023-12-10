@@ -100,6 +100,12 @@ interface BackendService {
         @Path("sneakerId") sneakerId: Int,
     ): Boolean
 
+    @GET("basket/removeSneaker/{basketId}/{sneakerId}")
+    suspend fun deleteSneakerFromBasket(
+        @Path("basketId") basketId: Int,
+        @Path("sneakerId") sneakerId: Int,
+    )
+
     companion object {
         private const val BASE_URL = "https://59k4pfj3-8080.euw.devtunnels.ms/api/"
 

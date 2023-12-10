@@ -46,9 +46,9 @@ class RestBasketRepository(
 //        TODO("Not yet implemented")
 //    }
 //
-//    override suspend fun removeSneakerFromBasket(basketId: Int, sneakerId: Int) {
-//        TODO("Not yet implemented")
-//    }
+    override suspend fun removeSneakerFromBasket(basketId: Int, sneakerId: Int) {
+        service.deleteSneakerFromBasket(basketId, sneakerId)
+    }
 //
 //    override suspend fun updateSneakerQuantity(basketId: Int, sneakerId: Int, quantity: Int) {
 //        TODO("Not yet implemented")

@@ -40,6 +40,10 @@ import com.example.android_programming.model.Sneaker
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.BasketViewModel
 import com.example.android_programming.businessLogic.vmodel.OrderViewModel
+import com.example.android_programming.model.BasketSneakers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
@@ -81,7 +85,11 @@ fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(
                     contentColor = Color.White
                 ),
                 onClick = {
-//                    basketViewModel.deleteSneakerFromBasket(GlobalUser.getInstance().getUser()?.userId!!, item.sneakerId!!)
+                    runBlocking {
+                        launch(Dispatchers.Default) {
+                            basketViewModel.deleteSneakerFromBasket(basketViewModel.getUserBasketId(GlobalUser.getInstance().getUser()?.userId!!), item.sneakerId!!)
+                        }
+                    }
                 },
                 modifier = Modifier
                     .padding(end = 16.dp)

@@ -65,11 +65,11 @@ class BasketViewModel(private val basketRepository: BasketRepository): ViewModel
         return basketRepository.getUserBasketId(userId)
     }
 
-//
-//    fun deleteSneakerFromBasket(basketId: Int, sneakerId: Int) = viewModelScope.launch {
-//        basketRepository.removeSneakerFromBasket(basketId, sneakerId)
-//    }
-//
+
+    fun deleteSneakerFromBasket(basketId: Int, sneakerId: Int) = viewModelScope.launch {
+        basketRepository.removeSneakerFromBasket(basketId, sneakerId)
+    }
+
     fun incrementQuantity(basketId: Int, sneakerId: Int) {
         val currentQuantity = _quantityStateMap[sneakerId]?.value ?: 1
         _quantityStateMap[sneakerId]?.value = currentQuantity + 1
