@@ -3,12 +3,12 @@ package com.example.android_programming.di
 import android.content.Context
 import com.example.android_programming.api.BackendService
 import com.example.android_programming.api.repository.RestBasketRepository
+import com.example.android_programming.api.repository.RestOrderRepository
 import com.example.android_programming.api.repository.RestSneakerRepository
 import com.example.android_programming.api.repository.RestUserRepository
 import com.example.android_programming.database.AppDatabase
 import com.example.android_programming.database.repository.RemoteKeysRepositoryImpl
 import com.example.android_programming.businessLogic.repo.BasketRepository
-import com.example.android_programming.database.repository.OrderRepoImpl
 import com.example.android_programming.businessLogic.repo.OrderRepository
 import com.example.android_programming.businessLogic.repo.SneakerRepository
 import com.example.android_programming.businessLogic.repo.UserRepository
@@ -31,7 +31,7 @@ class AppDataContainer(private val context: Context) : AppContainer {
     }
 
     override val orderRepo: OrderRepository by lazy {
-        OrderRepoImpl(AppDatabase.getInstance(context).orderDao())
+        RestOrderRepository(BackendService.getInstance())
     }
     private val sneakerRepository: SneakerRepoImpl by lazy {
         SneakerRepoImpl(AppDatabase.getInstance(context).sneakerDao())

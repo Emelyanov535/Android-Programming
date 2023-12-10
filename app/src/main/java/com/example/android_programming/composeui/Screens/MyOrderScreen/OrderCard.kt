@@ -20,8 +20,12 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -36,16 +40,15 @@ import com.example.android_programming.model.Order
 import com.example.android_programming.model.Sneaker
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.OrderViewModel
+import kotlinx.coroutines.flow.first
 import java.util.Date
 
 @Composable
 fun OrderCard(order: Order, orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)){
-
-    val SneakerList = order?.orderId?.let {
-        orderViewModel.getOrderWithSneakers(it)
+    var sneakers by remember { mutableStateOf<List<Sneaker>>(emptyList()) }
+    LaunchedEffect(order.orderId) {
+        sneakers = orderViewModel.getOrderWithSneakers(order.orderId!!).first()
     }
-    val sneakerWithOrder by SneakerList!!.collectAsState(null)
-    val sneakerList: List<Sneaker>? = sneakerWithOrder?.sneakers
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -62,8 +65,8 @@ fun OrderCard(order: Order, orderViewModel: OrderViewModel = viewModel(factory =
             Text("№ ${order.orderId}")
             Text("${Date(order.date)}")
             Row(){
-                if (sneakerList != null) {
-                    for(sneaker in sneakerList){
+                if (sneakers != null) {
+                    for(sneaker in sneakers){
                         Image(
                             contentScale = ContentScale.FillBounds,
                             painter = painterResource(id = sneaker.photo),
@@ -81,7 +84,7 @@ fun OrderCard(order: Order, orderViewModel: OrderViewModel = viewModel(factory =
                     contentColor = Color.White
                 ),
                 onClick = {
-                    orderViewModel.deleteOrder(order)
+                    orderViewModel.deleteOrder(order.orderId!!)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

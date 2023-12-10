@@ -27,6 +27,10 @@ import com.example.android_programming.model.Sneaker
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.BasketViewModel
 import com.example.android_programming.businessLogic.vmodel.OrderViewModel
+import com.example.android_programming.model.BasketSneakers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 
 @Composable
@@ -55,12 +59,16 @@ fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketVie
                 contentColor = Color.White
             ),
             onClick = {
-//                if(GlobalUser.getInstance().getUser() != null){
-//                    orderViewModel.createOrder()
-//                    navHostController.navigate("home")
-//                }else{
-//                    navHostController.navigate("login")
-//                }
+                if(GlobalUser.getInstance().getUser() != null){
+                    orderViewModel.createOrder()
+                    runBlocking {
+                        launch(Dispatchers.Default) {
+                            basketViewModel.deleteAllSneakerFromBasket(basketViewModel.getUserBasketId(userId!!))                        }
+                    }
+                    navHostController.navigate("home")
+                }else{
+                    navHostController.navigate("login")
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()

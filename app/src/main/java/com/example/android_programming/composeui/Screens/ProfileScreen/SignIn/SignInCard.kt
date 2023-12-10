@@ -43,6 +43,7 @@ import com.example.android_programming.model.Basket
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.BasketViewModel
 import com.example.android_programming.businessLogic.vmodel.UserViewModel
+import com.example.android_programming.composeui.Screens.ErrorSnackbar
 
 @Composable
 fun SignInCard(navController: NavHostController, userViewModel: UserViewModel = viewModel(factory = AppViewModelProvider.Factory), basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {

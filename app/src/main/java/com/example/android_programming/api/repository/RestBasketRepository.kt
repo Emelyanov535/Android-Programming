@@ -69,8 +69,12 @@ class RestBasketRepository(
     override suspend fun existSneaker(basketId: Int, sneakerId: Int): Boolean {
         return service.getSneaker(basketId, sneakerId)
     }
-//
-//    override suspend fun getTotalPriceForUser(userId: Int): Double? {
-//        TODO("Not yet implemented")
-//    }
+
+    override suspend fun getTotalPriceForUser(userId: Int): Double? {
+        return service.getTotalPriceForUserBasket(userId)
+    }
+
+    override suspend fun deleteAllSneakerFromBasket(basketId: Int) {
+        service.deleteAllSneakerFromBasket(basketId)
+    }
 }

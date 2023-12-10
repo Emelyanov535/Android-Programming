@@ -22,5 +22,6 @@ interface BasketRepository {
     suspend fun decrementSneakerQuantity(basketId: Int, sneakerId: Int)
     suspend fun getQuantity(basketId: Int, sneakerId: Int): Int?
     suspend fun existSneaker(basketId: Int, sneakerId: Int): Boolean
-//    suspend fun getTotalPriceForUser(userId: Int): Double?
+    suspend fun getTotalPriceForUser(userId: Int): Double?
+    suspend fun deleteAllSneakerFromBasket(basketId: Int)
 }

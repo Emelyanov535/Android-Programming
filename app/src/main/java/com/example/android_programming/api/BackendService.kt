@@ -1,9 +1,12 @@
 package com.example.android_programming.api
 
 import com.example.android_programming.api.model.BasketSneakerRemote
+import com.example.android_programming.api.model.OrderRemote
+import com.example.android_programming.api.model.OrderSneakerRemote
 import com.example.android_programming.api.model.SneakerRemote
 import com.example.android_programming.api.model.UserRemote
 import com.example.android_programming.api.model.UserRemoteSignIn
+import com.example.android_programming.model.Order
 import com.example.android_programming.model.Sneaker
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -104,6 +107,42 @@ interface BackendService {
     suspend fun deleteSneakerFromBasket(
         @Path("basketId") basketId: Int,
         @Path("sneakerId") sneakerId: Int,
+    )
+
+    @GET("basket/getUserPrice/{userId}")
+    suspend fun getTotalPriceForUserBasket(
+        @Path("userId") userId: Int
+    ): Double
+
+    @GET("basket/deleteAllSneakerFromBasket/{basketId}")
+    suspend fun deleteAllSneakerFromBasket(
+        @Path("basketId") basketId: Int
+    )
+
+    //ORDER
+    @POST("order/createOrderSneaker")
+    suspend fun createOrderSneaker(
+        @Body orderSneaker: OrderSneakerRemote
+    )
+
+    @POST("order/create")
+    suspend fun createOrder(
+        @Body order: OrderRemote
+    ): Long
+
+    @GET("order/getUserOrders/{userId}")
+    suspend fun getUserOrders(
+        @Path("userId") userId: Int
+    ) : List<OrderRemote>
+
+    @GET("order/getSneakerFromOrder/{orderId}")
+    suspend fun getSneakerFromOrder(
+        @Path("orderId") orderId: Int
+    ) : List<SneakerRemote>
+
+    @GET("order/deleteOrder/{orderId}")
+    suspend fun deleteOrder(
+        @Path("orderId") orderId: Int
     )
 
     companion object {

@@ -22,7 +22,7 @@ import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 @Composable
 fun SubTotal(orderViewModel: OrderViewModel) {
     val userId = GlobalUser.getInstance().getUser()?.userId!!
-//    orderViewModel.updateSubTotal(userId)
+    orderViewModel.updateSubTotal(userId)
     val subTotal = orderViewModel.subTotal.value
     Column(
         modifier = Modifier

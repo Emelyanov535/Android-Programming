@@ -10,7 +10,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -22,12 +27,17 @@ import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
 fun MyOrderScreen(orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val userId = GlobalUser.getInstance().getUser()?.userId
-    val userWithOrder = orderViewModel.getOrderList(userId!!).collectAsState(null).value?.orders
+    var usersOrder by remember { mutableStateOf<List<Order>>(emptyList()) }
+
+    LaunchedEffect(userId) {
+        usersOrder = orderViewModel.getOrderList(userId!!).first()
+    }
 
     Column(
         modifier = Modifier
@@ -49,8 +59,8 @@ fun MyOrderScreen(orderViewModel: OrderViewModel = viewModel(factory = AppViewMo
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                if (userWithOrder != null) {
-                    for (item in userWithOrder) {
+                if (usersOrder != null) {
+                    for (item in usersOrder) {
                         OrderCard(item)
                     }
                 }
