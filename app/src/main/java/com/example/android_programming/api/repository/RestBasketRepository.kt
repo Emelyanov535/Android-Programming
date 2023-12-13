@@ -21,14 +21,14 @@ class RestBasketRepository(
         service.createBasketSneaker(basketSneaker.toBasketSneakerRemote())
     }
 
-    override fun getBasketWithSneakers(id: Int): Flow<List<Sneaker>> = runBlocking {
+    override suspend fun getBasketWithSneakers(id: Int): Flow<List<Sneaker>> {
         val sneakersRemoteList = service.getUserBasketSneakers(id)
         val sneakersList = sneakersRemoteList.map { it.toSneaker() }
-        flowOf(sneakersList.toList())
+        return flowOf(sneakersList.toList())
     }
 
-    override suspend fun getUserBasketId(id: Int): Int {
-        return service.getUserBasket(id)
+    override suspend fun getUserBasketId(id: Int): Flow<Int> {
+        return flowOf(service.getUserBasket(id))
     }
 
     override suspend fun getQuantity(basketId: Int, sneakerId: Int): Int? {

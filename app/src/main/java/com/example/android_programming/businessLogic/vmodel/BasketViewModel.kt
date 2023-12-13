@@ -8,22 +8,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android_programming.GlobalUser
 import com.example.android_programming.model.BasketSneakers
 import com.example.android_programming.model.BasketWithSneakers
 import com.example.android_programming.businessLogic.repo.BasketRepository
 import com.example.android_programming.model.Sneaker
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class BasketViewModel(private val basketRepository: BasketRepository): ViewModel() {
 
     private val _quantityStateMap = mutableMapOf<Int, MutableStateFlow<Int>>()
+
+    private val _sneakerList = MutableStateFlow<List<Sneaker>>(emptyList())
+    val sneakerList: StateFlow<List<Sneaker>> = _sneakerList
 
     fun getQuantityState(basketId: Int, sneakerId: Int): StateFlow<Int> {
         val quantityStateFlow = _quantityStateMap.getOrPut(sneakerId) {
@@ -50,17 +57,22 @@ class BasketViewModel(private val basketRepository: BasketRepository): ViewModel
             basketRepository.insertBasketSneaker(basketSneakers)
         }
     }
-    fun getBasketSneakers(userId: Int) : Flow<List<Sneaker>> {
-        return basketRepository.getBasketWithSneakers(userId)
+    fun fetchBasketSneakers(userId: Int) {
+        viewModelScope.launch {
+            basketRepository.getBasketWithSneakers(userId).collect {
+                _sneakerList.value = it
+            }
+        }
     }
 
-    suspend fun getUserBasketId(userId: Int) : Int{
+    suspend fun getUserBasketId(userId: Int) : Flow<Int>{
         return basketRepository.getUserBasketId(userId)
     }
 
 
     fun deleteSneakerFromBasket(basketId: Int, sneakerId: Int) = viewModelScope.launch {
         basketRepository.removeSneakerFromBasket(basketId, sneakerId)
+        fetchBasketSneakers(GlobalUser.getInstance().getUser()?.userId!!)
     }
 
     fun incrementQuantity(basketId: Int, sneakerId: Int) {

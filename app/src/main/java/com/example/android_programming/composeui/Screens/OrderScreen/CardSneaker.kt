@@ -24,6 +24,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +43,7 @@ import com.example.android_programming.businessLogic.vmodel.BasketViewModel
 import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 import com.example.android_programming.model.BasketSneakers
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -50,6 +52,7 @@ import kotlinx.coroutines.runBlocking
 fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val userId = GlobalUser.getInstance().getUser()?.userId!!
     val quantityState by basketViewModel.getQuantityState(userId, item.sneakerId!!).collectAsState()
+    val scope = rememberCoroutineScope()
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -85,7 +88,9 @@ fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(
                     contentColor = Color.White
                 ),
                 onClick = {
-                    basketViewModel.deleteSneakerFromBasket(1, item.sneakerId!!)
+                    scope.launch {
+                        basketViewModel.deleteSneakerFromBasket(basketViewModel.getUserBasketId(GlobalUser.getInstance().getUser()?.userId!!).first(), item.sneakerId!!)
+                    }
 //                    runBlocking {
 //                        launch(Dispatchers.Default) {
 //                            basketViewModel.deleteSneakerFromBasket(basketViewModel.getUserBasketId(GlobalUser.getInstance().getUser()?.userId!!), item.sneakerId!!)

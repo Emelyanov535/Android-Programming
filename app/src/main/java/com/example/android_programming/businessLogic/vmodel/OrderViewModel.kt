@@ -62,8 +62,7 @@ class OrderViewModel(private val orderRepository: OrderRepository, private val b
 
         for (sneaker in selectedItems.value.orEmpty()) {
             val userId = GlobalUser.getInstance().getUser()?.userId!!
-            val orderSneaker = basketRepository.getQuantity(userId, sneaker.sneakerId!!)
-                ?.let { OrderSneaker( orderId.toInt(), sneaker.sneakerId!!, it) }
+            val orderSneaker =  OrderSneaker( orderId.toInt(), sneaker.sneakerId!!, 1)
             if (orderSneaker != null) {
                 orderRepository.insertOrderSneaker(orderSneaker)
             }

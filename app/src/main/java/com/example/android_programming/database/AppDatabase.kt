@@ -77,9 +77,9 @@ abstract class AppDatabase : RoomDatabase() {
                     .addCallback(object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            CoroutineScope(Dispatchers.IO).launch {
-                                populateDatabase()
-                            }
+//                            CoroutineScope(Dispatchers.IO).launch {
+//                                populateDatabase()
+//                            }
                         }
                     })
                     .fallbackToDestructiveMigration()

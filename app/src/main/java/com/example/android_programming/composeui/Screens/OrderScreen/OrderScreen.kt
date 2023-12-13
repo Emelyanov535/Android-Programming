@@ -15,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -30,12 +31,14 @@ import com.example.android_programming.businessLogic.vmodel.BasketViewModel
 import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 import com.example.android_programming.model.BasketSneakers
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 
 @Composable
 fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory), orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+    val scope = rememberCoroutineScope()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,10 +49,11 @@ fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketVie
         DeliveryAddress(orderViewModel)
         val userId = GlobalUser.getInstance().getUser()?.userId
         if (userId != null) {
-            val sneakerList: List<Sneaker>? by basketViewModel.getBasketSneakers(userId).collectAsState(null)
+            basketViewModel.fetchBasketSneakers(userId!!)
+            val sneakerList: List<Sneaker>? = basketViewModel.sneakerList.collectAsState(null).value
             if (sneakerList != null) {
-                orderViewModel.updateSelectedItems(sneakerList!!)
-                ShoppingList(sneakerList!!)
+                orderViewModel.updateSelectedItems(sneakerList)
+                ShoppingList(sneakerList)
                 SubTotal(orderViewModel)
             }
         }
@@ -61,9 +65,8 @@ fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketVie
             onClick = {
                 if(GlobalUser.getInstance().getUser() != null){
                     orderViewModel.createOrder()
-                    runBlocking {
-                        launch(Dispatchers.Default) {
-                            basketViewModel.deleteAllSneakerFromBasket(basketViewModel.getUserBasketId(userId!!))                        }
+                    scope.launch {
+                        basketViewModel.deleteAllSneakerFromBasket(basketViewModel.getUserBasketId(userId!!).first())
                     }
                     navHostController.navigate("home")
                 }else{

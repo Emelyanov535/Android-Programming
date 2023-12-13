@@ -18,7 +18,11 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,14 +41,16 @@ import com.example.android_programming.model.Sneaker
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.BasketViewModel
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 @Composable
 fun CardSneaker(item: Sneaker, navController: NavHostController, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val maxWidth = (LocalConfiguration.current.screenWidthDp / 2).dp
-
+    val coroutineScope = rememberCoroutineScope()
     Box(
         modifier = Modifier
             .padding(4.dp)
@@ -100,12 +106,10 @@ fun CardSneaker(item: Sneaker, navController: NavHostController, basketViewModel
                                 if(user == null){
                                     navController.navigate("login")
                                 }else{
-                                    basketViewModel.addToBasket(BasketSneakers(1, item.sneakerId!!, 1))
-//                                    runBlocking {
-//                                        launch(Dispatchers.Default) {
-//                                            basketViewModel.addToBasket(BasketSneakers(basketViewModel.getUserBasketId(user.userId!!), item.sneakerId!!, 1))
-//                                        }
-//                                    }
+                                    coroutineScope.launch {
+                                        val userBasketId: Int = basketViewModel.getUserBasketId(user.userId!!).first()
+                                        basketViewModel.addToBasket(BasketSneakers(userBasketId, item.sneakerId!!, 1))
+                                    }
                                 }
                             },
                             modifier = Modifier
