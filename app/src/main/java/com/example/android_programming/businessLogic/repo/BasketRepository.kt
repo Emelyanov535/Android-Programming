@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface BasketRepository {
     suspend fun insertBasketSneaker(basketSneaker: BasketSneakers)
-    suspend fun getBasketWithSneakers(id: Int): Flow<List<Sneaker>>
+    fun getBasketWithSneakers(id: Int): Flow<List<Sneaker>>
     suspend fun getUserBasketId(id: Int): Int
 //    fun getAllBasket(): Flow<List<Basket>>
 //    suspend fun delete(basket: Basket)

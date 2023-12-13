@@ -100,11 +100,12 @@ fun CardSneaker(item: Sneaker, navController: NavHostController, basketViewModel
                                 if(user == null){
                                     navController.navigate("login")
                                 }else{
-                                    runBlocking {
-                                        launch(Dispatchers.Default) {
-                                            basketViewModel.addToBasket(BasketSneakers(basketViewModel.getUserBasketId(user.userId!!), item.sneakerId!!, 1))
-                                        }
-                                    }
+                                    basketViewModel.addToBasket(BasketSneakers(1, item.sneakerId!!, 1))
+//                                    runBlocking {
+//                                        launch(Dispatchers.Default) {
+//                                            basketViewModel.addToBasket(BasketSneakers(basketViewModel.getUserBasketId(user.userId!!), item.sneakerId!!, 1))
+//                                        }
+//                                    }
                                 }
                             },
                             modifier = Modifier

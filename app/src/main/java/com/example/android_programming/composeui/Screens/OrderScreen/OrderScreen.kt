@@ -11,6 +11,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -45,11 +46,10 @@ fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketVie
         DeliveryAddress(orderViewModel)
         val userId = GlobalUser.getInstance().getUser()?.userId
         if (userId != null) {
-            basketViewModel.fetchBasketSneakers(userId!!)
-            val sneakerList: List<Sneaker>? = basketViewModel.sneakerList.collectAsState(null).value
+            val sneakerList: List<Sneaker>? by basketViewModel.getBasketSneakers(userId).collectAsState(null)
             if (sneakerList != null) {
-                orderViewModel.updateSelectedItems(sneakerList)
-                ShoppingList(sneakerList)
+                orderViewModel.updateSelectedItems(sneakerList!!)
+                ShoppingList(sneakerList!!)
                 SubTotal(orderViewModel)
             }
         }

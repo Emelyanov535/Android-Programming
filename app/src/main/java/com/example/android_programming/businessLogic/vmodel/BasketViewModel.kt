@@ -25,9 +25,6 @@ class BasketViewModel(private val basketRepository: BasketRepository): ViewModel
 
     private val _quantityStateMap = mutableMapOf<Int, MutableStateFlow<Int>>()
 
-    private val _sneakerList = MutableStateFlow<List<Sneaker>>(emptyList())
-    val sneakerList: StateFlow<List<Sneaker>> = _sneakerList.asStateFlow()
-
     fun getQuantityState(basketId: Int, sneakerId: Int): StateFlow<Int> {
         val quantityStateFlow = _quantityStateMap.getOrPut(sneakerId) {
             MutableStateFlow(0)
@@ -53,12 +50,8 @@ class BasketViewModel(private val basketRepository: BasketRepository): ViewModel
             basketRepository.insertBasketSneaker(basketSneakers)
         }
     }
-    fun fetchBasketSneakers(userId: Int) {
-        viewModelScope.launch {
-            basketRepository.getBasketWithSneakers(userId).collect {
-                _sneakerList.emit(it)
-            }
-        }
+    fun getBasketSneakers(userId: Int) : Flow<List<Sneaker>> {
+        return basketRepository.getBasketWithSneakers(userId)
     }
 
     suspend fun getUserBasketId(userId: Int) : Int{

@@ -12,6 +12,7 @@ import com.example.android_programming.model.BasketWithSneakers
 import com.example.android_programming.model.Sneaker
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 
 class RestBasketRepository(
     private var service: BackendService
@@ -20,10 +21,10 @@ class RestBasketRepository(
         service.createBasketSneaker(basketSneaker.toBasketSneakerRemote())
     }
 
-    override suspend fun getBasketWithSneakers(id: Int): Flow<List<Sneaker>> {
+    override fun getBasketWithSneakers(id: Int): Flow<List<Sneaker>> = runBlocking {
         val sneakersRemoteList = service.getUserBasketSneakers(id)
         val sneakersList = sneakersRemoteList.map { it.toSneaker() }
-        return flowOf(sneakersList.toList())
+        flowOf(sneakersList.toList())
     }
 
     override suspend fun getUserBasketId(id: Int): Int {
