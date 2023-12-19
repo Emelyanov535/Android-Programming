@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -32,21 +33,7 @@ fun HomeScreen(navHostController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            /*.verticalScroll(rememberScrollState())*/
     ) {
-        Row {
-            // Поле для поиска
-            SearchField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp, 20.dp, 20.dp, 10.dp)
-                    .clip(RoundedCornerShape(10.dp))
-            ) { searchText ->
-                // Обработка введенного текста поиска
-            }
-        }
-        Sales()
-        FilterByBrand()
         RecyclerView(navHostController = navHostController)
     }
 }

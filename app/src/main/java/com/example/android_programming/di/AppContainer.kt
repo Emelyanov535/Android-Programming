@@ -15,7 +15,7 @@ interface AppContainer {
     val basketRepo: BasketRepository
 
     companion object {
-        const val TIMEOUT = 5000L
+        const val TIMEOUT = 500L
         const val LIMIT = 10
     }
 }

@@ -4,12 +4,15 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.example.android_programming.R
 import com.example.android_programming.api.repository.RestSneakerRepository
 import com.example.android_programming.businessLogic.repo.SneakerRepository
 import com.example.android_programming.model.Sneaker
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewModel() {
@@ -19,6 +22,7 @@ class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewMo
     val description = mutableStateOf("")
     val price = mutableStateOf("")
     val photo = mutableIntStateOf(R.drawable.img)
+
     fun insertSneaker() = viewModelScope.launch {
         val sneaker = Sneaker(
             brand = brand.value,

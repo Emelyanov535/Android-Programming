@@ -4,6 +4,9 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.android_programming.di.AppContainer
 import com.example.android_programming.api.BackendService
 import com.example.android_programming.api.SneakerRemoteMediator
@@ -15,6 +18,8 @@ import com.example.android_programming.model.Sneaker
 import com.example.android_programming.database.repository.SneakerRepoImpl
 import com.example.android_programming.businessLogic.repo.SneakerRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 
 class RestSneakerRepository(
     private val service: BackendService,
@@ -23,7 +28,6 @@ class RestSneakerRepository(
     private val dbRemoteKeyRepository: RemoteKeysRepositoryImpl
 
 ) : SneakerRepository {
-
     override fun getAllSneakers(): Flow<PagingData<Sneaker>> {
         val pagingSourceFactory = { dbSneakerRepository.getAllSneakersPagingSource() }
 

@@ -6,8 +6,6 @@ import com.example.android_programming.api.model.OrderSneakerRemote
 import com.example.android_programming.api.model.SneakerRemote
 import com.example.android_programming.api.model.UserRemote
 import com.example.android_programming.api.model.UserRemoteSignIn
-import com.example.android_programming.model.Order
-import com.example.android_programming.model.Sneaker
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -51,6 +49,13 @@ interface BackendService {
     suspend fun deleteSneaker(
         @Path("id") id: Int
     )
+
+    @GET("sneaker/findSneakersByString/{string}")
+    suspend fun findSneakersByString(
+        @Path("string") str: String,
+        nextPageNumber: Int,
+        loadSize: Int
+    ): List<SneakerRemote>
 
     //USER
     @POST("user/signup")
