@@ -20,8 +20,8 @@ interface SneakerDao {
     @Delete
     suspend fun delete(sneaker: Sneaker)
 
-    @Query("SELECT*FROM Sneaker")
-    fun getAllSneakersPaged(): PagingSource<Int, Sneaker>
+    @Query("SELECT * FROM Sneaker WHERE LOWER(brand) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(model) LIKE '%' || LOWER(:searchString) || '%'")
+    fun findSneakersByBrandOrModel(searchString: String): PagingSource<Int, Sneaker>
     @Query("select * from Sneaker")
     fun getAll(): PagingSource<Int, Sneaker>
     @Query("SELECT * FROM Sneaker WHERE sneakerId = :id")

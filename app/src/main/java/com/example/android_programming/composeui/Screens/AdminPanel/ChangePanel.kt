@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
@@ -36,7 +37,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun ChangePanel(navHostController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
-    val list = sneakerViewModel.sneakerList.collectAsLazyPagingItems()
+    val list = sneakerViewModel.sneakerList.collectAsState().value.collectAsLazyPagingItems()
 
     Column(
         modifier = Modifier

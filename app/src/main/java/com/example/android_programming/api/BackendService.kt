@@ -1,5 +1,6 @@
 package com.example.android_programming.api
 
+import androidx.paging.PagingSource
 import com.example.android_programming.api.model.BasketSneakerRemote
 import com.example.android_programming.api.model.OrderRemote
 import com.example.android_programming.api.model.OrderSneakerRemote
@@ -53,7 +54,9 @@ interface BackendService {
     @GET("sneaker/findSneakersByString/{string}")
     suspend fun findSneakersByString(
         @Path("string") str: String,
-    ): List<SneakerRemote>
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): PagingSource<Int, SneakerRemote>
 
     //USER
     @POST("user/signup")

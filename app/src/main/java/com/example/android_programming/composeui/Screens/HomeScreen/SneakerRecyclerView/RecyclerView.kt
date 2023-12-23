@@ -45,11 +45,12 @@ import kotlinx.serialization.builtins.serializer
 
 @Composable
 fun RecyclerView(navHostController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
-    val sneakerLazyPagingItems = sneakerViewModel.sneakerList.collectAsLazyPagingItems()
+    val sneakerLazyPagingItems = sneakerViewModel.sneakerList.collectAsState().value.collectAsLazyPagingItems()
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .padding(bottom = 60.dp)
     ) {
         item {
             Column(
@@ -62,7 +63,7 @@ fun RecyclerView(navHostController: NavHostController, sneakerViewModel: Sneaker
                         .padding(20.dp, 20.dp, 20.dp, 10.dp)
                         .clip(RoundedCornerShape(10.dp))
                 ) { searchText ->
-                    // Обработка введенного текста поиска
+                    sneakerViewModel.searchSneakersByFilter(searchText)
                 }
                 Sales()
                 FilterByBrand()
