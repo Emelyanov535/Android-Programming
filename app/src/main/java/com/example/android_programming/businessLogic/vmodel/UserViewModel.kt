@@ -10,12 +10,13 @@ import com.example.android_programming.model.User
 import com.example.android_programming.businessLogic.repo.UserRepository
 import kotlinx.coroutines.launch
 
-class UserViewModel(private val userRepository: UserRepository): ViewModel() {
+class UserViewModel(private val userRepository: UserRepository): MyViewModel() {
 
     var name = mutableStateOf("")
     val surname = mutableStateOf("")
     val email = mutableStateOf("")
     val password = mutableStateOf("")
+
     fun createUser() = viewModelScope.launch {
         val user = User(
             name = name.value,
@@ -27,9 +28,21 @@ class UserViewModel(private val userRepository: UserRepository): ViewModel() {
         )
         userRepository.createUser(user)
     }
-    fun authUser() = viewModelScope.launch {
-        val user = userRepository.authUser(UserRemoteSignIn(email.value, password.value))
-        GlobalUser.getInstance().setUser(user)
+//    fun authUser() = viewModelScope.launch {
+//        val user = userRepository.authUser(UserRemoteSignIn(email.value, password.value))
+//        GlobalUser.getInstance().setUser(user)
+//    }
+
+    fun authUser() {
+        runInScope(
+            actionSuccess = {
+                val user = userRepository.authUser(UserRemoteSignIn(email.value, password.value))
+                GlobalUser.getInstance().setUser(user)
+            },
+            actionError = {
+                GlobalUser.getInstance().setUser(null)
+            }
+        )
     }
 
     fun isValidEmail(email: String): Boolean {

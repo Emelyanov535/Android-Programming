@@ -53,8 +53,6 @@ interface BackendService {
     @GET("sneaker/findSneakersByString/{string}")
     suspend fun findSneakersByString(
         @Path("string") str: String,
-        nextPageNumber: Int,
-        loadSize: Int
     ): List<SneakerRemote>
 
     //USER

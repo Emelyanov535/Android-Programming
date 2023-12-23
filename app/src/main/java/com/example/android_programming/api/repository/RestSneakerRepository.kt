@@ -47,6 +47,10 @@ class RestSneakerRepository(
         ).flow
     }
 
+//    override suspend fun getSearchableSneakers(str: String): List<Sneaker> {
+//        return service.findSneakersByString(str).map { it.toSneaker() }
+//    }
+
     override suspend fun getSneakerById(id: Int): Sneaker = service.getSneaker(id).toSneaker()
     override suspend fun insertSneaker(sneaker: Sneaker) {
         service.createSneaker(sneaker.toSneakerRemote())
@@ -59,4 +63,5 @@ class RestSneakerRepository(
     override suspend fun deleteSneaker(sneaker: Sneaker) {
         sneaker.sneakerId?.let { service.deleteSneaker(it) }
     }
+
 }
