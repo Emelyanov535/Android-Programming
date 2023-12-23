@@ -54,32 +54,18 @@ import com.example.android_programming.businessLogic.vmodel.UserViewModel
 import com.example.android_programming.composeui.ErrorPlaceholder
 import com.example.android_programming.composeui.LoadingPlaceholder
 import com.example.android_programming.composeui.Screens.ErrorSnackbar
+import com.example.android_programming.composeui.circular
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun circular(){
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-        Spacer(modifier = Modifier.height(16.dp))
-        Text("Loading...", fontSize = 18.sp)
-    }
-}
-@Composable
 fun SignInCard(navController: NavHostController, userViewModel: UserViewModel = viewModel(factory = AppViewModelProvider.Factory), basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val context = LocalContext.current
     when(userViewModel.apiStatus){
         ApiStatus.LOADING -> circular()
-        ApiStatus.ERROR -> Toast.makeText(context, "Возникла ошибка: " + userViewModel.apiError, Toast.LENGTH_SHORT).show()
-        else -> {
-
-        }
+        ApiStatus.ERROR -> Toast.makeText(context, "Не верные данные или пользователя не существует: " + userViewModel.apiError, Toast.LENGTH_SHORT).show()
+        else -> {}
     }
     Row(
         modifier = Modifier
@@ -187,8 +173,12 @@ fun SignInCard(navController: NavHostController, userViewModel: UserViewModel = 
                     contentColor = Color.White
                 ),
                 onClick = {
-                    userViewModel.authUser()
-                    navController.navigate("profile")
+                    if(userViewModel.email.value != "" && userViewModel.password.value != ""){
+                        userViewModel.authUser()
+                        navController.navigate("profile")
+                    }else{
+                        Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()

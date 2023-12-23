@@ -26,23 +26,25 @@ class UserViewModel(private val userRepository: UserRepository): MyViewModel() {
             role = "USER",
             photo = R.drawable.shailushai
         )
-        userRepository.createUser(user)
-    }
-//    fun authUser() = viewModelScope.launch {
-//        val user = userRepository.authUser(UserRemoteSignIn(email.value, password.value))
-//        GlobalUser.getInstance().setUser(user)
-//    }
-
-    fun authUser() {
         runInScope(
             actionSuccess = {
-                val user = userRepository.authUser(UserRemoteSignIn(email.value, password.value))
-                GlobalUser.getInstance().setUser(user)
-            },
-            actionError = {
-                GlobalUser.getInstance().setUser(null)
+                userRepository.createUser(user)
             }
         )
+    }
+
+    fun authUser() {
+        if(email.value != "" && password.value != ""){
+            runInScope(
+                actionSuccess = {
+                    val user = userRepository.authUser(UserRemoteSignIn(email.value, password.value))
+                    GlobalUser.getInstance().setUser(user)
+                },
+                actionError = {
+                    GlobalUser.getInstance().setUser(null)
+                }
+            )
+        }
     }
 
     fun isValidEmail(email: String): Boolean {

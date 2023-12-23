@@ -50,7 +50,7 @@ fun ProfileCard(navHostController: NavHostController) {
                 contentDescription = null,
                 modifier = Modifier
                     .size(150.dp)
-                    .border(2.dp, Color.White, CircleShape)
+                    .border(2.dp, colorResource(id = R.color.figma), CircleShape)
                     .padding(16.dp)
                     .clip(CircleShape)
             )
@@ -80,6 +80,35 @@ fun ProfileCard(navHostController: NavHostController) {
                     .padding(16.dp, 16.dp, 16.dp, 0.dp)
             ) {
                 Text("My order")
+            }
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = colorResource(id = R.color.figma_blue),
+                    contentColor = Color.White
+                ),
+                onClick = {
+                    //update user
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 0.dp, 16.dp, 0.dp)
+            ) {
+                Text("Update profile")
+            }
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = colorResource(id = R.color.figma_blue),
+                    contentColor = Color.White
+                ),
+                onClick = {
+                    GlobalUser.getInstance().setUser(null)
+                    navHostController.navigate("profile")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 0.dp, 16.dp, 16.dp)
+            ) {
+                Text("Exit")
             }
         }
     }

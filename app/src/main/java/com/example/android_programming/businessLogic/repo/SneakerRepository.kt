@@ -11,6 +11,7 @@ interface SneakerRepository {
     suspend fun deleteSneaker(sneaker: Sneaker)
     suspend fun getSneakerById(id: Int): Sneaker
     fun getAllSneakers(): Flow<PagingData<Sneaker>>
-    fun getAllSneakerByFilter(str: String): PagingSource<Int, Sneaker>
     fun call(str: String): Flow<PagingData<Sneaker>>
+    fun callAdidas(): Flow<PagingData<Sneaker>>
+    fun callNike(): Flow<PagingData<Sneaker>>
 }

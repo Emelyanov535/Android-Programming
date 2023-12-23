@@ -28,4 +28,8 @@ interface SneakerDao {
     suspend fun getSneakerById(id: Int): Sneaker
     @Query("DELETE FROM Sneaker")
     suspend fun deleteAll()
+    @Query("SELECT * FROM Sneaker WHERE brand='ADIDAS' or brand='adidas' or brand='Adidas'")
+    fun findSneakersByAdidas(): PagingSource<Int, Sneaker>
+    @Query("SELECT * FROM Sneaker WHERE brand='NIKE' or brand='nike' or brand='Nike'")
+    fun findSneakersByNike(): PagingSource<Int, Sneaker>
 }

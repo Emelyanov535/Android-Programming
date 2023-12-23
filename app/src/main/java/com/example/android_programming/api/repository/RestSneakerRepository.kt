@@ -47,12 +47,16 @@ class RestSneakerRepository(
         ).flow
     }
 
-    override fun getAllSneakerByFilter(str: String): PagingSource<Int, Sneaker> {
-        return dbSneakerRepository.getAllSneakerByFilter(str)
-    }
-
     override fun call(str: String): Flow<PagingData<Sneaker>> {
         return dbSneakerRepository.call(str)
+    }
+
+    override fun callAdidas(): Flow<PagingData<Sneaker>> {
+        return dbSneakerRepository.callAdidas()
+    }
+
+    override fun callNike(): Flow<PagingData<Sneaker>> {
+        return dbSneakerRepository.callNike()
     }
 
     override suspend fun getSneakerById(id: Int): Sneaker = service.getSneaker(id).toSneaker()

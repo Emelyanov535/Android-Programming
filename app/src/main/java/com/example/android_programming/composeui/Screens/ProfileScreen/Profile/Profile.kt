@@ -25,20 +25,6 @@ fun Person(navHostController: NavHostController) {
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center
     ) {
-        Button(
-            onClick = {
-                GlobalUser.getInstance().setUser(null)
-                navHostController.navigate("profile")
-            },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = colorResource(id = R.color.white),
-                contentColor = Color.Black
-            ),
-            modifier = Modifier
-                .padding(16.dp, 0.dp)
-        ) {
-            Text("Exit")
-        }
         ProfileCard(navHostController)
     }
 }

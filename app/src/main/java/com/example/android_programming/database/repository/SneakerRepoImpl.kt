@@ -33,8 +33,6 @@ class SneakerRepoImpl(private val sneakerDao: SneakerDao) : SneakerRepository {
 
     fun getAllSneakersPagingSource(): PagingSource<Int, Sneaker> = sneakerDao.getAll()
 
-    override fun getAllSneakerByFilter(str: String): PagingSource<Int, Sneaker> = sneakerDao.findSneakersByBrandOrModel(str)
-
     override fun call(str: String): Flow<PagingData<Sneaker>> {
         return Pager(
             PagingConfig(
@@ -43,6 +41,28 @@ class SneakerRepoImpl(private val sneakerDao: SneakerDao) : SneakerRepository {
             ),
         ) {
             sneakerDao.findSneakersByBrandOrModel(str)
+        }.flow
+    }
+
+    override fun callAdidas(): Flow<PagingData<Sneaker>> {
+        return Pager(
+            PagingConfig(
+                pageSize = AppContainer.LIMIT,
+                enablePlaceholders = false
+            ),
+        ) {
+            sneakerDao.findSneakersByAdidas()
+        }.flow
+    }
+
+    override fun callNike(): Flow<PagingData<Sneaker>> {
+        return Pager(
+            PagingConfig(
+                pageSize = AppContainer.LIMIT,
+                enablePlaceholders = false
+            ),
+        ) {
+            sneakerDao.findSneakersByNike()
         }.flow
     }
 }

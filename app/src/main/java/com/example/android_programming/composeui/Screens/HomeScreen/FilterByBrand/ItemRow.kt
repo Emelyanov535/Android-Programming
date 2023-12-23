@@ -2,6 +2,7 @@ package com.example.android_programming.composeui.Screens.HomeScreen.FilterByBra
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,7 +26,7 @@ fun ItemRow(item: ItemFilterByBrand) {
         modifier = Modifier
             .clip(RoundedCornerShape(10.dp))
             .background(colorResource(id = R.color.figma))
-
+            .clickable { item.onClick() }
     ) {
         Image(
             painter = painterResource(id = item.imageId),
@@ -36,10 +37,4 @@ fun ItemRow(item: ItemFilterByBrand) {
                 .size(30.dp)
         )
     }
-}
-
-@Composable
-@Preview
-fun PreviewItemRow(){
-    ItemRow(item = ItemFilterByBrand(R.drawable.jordan))
 }

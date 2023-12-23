@@ -51,4 +51,16 @@ class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewMo
             _sneakerList.value = filteredSneakers
         }
     }
+    fun searchSneakersByAdidas() {
+        viewModelScope.launch {
+            val filteredSneakers = sneakerRepository.callAdidas().cachedIn(viewModelScope)
+            _sneakerList.value = filteredSneakers
+        }
+    }
+    fun searchSneakersByNike() {
+        viewModelScope.launch {
+            val filteredSneakers = sneakerRepository.callNike().cachedIn(viewModelScope)
+            _sneakerList.value = filteredSneakers
+        }
+    }
 }

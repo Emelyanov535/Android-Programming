@@ -10,11 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.android_programming.R
+import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
+import com.example.android_programming.businessLogic.vmodel.SneakerViewModel
 
 @Preview
 @Composable
-fun FilterByBrand() {
+fun FilterByBrand(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     Row {
         LazyRow(
             modifier = Modifier
@@ -25,10 +28,18 @@ fun FilterByBrand() {
         ){
             itemsIndexed(
                 listOf(
-                    ItemFilterByBrand(R.drawable.jordan),
-                    ItemFilterByBrand(R.drawable.jordan),
-                    ItemFilterByBrand(R.drawable.jordan),
-                    ItemFilterByBrand(R.drawable.jordan)
+                    ItemFilterByBrand(R.drawable.jordan){
+                        sneakerViewModel.searchSneakersByNike()
+                    },
+                    ItemFilterByBrand(R.drawable.adidas){
+                        sneakerViewModel.searchSneakersByAdidas()
+                    },
+                    ItemFilterByBrand(R.drawable.jordan){
+                        sneakerViewModel.searchSneakersByNike()
+                    },
+                    ItemFilterByBrand(R.drawable.adidas){
+                        sneakerViewModel.searchSneakersByAdidas()
+                    },
                 )
             ){ _, item->
                 ItemRow(item = item)
