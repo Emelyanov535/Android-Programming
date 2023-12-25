@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.android_programming.R
 import com.example.android_programming.database.dao.BasketDao
@@ -14,6 +15,7 @@ import com.example.android_programming.database.dao.RemoteKeysDao
 import com.example.android_programming.model.RemoteKeys
 import com.example.android_programming.model.Basket
 import com.example.android_programming.model.BasketSneakers
+import com.example.android_programming.model.Converters
 import com.example.android_programming.model.Order
 import com.example.android_programming.model.OrderSneaker
 import com.example.android_programming.model.Sneaker
@@ -22,7 +24,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Sneaker::class, User::class, Order::class, OrderSneaker::class, Basket::class, BasketSneakers::class, RemoteKeys::class], version = 7)
+@Database(entities = [Sneaker::class, User::class, Order::class, OrderSneaker::class, Basket::class, BasketSneakers::class, RemoteKeys::class], version = 8)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun sneakerDao(): SneakerDao
     abstract fun userDao(): UserDao
@@ -47,15 +50,15 @@ abstract class AppDatabase : RoomDatabase() {
                 userDao.createUser(user2)
                 userDao.createUser(user3)
                 // Sneaker
-                val sneakerDao = database.sneakerDao()
-                val sneaker1 = Sneaker(null, "Nike", "Air Force 1", "nice", 159.99, R.drawable.img_1)
-                val sneaker2 = Sneaker(null, "Adidas", "ZX 750", "beautiful", 169.99, R.drawable.img_2)
-                val sneaker3 = Sneaker(null, "Reebok", "Classic", "amazing", 179.99, R.drawable.img_3)
-                val sneaker4 = Sneaker(null, "Puma", "Classic", "normal", 189.99, R.drawable.img_4)
-                sneakerDao.insert(sneaker1)
-                sneakerDao.insert(sneaker2)
-                sneakerDao.insert(sneaker3)
-                sneakerDao.insert(sneaker4)
+//                val sneakerDao = database.sneakerDao()
+//                val sneaker1 = Sneaker(null, "Nike", "Air Force 1", "nice", 159.99, R.drawable.img_1)
+//                val sneaker2 = Sneaker(null, "Adidas", "ZX 750", "beautiful", 169.99, R.drawable.img_2)
+//                val sneaker3 = Sneaker(null, "Reebok", "Classic", "amazing", 179.99, R.drawable.img_3)
+//                val sneaker4 = Sneaker(null, "Puma", "Classic", "normal", 189.99, R.drawable.img_4)
+//                sneakerDao.insert(sneaker1)
+//                sneakerDao.insert(sneaker2)
+//                sneakerDao.insert(sneaker3)
+//                sneakerDao.insert(sneaker4)
                 // Order
                 val basketDao = database.basketDao()
                 val basket1 = Basket(1,1)

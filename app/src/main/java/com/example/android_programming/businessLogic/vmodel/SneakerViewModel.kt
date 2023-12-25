@@ -1,7 +1,10 @@
 package com.example.android_programming.businessLogic.vmodel
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -22,17 +25,16 @@ class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewMo
     val model = mutableStateOf("")
     val description = mutableStateOf("")
     val price = mutableStateOf("")
-    val photo = mutableIntStateOf(R.drawable.img)
 
     private val _sneakerList = MutableStateFlow(sneakerRepository.getAllSneakers())
     val sneakerList: StateFlow<Flow<PagingData<Sneaker>>> get() = _sneakerList
-    fun insertSneaker() = viewModelScope.launch {
+    fun insertSneaker(photo: Bitmap) = viewModelScope.launch {
         val sneaker = Sneaker(
             brand = brand.value,
             model = model.value,
             description = description.value,
             price = price.value.toDouble(),
-            photo = photo.value
+            photo = photo
             )
         sneakerRepository.insertSneaker(sneaker)
     }

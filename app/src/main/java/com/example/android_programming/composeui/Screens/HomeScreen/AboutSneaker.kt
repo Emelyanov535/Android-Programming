@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -48,7 +49,7 @@ fun AboutSneaker(sneaker: Sneaker, onBackClick: () -> Unit) {
             )
         }
         Image(
-            painter = painterResource(id = sneaker.photo),
+            bitmap = sneaker.photo.asImageBitmap(),
             contentDescription = "image",
             contentScale = ContentScale.FillWidth,
             modifier = Modifier

@@ -1,5 +1,13 @@
 package com.example.android_programming.composeui.Screens.AdminPanel
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -20,11 +28,15 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -40,7 +52,24 @@ import com.example.android_programming.businessLogic.vmodel.SneakerViewModel
 
 @Composable
 fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)){
-    val photoManager = PhotoManager()
+    val context = LocalContext.current
+    val photo = remember { mutableStateOf<Bitmap>(BitmapFactory.decodeResource(context.resources, R.drawable.adidas)) }
+
+    val imageData = remember { mutableStateOf<Uri?>(null) }
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            imageData.value = uri
+        }
+    imageData.value?.let {
+        if (Build.VERSION.SDK_INT < 28) {
+            photo.value = MediaStore.Images
+                .Media.getBitmap(context.contentResolver, imageData.value)
+        } else {
+            val source = ImageDecoder
+                .createSource(context.contentResolver, imageData.value!!)
+            photo.value = ImageDecoder.decodeBitmap(source)
+        }
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,7 +84,7 @@ fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewMod
             verticalArrangement = Arrangement.Center
         ) {
             Image(
-                painter = painterResource(id = sneakerViewModel.photo.value),
+                bitmap = photo.value.asImageBitmap(),
                 contentDescription = "image",
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
@@ -69,7 +98,7 @@ fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewMod
                     contentColor = Color.White
                 ),
                 onClick = {
-                    sneakerViewModel.photo.value = photoManager.changePhoto(sneakerViewModel.photo.value)
+                    launcher.launch("image/*")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -193,7 +222,7 @@ fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewMod
                     contentColor = Color.White
                 ),
                 onClick = {
-                    sneakerViewModel.insertSneaker()
+                    sneakerViewModel.insertSneaker(photo.value)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

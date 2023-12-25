@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -69,7 +70,7 @@ fun OrderCard(order: Order, orderViewModel: OrderViewModel = viewModel(factory =
                     for(sneaker in sneakers){
                         Image(
                             contentScale = ContentScale.FillBounds,
-                            painter = painterResource(id = sneaker.photo),
+                            bitmap = sneaker.photo.asImageBitmap(),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(70.dp)

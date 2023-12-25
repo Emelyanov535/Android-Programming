@@ -1,5 +1,6 @@
 package com.example.android_programming.model
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -17,5 +18,5 @@ data class Sneaker(
     @ColumnInfo(name = "Price")
     val price: Double,
     @ColumnInfo(name = "Photo")
-    val photo: Int
+    val photo: Bitmap
 )

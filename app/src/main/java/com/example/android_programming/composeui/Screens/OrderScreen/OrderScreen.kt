@@ -1,5 +1,6 @@
 package com.example.android_programming.composeui.Screens.OrderScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
@@ -39,6 +41,7 @@ import kotlinx.coroutines.runBlocking
 @Composable
 fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory), orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,11 +67,19 @@ fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketVie
             ),
             onClick = {
                 if(GlobalUser.getInstance().getUser() != null){
-                    orderViewModel.createOrder()
-                    scope.launch {
-                        basketViewModel.deleteAllSneakerFromBasket(basketViewModel.getUserBasketId(userId!!).first())
+                    if(orderViewModel.city.value != "" && orderViewModel.street.value != "" && orderViewModel.house.value != ""){
+                        if(!orderViewModel.selectedItems.value.isNullOrEmpty()){
+                            orderViewModel.createOrder()
+                            scope.launch {
+                                basketViewModel.deleteAllSneakerFromBasket(basketViewModel.getUserBasketId(userId!!).first())
+                            }
+                            navHostController.navigate("home")
+                        }else{
+                            Toast.makeText(context, "Список заказов пуст", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
                     }
-                    navHostController.navigate("home")
                 }else{
                     navHostController.navigate("login")
                 }

@@ -5,6 +5,7 @@ import com.example.android_programming.api.repository.RestSneakerRepository
 import com.example.android_programming.api.repository.RestUserRepository
 import com.example.android_programming.businessLogic.repo.BasketRepository
 import com.example.android_programming.businessLogic.repo.OrderRepository
+import com.example.android_programming.businessLogic.repo.ReportRepository
 import com.example.android_programming.businessLogic.repo.SneakerRepository
 import com.example.android_programming.businessLogic.repo.UserRepository
 
@@ -13,6 +14,7 @@ interface AppContainer {
     val userRepo: UserRepository
     val orderRepo: OrderRepository
     val basketRepo: BasketRepository
+    val reportRepo: ReportRepository
 
     companion object {
         const val TIMEOUT = 500L

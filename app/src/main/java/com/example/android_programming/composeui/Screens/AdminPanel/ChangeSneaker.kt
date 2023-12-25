@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -53,7 +54,6 @@ fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: S
     val description = remember{mutableStateOf(sneaker.description)}
     val price = remember{mutableStateOf(sneaker.price.toString())}
     var photo by remember { mutableStateOf(sneaker.photo) }
-    val photoManager = PhotoManager()
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,7 +80,7 @@ fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: S
                 )
             }
             Image(
-                painter = painterResource(id = photo),
+                bitmap = photo.asImageBitmap(),
                 contentDescription = "image",
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
@@ -95,7 +95,7 @@ fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: S
                     contentColor = Color.White
                 ),
                 onClick = {
-                    photo = photoManager.changePhoto(photo)
+//                    photo = photoManager.changePhoto(photo)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

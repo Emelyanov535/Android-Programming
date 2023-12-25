@@ -2,6 +2,7 @@ package com.example.android_programming.composeui.Navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -20,4 +21,5 @@ sealed class NavItem(val route: String, val icon: ImageVector?){
     object ChangePanel : NavItem("change", null)
     object AboutSneaker : NavItem("aboutSneaker/{sneakerItem}", null)
     object ChangeSneaker : NavItem("changeSneaker/{sneakerItem}", null)
+    object Report : NavItem("report", Icons.Default.DateRange)
 }

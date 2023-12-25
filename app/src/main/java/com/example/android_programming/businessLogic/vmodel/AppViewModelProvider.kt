@@ -20,6 +20,9 @@ object AppViewModelProvider {
         initializer {
             BasketViewModel(app().container.basketRepo)
         }
+        initializer {
+            ReportViewModel()
+        }
     }
 }
 

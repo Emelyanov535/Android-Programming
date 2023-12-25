@@ -28,10 +28,10 @@ fun Navigate() {
         NavItem.Order,
         NavItem.Profile,
         NavItem.AdminPanel,
+        NavItem.Report,
     )
 
     Scaffold(bottomBar = {
-        // Оставьте код навигационного бара без изменений
         BottomNavigation(
             backgroundColor = Color.White
         ) {

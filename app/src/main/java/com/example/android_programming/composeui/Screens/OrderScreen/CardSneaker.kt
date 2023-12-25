@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -49,7 +50,7 @@ import kotlinx.coroutines.runBlocking
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory), orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val userId = GlobalUser.getInstance().getUser()?.userId!!
     val quantityState by basketViewModel.getQuantityState(userId, item.sneakerId!!).collectAsState()
     val scope = rememberCoroutineScope()
@@ -63,7 +64,7 @@ fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Image(
-            painter = painterResource(id = item.photo),
+            bitmap = item.photo.asImageBitmap(),
             contentDescription = "image",
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
@@ -91,11 +92,6 @@ fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(
                     scope.launch {
                         basketViewModel.deleteSneakerFromBasket(basketViewModel.getUserBasketId(GlobalUser.getInstance().getUser()?.userId!!).first(), item.sneakerId!!)
                     }
-//                    runBlocking {
-//                        launch(Dispatchers.Default) {
-//                            basketViewModel.deleteSneakerFromBasket(basketViewModel.getUserBasketId(GlobalUser.getInstance().getUser()?.userId!!), item.sneakerId!!)
-//                        }
-//                    }
                 },
                 modifier = Modifier
                     .padding(end = 16.dp)
@@ -106,11 +102,17 @@ fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(
 
         Column {
             Row {
-                IconButton(onClick = { basketViewModel.decrementQuantity(userId ,item.sneakerId!!) }) {
+                IconButton(onClick = {
+                    basketViewModel.decrementQuantity(userId ,item.sneakerId!!)
+                    orderViewModel.updateSubTotal(userId)
+                }) {
                     Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "Decrease Quantity")
                 }
                 Text("$quantityState")
-                IconButton(onClick = { basketViewModel.incrementQuantity(userId, item.sneakerId!!) }) {
+                IconButton(onClick = {
+                    basketViewModel.incrementQuantity(userId, item.sneakerId!!)
+                    orderViewModel.updateSubTotal(userId)
+                }) {
                     Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Increase Quantity")
                 }
             }

@@ -20,6 +20,7 @@ import com.example.android_programming.composeui.Screens.ProfileScreen.SignUp.Si
 import com.example.android_programming.model.Sneaker
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.OrderViewModel
+import com.example.android_programming.composeui.Screens.Report.ReportScreen
 import com.google.gson.Gson
 
 @Composable
@@ -71,6 +72,9 @@ fun NavController(navController: NavHostController){
             sneakerItem?.let { ChangeSneaker(it, onBackClick = {
                 navController.navigateUp() })
             }
+        }
+        composable(NavItem.Report.route){
+            ReportScreen(navController)
         }
     }
 }

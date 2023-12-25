@@ -13,11 +13,7 @@ interface BasketRepository {
     suspend fun insertBasketSneaker(basketSneaker: BasketSneakers)
     suspend fun getBasketWithSneakers(id: Int): Flow<List<Sneaker>>
     suspend fun getUserBasketId(id: Int): Flow<Int>
-//    fun getAllBasket(): Flow<List<Basket>>
-//    suspend fun delete(basket: Basket)
-//    suspend fun createBasket(basket: Basket):Long
     suspend fun removeSneakerFromBasket(basketId: Int, sneakerId: Int)
-//    suspend fun updateSneakerQuantity(basketId: Int, sneakerId: Int, quantity: Int)
     suspend fun incrementSneakerQuantity(basketId: Int, sneakerId: Int)
     suspend fun decrementSneakerQuantity(basketId: Int, sneakerId: Int)
     suspend fun getQuantity(basketId: Int, sneakerId: Int): Int?

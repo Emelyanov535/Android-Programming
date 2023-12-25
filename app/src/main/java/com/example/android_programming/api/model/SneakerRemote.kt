@@ -10,7 +10,7 @@ data class SneakerRemote (
     val model: String = "",
     val description: String = "",
     val price: Double = 0.0,
-    val photo: Int = 0
+    val photo: String = ""
 )
 
 fun SneakerRemote.toSneaker():Sneaker = Sneaker(
@@ -19,7 +19,7 @@ fun SneakerRemote.toSneaker():Sneaker = Sneaker(
     model,
     description,
     price,
-    photo
+    RemoteConverters.toBitmap(photo)
 )
 
 fun Sneaker.toSneakerRemote():SneakerRemote = SneakerRemote(
@@ -28,5 +28,5 @@ fun Sneaker.toSneakerRemote():SneakerRemote = SneakerRemote(
     model,
     description,
     price,
-    photo
+    RemoteConverters.fromBitmap(photo)
 )
