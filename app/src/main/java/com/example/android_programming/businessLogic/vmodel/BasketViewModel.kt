@@ -96,7 +96,4 @@ class BasketViewModel(private val basketRepository: BasketRepository): ViewModel
             }
         }
     }
-    fun deleteAllSneakerFromBasket(basketId: Int) = viewModelScope.launch {
-        basketRepository.deleteAllSneakerFromBasket(basketId)
-    }
 }

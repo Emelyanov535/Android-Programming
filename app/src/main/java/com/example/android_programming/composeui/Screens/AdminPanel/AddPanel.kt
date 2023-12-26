@@ -53,7 +53,7 @@ import com.example.android_programming.businessLogic.vmodel.SneakerViewModel
 @Composable
 fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)){
     val context = LocalContext.current
-    val photo = remember { mutableStateOf<Bitmap>(BitmapFactory.decodeResource(context.resources, R.drawable.adidas)) }
+    val photo = remember { mutableStateOf<Bitmap>(BitmapFactory.decodeResource(context.resources, R.drawable.sneaker_add)) }
 
     val imageData = remember { mutableStateOf<Uri?>(null) }
     val launcher =

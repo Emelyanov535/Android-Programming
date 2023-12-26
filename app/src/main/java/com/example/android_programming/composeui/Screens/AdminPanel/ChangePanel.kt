@@ -43,7 +43,7 @@ fun ChangePanel(navHostController: NavHostController, sneakerViewModel: SneakerV
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(16.dp, 80.dp)
+            .padding(16.dp, 16.dp)
     ) {
         Row {
             LazyColumn(

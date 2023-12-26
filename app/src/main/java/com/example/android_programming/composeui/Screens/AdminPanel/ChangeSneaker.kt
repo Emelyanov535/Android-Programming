@@ -1,5 +1,13 @@
 package com.example.android_programming.composeui.Screens.AdminPanel
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,6 +41,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -53,7 +62,25 @@ fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: S
     val model = remember{mutableStateOf(sneaker.model)}
     val description = remember{mutableStateOf(sneaker.description)}
     val price = remember{mutableStateOf(sneaker.price.toString())}
-    var photo by remember { mutableStateOf(sneaker.photo) }
+    val context = LocalContext.current
+
+    val photo = remember { mutableStateOf<Bitmap>(sneaker.photo) }
+
+    val imageData = remember { mutableStateOf<Uri?>(null) }
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            imageData.value = uri
+        }
+    imageData.value?.let {
+        if (Build.VERSION.SDK_INT < 28) {
+            photo.value = MediaStore.Images
+                .Media.getBitmap(context.contentResolver, imageData.value)
+        } else {
+            val source = ImageDecoder
+                .createSource(context.contentResolver, imageData.value!!)
+            photo.value = ImageDecoder.decodeBitmap(source)
+        }
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,7 +107,7 @@ fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: S
                 )
             }
             Image(
-                bitmap = photo.asImageBitmap(),
+                bitmap = photo.value.asImageBitmap(),
                 contentDescription = "image",
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
@@ -95,7 +122,7 @@ fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: S
                     contentColor = Color.White
                 ),
                 onClick = {
-//                    photo = photoManager.changePhoto(photo)
+                    launcher.launch("image/*")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -225,7 +252,7 @@ fun ChangeSneaker(sneaker: Sneaker, onBackClick: () -> Unit, sneakerViewModel: S
                             brand = brand.value,
                             model = model.value,
                             description = description.value,
-                            photo = photo,
+                            photo = photo.value,
                             price = price.value.toDouble()
                         )
                     )

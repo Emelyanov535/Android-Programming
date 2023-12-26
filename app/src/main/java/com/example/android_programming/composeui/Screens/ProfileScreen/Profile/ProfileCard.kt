@@ -87,20 +87,6 @@ fun ProfileCard(navHostController: NavHostController) {
                     contentColor = Color.White
                 ),
                 onClick = {
-                    //update user
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp, 0.dp, 16.dp, 0.dp)
-            ) {
-                Text("Update profile")
-            }
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = colorResource(id = R.color.figma_blue),
-                    contentColor = Color.White
-                ),
-                onClick = {
                     GlobalUser.getInstance().setUser(null)
                     navHostController.navigate("profile")
                 },
