@@ -21,7 +21,7 @@ object AppViewModelProvider {
             BasketViewModel(app().container.basketRepo)
         }
         initializer {
-            ReportViewModel()
+            ReportViewModel(app().container.reportRepo)
         }
     }
 }

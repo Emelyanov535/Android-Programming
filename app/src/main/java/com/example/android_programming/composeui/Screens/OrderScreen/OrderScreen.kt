@@ -42,6 +42,12 @@ import kotlinx.coroutines.runBlocking
 fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory), orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        val userId = GlobalUser.getInstance().getUser()?.userId
+        if (userId != null) {
+            basketViewModel.fetchBasketSneakers(userId)
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +58,6 @@ fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketVie
         DeliveryAddress(orderViewModel)
         val userId = GlobalUser.getInstance().getUser()?.userId
         if (userId != null) {
-            basketViewModel.fetchBasketSneakers(userId!!)
             val sneakerList: List<Sneaker>? = basketViewModel.sneakerList.collectAsState(null).value
             if (sneakerList != null) {
                 orderViewModel.updateSelectedItems(sneakerList)
@@ -70,9 +75,6 @@ fun OrderScreen(navHostController: NavHostController, basketViewModel: BasketVie
                     if(orderViewModel.city.value != "" && orderViewModel.street.value != "" && orderViewModel.house.value != ""){
                         if(!orderViewModel.selectedItems.value.isNullOrEmpty()){
                             orderViewModel.createOrder()
-                            scope.launch {
-                                basketViewModel.deleteAllSneakerFromBasket(basketViewModel.getUserBasketId(userId!!).first())
-                            }
                             navHostController.navigate("home")
                         }else{
                             Toast.makeText(context, "Список заказов пуст", Toast.LENGTH_SHORT).show()

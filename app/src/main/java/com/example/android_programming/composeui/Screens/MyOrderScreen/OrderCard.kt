@@ -25,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,10 +43,12 @@ import com.example.android_programming.model.Sneaker
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.util.Date
 
 @Composable
 fun OrderCard(order: Order, orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)){
+    val scope = rememberCoroutineScope()
     var sneakers by remember { mutableStateOf<List<Sneaker>>(emptyList()) }
     LaunchedEffect(order.orderId) {
         sneakers = orderViewModel.getOrderWithSneakers(order.orderId!!).first()
@@ -85,7 +88,9 @@ fun OrderCard(order: Order, orderViewModel: OrderViewModel = viewModel(factory =
                     contentColor = Color.White
                 ),
                 onClick = {
-                    orderViewModel.deleteOrder(order.orderId!!)
+                    scope.launch {
+                        orderViewModel.deleteOrder(order.orderId!!)
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()

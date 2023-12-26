@@ -28,7 +28,7 @@ class RestSneakerRepository(
     private val dbRemoteKeyRepository: RemoteKeysRepositoryImpl
 
 ) : SneakerRepository {
-    override fun getAllSneakers(): Flow<PagingData<Sneaker>> {
+    override suspend fun getAllSneakers(): Flow<PagingData<Sneaker>> {
         val pagingSourceFactory = { dbSneakerRepository.getAllSneakersPagingSource() }
 
         @OptIn(ExperimentalPagingApi::class)

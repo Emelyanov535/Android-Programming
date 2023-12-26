@@ -1,83 +1,76 @@
 package com.example.android_programming.composeui.Screens.Report
 
-
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import com.example.android_programming.R
+import com.example.android_programming.api.model.ExpandedOrderRemote
+import com.example.android_programming.api.model.toSneaker
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
+import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 import com.example.android_programming.businessLogic.vmodel.ReportViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
+import com.example.android_programming.model.Order
+import com.example.android_programming.model.Sneaker
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.util.Date
 
 @Composable
-fun ReportCard(reportViewModel: ReportViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun CardOrderForReport(item: ExpandedOrderRemote){
     Row(
         modifier = Modifier
-            .padding(16.dp)
             .fillMaxWidth()
+            .padding(0.dp, 0.dp, 0.dp, 16.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(colorResource(id = R.color.figma))
-    ) {
+    ){
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
-        ) {
-            DatePicker(
-                selectedDate = reportViewModel.dateFrom,
-                onDateSelected = { date ->
-                    reportViewModel.dateFrom.value = date
+        ){
+            Text("№ ${item.id}")
+            Text("${item.date}")
+            Text("${item.user}")
+
+            Row(){
+                for(sneaker in item.sneakerList){
+                    Image(
+                        contentScale = ContentScale.FillBounds,
+                        bitmap = sneaker.toSneaker().photo.asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(70.dp)
+                            .padding(0.dp, 10.dp, 10.dp, 10.dp)
+                    )
                 }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            DatePicker(
-                selectedDate = reportViewModel.dateTo,
-                onDateSelected = { date ->
-                    reportViewModel.dateTo.value = date
-                }
-            )
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = colorResource(id = R.color.figma_blue),
-                    contentColor = Color.White
-                ),
-                onClick = {
-                    reportViewModel.updateReportData(reportViewModel.dateFrom.value, reportViewModel.dateTo.value)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text("Get report")
             }
         }
     }
 }
-
-

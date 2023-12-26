@@ -1,6 +1,8 @@
 package com.example.android_programming.businessLogic.vmodel
 
+import android.util.Log
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,10 +16,17 @@ import com.example.android_programming.model.Sneaker
 import com.example.android_programming.model.UserWithOrder
 import com.example.android_programming.businessLogic.repo.BasketRepository
 import com.example.android_programming.businessLogic.repo.OrderRepository
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.Date
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class OrderViewModel(private val orderRepository: OrderRepository, private val basketRepository: BasketRepository) : MyViewModel() {
 
@@ -47,6 +56,9 @@ class OrderViewModel(private val orderRepository: OrderRepository, private val b
 
     fun createOrder() = viewModelScope.launch {
         val userId = GlobalUser.getInstance().getUser()?.userId!!
+        Log.d("USER ID", userId.toString())
+        val userBasketId = basketRepository.getUserBasketId(userId).first()
+        Log.d("USER BASKET ID", userBasketId.toString())
         val subTotal = getSubTotal(userId)
         val order = Order(
             date = Date().time,
@@ -60,14 +72,17 @@ class OrderViewModel(private val orderRepository: OrderRepository, private val b
         )
         val orderId = orderRepository.createOrder(order)
         for (sneaker in selectedItems.value.orEmpty()) {
-            val userId = GlobalUser.getInstance().getUser()?.userId!!
-            val orderSneaker =  OrderSneaker( orderId.toInt(), sneaker.sneakerId!!, basketRepository.getQuantity(basketRepository.getUserBasketId(userId).first(), sneaker.sneakerId)!!)
+            val quantity = basketRepository.getQuantity(userBasketId, sneaker.sneakerId!!).first()
+            Log.d("QUANTITY", quantity.toString())
+            val orderSneaker =  OrderSneaker( orderId.toInt(), sneaker.sneakerId, quantity)
             orderRepository.insertOrderSneaker(orderSneaker)
         }
         city.value = ""
         street.value = ""
         house.value = ""
+        basketRepository.deleteAllSneakerFromBasket(userBasketId)
     }
+
 
     fun updateSubTotal(userId: Int) {
         viewModelScope.launch {

@@ -11,7 +11,6 @@ interface OrderRepository {
     suspend fun createOrder(order: Order): Long
     suspend fun insertOrderSneaker(orderSneaker: OrderSneaker)
     suspend fun delete(orderId: Int)
-suspend fun getSneakerFromOrder(id: Int): Flow<List<Sneaker>>
-//    fun getAllOrder(): Flow<List<Order>>
-suspend fun getUserOrders(id: Int) : Flow<List<Order>>
+    suspend fun getSneakerFromOrder(id: Int): Flow<List<Sneaker>>
+    suspend fun getUserOrders(id: Int) : Flow<List<Order>>
 }

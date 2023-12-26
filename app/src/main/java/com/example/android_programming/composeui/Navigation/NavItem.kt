@@ -22,4 +22,5 @@ sealed class NavItem(val route: String, val icon: ImageVector?){
     object AboutSneaker : NavItem("aboutSneaker/{sneakerItem}", null)
     object ChangeSneaker : NavItem("changeSneaker/{sneakerItem}", null)
     object Report : NavItem("report", Icons.Default.DateRange)
+    object GetReport : NavItem("getReport", null)
 }

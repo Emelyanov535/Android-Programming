@@ -32,7 +32,7 @@ class AppDataContainer(private val context: Context) : AppContainer {
         RestBasketRepository(BackendService.getInstance())
     }
     override val reportRepo: ReportRepository by lazy {
-        RestReportRepository()
+        RestReportRepository(BackendService.getInstance())
     }
     override val orderRepo: OrderRepository by lazy {
         RestOrderRepository(BackendService.getInstance())

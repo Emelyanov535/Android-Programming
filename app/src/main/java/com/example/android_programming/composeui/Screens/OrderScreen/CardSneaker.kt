@@ -20,11 +20,16 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,8 +57,14 @@ import kotlinx.coroutines.runBlocking
 @Composable
 fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(factory = AppViewModelProvider.Factory), orderViewModel: OrderViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val userId = GlobalUser.getInstance().getUser()?.userId!!
-    val quantityState by basketViewModel.getQuantityState(userId, item.sneakerId!!).collectAsState()
     val scope = rememberCoroutineScope()
+    var quantityState by remember { mutableStateOf(1) }
+    LaunchedEffect(Unit) {
+        val quantityStateFlow = basketViewModel.getQuantityState(userId, item.sneakerId!!)
+        quantityStateFlow.collect {
+            quantityState = it
+        }
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -103,15 +114,19 @@ fun CardSneakerLike(item: Sneaker, basketViewModel: BasketViewModel = viewModel(
         Column {
             Row {
                 IconButton(onClick = {
-                    basketViewModel.decrementQuantity(userId ,item.sneakerId!!)
-                    orderViewModel.updateSubTotal(userId)
+                    scope.launch {
+                        basketViewModel.decrementQuantity(userId ,item.sneakerId!!)
+                        orderViewModel.updateSubTotal(userId)
+                    }
                 }) {
                     Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "Decrease Quantity")
                 }
                 Text("$quantityState")
                 IconButton(onClick = {
-                    basketViewModel.incrementQuantity(userId, item.sneakerId!!)
-                    orderViewModel.updateSubTotal(userId)
+                    scope.launch {
+                        basketViewModel.incrementQuantity(userId, item.sneakerId!!)
+                        orderViewModel.updateSubTotal(userId)
+                    }
                 }) {
                     Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Increase Quantity")
                 }

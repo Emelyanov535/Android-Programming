@@ -19,7 +19,7 @@ class SneakerRepoImpl(private val sneakerDao: SneakerDao) : SneakerRepository {
     override suspend fun deleteSneaker(sneaker: Sneaker) = sneakerDao.delete(sneaker)
 
     override suspend fun getSneakerById(id: Int): Sneaker = sneakerDao.getSneakerById(id)
-    override fun getAllSneakers(): Flow<PagingData<Sneaker>> = Pager(
+    override suspend fun getAllSneakers(): Flow<PagingData<Sneaker>> = Pager(
         config = PagingConfig(
             pageSize = AppContainer.LIMIT,
             enablePlaceholders = false

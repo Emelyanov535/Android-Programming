@@ -16,6 +16,7 @@ import com.example.android_programming.model.Sneaker
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -26,8 +27,13 @@ class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewMo
     val description = mutableStateOf("")
     val price = mutableStateOf("")
 
-    private val _sneakerList = MutableStateFlow(sneakerRepository.getAllSneakers())
+    private val _sneakerList = MutableStateFlow<Flow<PagingData<Sneaker>>>(emptyFlow())
     val sneakerList: StateFlow<Flow<PagingData<Sneaker>>> get() = _sneakerList
+    init {
+        viewModelScope.launch {
+            _sneakerList.value = sneakerRepository.getAllSneakers()
+        }
+    }
     fun insertSneaker(photo: Bitmap) = viewModelScope.launch {
         val sneaker = Sneaker(
             brand = brand.value,

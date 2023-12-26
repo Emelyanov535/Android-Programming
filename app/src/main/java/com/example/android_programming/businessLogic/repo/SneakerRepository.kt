@@ -10,7 +10,7 @@ interface SneakerRepository {
     suspend fun updateSneaker(sneaker: Sneaker)
     suspend fun deleteSneaker(sneaker: Sneaker)
     suspend fun getSneakerById(id: Int): Sneaker
-    fun getAllSneakers(): Flow<PagingData<Sneaker>>
+    suspend fun getAllSneakers(): Flow<PagingData<Sneaker>>
     fun call(str: String): Flow<PagingData<Sneaker>>
     fun callAdidas(): Flow<PagingData<Sneaker>>
     fun callNike(): Flow<PagingData<Sneaker>>

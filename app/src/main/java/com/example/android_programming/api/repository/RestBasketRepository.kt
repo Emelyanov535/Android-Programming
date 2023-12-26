@@ -31,30 +31,13 @@ class RestBasketRepository(
         return flowOf(service.getUserBasket(id))
     }
 
-    override suspend fun getQuantity(basketId: Int, sneakerId: Int): Int? {
-        return service.getQuantity(basketId, sneakerId)
+    override suspend fun getQuantity(basketId: Int, sneakerId: Int): Flow<Int> {
+        return flowOf(service.getQuantity(basketId, sneakerId))
     }
-//
-//    override fun getAllBasket(): Flow<List<Basket>> {
-//        TODO("Not yet implemented")
-//    }
-//
-//    override suspend fun delete(basket: Basket) {
-//        TODO("Not yet implemented")
-//    }
-//
-//    override suspend fun createBasket(basket: Basket): Long {
-//        TODO("Not yet implemented")
-//    }
-//
     override suspend fun removeSneakerFromBasket(basketId: Int, sneakerId: Int) {
         service.deleteSneakerFromBasket(basketId, sneakerId)
     }
-//
-//    override suspend fun updateSneakerQuantity(basketId: Int, sneakerId: Int, quantity: Int) {
-//        TODO("Not yet implemented")
-//    }
-//
+
     override suspend fun incrementSneakerQuantity(basketId: Int, sneakerId: Int) {
         service.increment(basketId, sneakerId)
     }
@@ -62,11 +45,7 @@ class RestBasketRepository(
     override suspend fun decrementSneakerQuantity(basketId: Int, sneakerId: Int) {
         service.decrement(basketId, sneakerId)
     }
-//
-//    override suspend fun getQuantity(basketId: Int, sneakerId: Int): Int? {
-//        TODO("Not yet implemented")
-//    }
-//
+
     override suspend fun existSneaker(basketId: Int, sneakerId: Int): Boolean {
         return service.getSneaker(basketId, sneakerId)
     }

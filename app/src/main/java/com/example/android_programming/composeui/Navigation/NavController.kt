@@ -18,8 +18,6 @@ import com.example.android_programming.composeui.Screens.ProfileScreen.Profile.P
 import com.example.android_programming.composeui.Screens.ProfileScreen.SignIn.LoginScreen
 import com.example.android_programming.composeui.Screens.ProfileScreen.SignUp.SignUpScreen
 import com.example.android_programming.model.Sneaker
-import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
-import com.example.android_programming.businessLogic.vmodel.OrderViewModel
 import com.example.android_programming.composeui.Screens.Report.ReportScreen
 import com.google.gson.Gson
 
@@ -74,7 +72,7 @@ fun NavController(navController: NavHostController){
             }
         }
         composable(NavItem.Report.route){
-            ReportScreen(navController)
+            ReportScreen()
         }
     }
 }

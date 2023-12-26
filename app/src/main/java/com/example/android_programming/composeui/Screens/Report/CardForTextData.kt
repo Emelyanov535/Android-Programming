@@ -1,6 +1,5 @@
 package com.example.android_programming.composeui.Screens.Report
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,31 +13,31 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import com.example.android_programming.R
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.ReportViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
-fun ReportCard(reportViewModel: ReportViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun CardForTextData(reportViewModel: ReportViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+    val dateFormatter = remember { SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()) }
     Row(
         modifier = Modifier
-            .padding(16.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(colorResource(id = R.color.figma))
@@ -47,37 +46,32 @@ fun ReportCard(reportViewModel: ReportViewModel = viewModel(factory = AppViewMod
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center
         ) {
-            DatePicker(
-                selectedDate = reportViewModel.dateFrom,
-                onDateSelected = { date ->
-                    reportViewModel.dateFrom.value = date
-                }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            DatePicker(
-                selectedDate = reportViewModel.dateTo,
-                onDateSelected = { date ->
-                    reportViewModel.dateTo.value = date
-                }
-            )
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = colorResource(id = R.color.figma_blue),
-                    contentColor = Color.White
-                ),
-                onClick = {
-                    reportViewModel.updateReportData(reportViewModel.dateFrom.value, reportViewModel.dateTo.value)
-                },
+            Text(
+                text = "Данные с ${dateFormatter.format(reportViewModel.dateFrom.value)} по ${dateFormatter.format(reportViewModel.dateTo.value)}",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text("Get report")
-            }
+                    .padding(5.dp)
+            )
+
+            Text(
+                text = "Кол-во заказов ${reportViewModel.countOrder.value}",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(5.dp)
+            )
+
+            Text(
+                text = "Средняя стоимость заказа ${reportViewModel.avvSum.collectAsState().value}",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(5.dp)
+            )
         }
     }
 }
-
-

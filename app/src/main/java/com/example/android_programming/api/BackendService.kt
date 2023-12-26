@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import com.example.android_programming.api.model.BasketSneakerRemote
 import com.example.android_programming.api.model.OrderRemote
 import com.example.android_programming.api.model.OrderSneakerRemote
+import com.example.android_programming.api.model.ReportRemote
 import com.example.android_programming.api.model.SneakerRemote
 import com.example.android_programming.api.model.UserRemote
 import com.example.android_programming.api.model.UserRemoteSignIn
@@ -150,6 +151,13 @@ interface BackendService {
     suspend fun deleteOrder(
         @Path("orderId") orderId: Int
     )
+
+    //REPORT
+    @GET("report/getReport/{dateFrom}/{dateTo}")
+    suspend fun getReport(
+        @Path("dateFrom") dateFrom: Long,
+        @Path("dateTo") dateTo: Long
+    ): ReportRemote
 
     companion object {
         private const val BASE_URL = "https://59k4pfj3-8080.euw.devtunnels.ms/api/"
