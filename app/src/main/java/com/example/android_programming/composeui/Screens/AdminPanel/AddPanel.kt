@@ -205,7 +205,7 @@ fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewMod
                     .border(1.dp, Color.Gray, RoundedCornerShape(4.dp)),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
+                    keyboardType = KeyboardType.Decimal,
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
