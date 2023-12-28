@@ -6,6 +6,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -73,7 +74,7 @@ fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewMod
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(16.dp, 16.dp, 16.dp, 50.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(colorResource(id = R.color.figma))
             .verticalScroll(rememberScrollState())
@@ -192,7 +193,11 @@ fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewMod
 
             TextField(
                 value = sneakerViewModel.price.value,
-                onValueChange = { sneakerViewModel.price.value = it },
+                onValueChange = { try {
+                    sneakerViewModel.price.value = it
+                }catch (e: Exception){
+                    Toast.makeText(context, "Нельзя сюда писать буквы", Toast.LENGTH_SHORT).show()
+                }},
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -222,7 +227,11 @@ fun AddPanel(sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewMod
                     contentColor = Color.White
                 ),
                 onClick = {
-                    sneakerViewModel.insertSneaker(photo.value)
+                    if(sneakerViewModel.model.value == "" || sneakerViewModel.brand.value == "" || sneakerViewModel.description.value == "" || sneakerViewModel.price.value == ""){
+                        Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                    }else{
+                        sneakerViewModel.insertSneaker(photo.value)
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()

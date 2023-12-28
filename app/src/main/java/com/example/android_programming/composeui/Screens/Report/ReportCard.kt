@@ -1,6 +1,7 @@
 package com.example.android_programming.composeui.Screens.Report
 
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -36,6 +38,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ReportCard(reportViewModel: ReportViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .padding(16.dp)
@@ -69,7 +72,11 @@ fun ReportCard(reportViewModel: ReportViewModel = viewModel(factory = AppViewMod
                     contentColor = Color.White
                 ),
                 onClick = {
-                    reportViewModel.updateReportData(reportViewModel.dateFrom.value, reportViewModel.dateTo.value)
+                    if(reportViewModel.dateTo.value <= reportViewModel.dateFrom.value){
+                        Toast.makeText(context, "Inccorect date range", Toast.LENGTH_SHORT).show()
+                    }else{
+                        reportViewModel.updateReportData(reportViewModel.dateFrom.value, reportViewModel.dateTo.value)
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()

@@ -35,7 +35,11 @@ class ReportViewModel(private val reportRepository: ReportRepository): MyViewMod
         viewModelScope.launch {
             val report = reportRepository.getReportData(dateFrom, dateTo)
             countOrder.value = report.countOrder
-            _avvSum.value = report.avvSum!!
+            if(report.avvSum == null){
+                _avvSum.value = 0.0
+            }else{
+                _avvSum.value = report.avvSum
+            }
             sneakerList.value = report.listPopularSneaker
             orderList.value = report.listOrder
         }

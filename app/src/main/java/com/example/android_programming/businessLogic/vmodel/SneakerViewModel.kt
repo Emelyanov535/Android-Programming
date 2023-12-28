@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
-class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewModel() {
+class SneakerViewModel(private val sneakerRepository: SneakerRepository): MyViewModel() {
     var brand = mutableStateOf("")
     val model = mutableStateOf("")
     val description = mutableStateOf("")
@@ -46,7 +46,13 @@ class SneakerViewModel(private val sneakerRepository: SneakerRepository): ViewMo
     }
 
     fun deleteSneaker(sneaker :  Sneaker) = viewModelScope.launch {
-        sneakerRepository.deleteSneaker(sneaker)
+        runInScope(
+            actionSuccess = {
+                sneakerRepository.deleteSneaker(sneaker)
+                _sneakerList.value = sneakerRepository.getAllSneakers()
+            }
+        )
+
     }
 
     fun UpdateSneaker(sneaker: Sneaker) = viewModelScope.launch {

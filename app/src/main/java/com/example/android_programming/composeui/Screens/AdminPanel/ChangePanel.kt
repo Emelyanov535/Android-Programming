@@ -1,5 +1,6 @@
 package com.example.android_programming.composeui.Screens.AdminPanel
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -30,13 +32,21 @@ import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
+import com.example.android_programming.api.ApiStatus
 import com.example.android_programming.model.Sneaker
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.SneakerViewModel
+import com.example.android_programming.composeui.circular
 import kotlinx.coroutines.delay
 
 @Composable
 fun ChangePanel(navHostController: NavHostController, sneakerViewModel: SneakerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+    val context = LocalContext.current
+    when(sneakerViewModel.apiStatus){
+        ApiStatus.LOADING -> circular()
+        ApiStatus.ERROR -> Toast.makeText(context, "Невозможно удалить товар " + sneakerViewModel.apiError, Toast.LENGTH_SHORT).show()
+        else -> {}
+    }
     val list = sneakerViewModel.sneakerList.collectAsState().value.collectAsLazyPagingItems()
 
     Column(

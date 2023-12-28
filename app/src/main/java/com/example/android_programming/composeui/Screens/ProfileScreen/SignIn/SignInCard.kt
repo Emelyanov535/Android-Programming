@@ -51,9 +51,6 @@ import com.example.android_programming.model.Basket
 import com.example.android_programming.businessLogic.vmodel.AppViewModelProvider
 import com.example.android_programming.businessLogic.vmodel.BasketViewModel
 import com.example.android_programming.businessLogic.vmodel.UserViewModel
-import com.example.android_programming.composeui.ErrorPlaceholder
-import com.example.android_programming.composeui.LoadingPlaceholder
-import com.example.android_programming.composeui.Screens.ErrorSnackbar
 import com.example.android_programming.composeui.circular
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

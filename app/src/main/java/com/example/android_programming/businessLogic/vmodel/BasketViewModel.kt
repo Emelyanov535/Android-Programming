@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class BasketViewModel(private val basketRepository: BasketRepository): ViewModel() {
+class BasketViewModel(private val basketRepository: BasketRepository): MyViewModel() {
 
     private val _quantityStateMap = mutableMapOf<Int, MutableStateFlow<Int>>()
 
